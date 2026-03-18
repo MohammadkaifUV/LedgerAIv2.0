@@ -95,7 +95,7 @@ if ! command -v node &> /dev/null; then
 fi
 
 # Start backend and track PID
-node server.js > backend_server.log 2>&1 &
+npx nodemon server.js >> backend_server.log 2>&1 &
 BACKEND_PID=$!
 echo "$BACKEND_PID" >> "$PIDS_FILE"
 echo "  PID: $BACKEND_PID"

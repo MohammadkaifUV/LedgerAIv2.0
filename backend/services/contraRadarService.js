@@ -109,12 +109,24 @@ async function findAndLinkContras(transactionsBatch, userId, supabaseClient) {
                 const diffDays = diffTime / (1000 * 60 * 60 * 24);
 
                 if (diffDays <= 2) {
+                    // Side A — mark contra, offset points to Side B's account
                     txn.offset_account_id = cBaseAccountId;
                     txn.is_contra = true;
                     txn.categorised_by = 'GLOBAL_RULE';
                     txn.confidence_score = 1.00;
 
-                    skippedIndices.add(j); 
+                    // Side B — also mark contra, offset points back to Side A's account
+                    // Push it directly instead of skipping it
+                    const sideB = {
+                        ...transactionsBatch[j],
+                        offset_account_id: baseAccountId,
+                        is_contra: true,
+                        categorised_by: 'GLOBAL_RULE',
+                        confidence_score: 1.00
+                    };
+                    resolvedBatch.push(sideB);
+
+                    skippedIndices.add(j);
                     matchFound = true;
                     break;
                 }
@@ -132,7 +144,7 @@ async function findAndLinkContras(transactionsBatch, userId, supabaseClient) {
 
             const { data: dbMatch, error } = await supabaseClient
                 .from('transactions')
-                .select('base_account_id')
+                .select('transaction_id, base_account_id')
                 .eq('user_id', userId)
                 .eq('amount', amount)
                 .eq('transaction_type', oppositeType)
@@ -147,6 +159,24 @@ async function findAndLinkContras(transactionsBatch, userId, supabaseClient) {
                 txn.is_contra = true;
                 txn.categorised_by = 'GLOBAL_RULE';
                 txn.confidence_score = 1.00;
+
+                // Retroactively update the mirror transaction that was already written
+                const { error: updateError } = await supabaseClient
+                    .from('transactions')
+                    .update({
+                        is_contra: true,
+                        categorised_by: 'GLOBAL_RULE',
+                        offset_account_id: txn.account_id || txn.base_account_id,
+                        attention_level: 'LOW',
+                        review_status: 'PENDING'
+                    })
+                    .eq('transaction_id', dbMatch[0].transaction_id);
+
+                if (updateError) {
+                    console.error('❌ Failed to retroactively update mirror contra transaction:', updateError);
+                } else {
+                    console.log(`✅ Contra linked: updated mirror transaction_id ${dbMatch[0].transaction_id}`);
+                }
             }
         }
 

@@ -23,3 +23,6 @@ build/
 # OS/editor artifacts
 .DS_Store
 .vscode/
+.ledgerai_pids
+
+/extraStuff/testJson
