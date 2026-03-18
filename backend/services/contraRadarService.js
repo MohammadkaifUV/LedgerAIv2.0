@@ -132,18 +132,18 @@ async function findAndLinkContras(transactionsBatch, userId, supabaseClient) {
 
             const { data: dbMatch, error } = await supabaseClient
                 .from('transactions')
-                .select('account_id')
+                .select('base_account_id')
                 .eq('user_id', userId)
                 .eq('amount', amount)
                 .eq('transaction_type', oppositeType)
-                .neq('account_id', baseAccountId)
+                .neq('base_account_id', baseAccountId)
                 .eq('is_contra', false)
                 .gte('transaction_date', formatDate(startDate))
                 .lte('transaction_date', formatDate(endDate))
                 .limit(1);
 
             if (!error && dbMatch && dbMatch.length > 0) {
-                txn.offset_account_id = dbMatch[0].account_id;
+                txn.offset_account_id = dbMatch[0].base_account_id;
                 txn.is_contra = true;
                 txn.categorised_by = 'GLOBAL_RULE';
                 txn.confidence_score = 1.00;

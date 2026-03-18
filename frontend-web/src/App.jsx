@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../../shared/hooks/useAuth';
-import { supabase } from '../../shared/supabase';
+import { supabase, supabaseConfigError } from '../../shared/supabase';
 
 // Pages & Components
 import AuthPage from './components/AuthPage';
@@ -35,6 +35,14 @@ function App() {
   }, [isDarkMode]);
 
   const checkSetupStatus = async () => {
+    if (!supabase) {
+      setRole('USER');
+      setHasModules(false);
+      setHasIdentifiers(false);
+      setLoading(false);
+      return;
+    }
+
     if (!user) {
       setHasModules(null);
       setHasIdentifiers(null);
@@ -96,8 +104,45 @@ function App() {
     else setLoading(false);
   }, [user]);
 
+  if (supabaseConfigError) {
+    return (
+      <div
+        style={{
+          minHeight: '100vh',
+          display: 'grid',
+          placeItems: 'center',
+          backgroundColor: '#0f172a',
+          color: '#e2e8f0',
+          fontFamily: 'Inter, sans-serif',
+          padding: '24px',
+        }}
+      >
+        <div style={{ maxWidth: '760px', width: '100%', lineHeight: 1.6 }}>
+          <h1 style={{ margin: '0 0 8px 0', fontSize: '1.5rem' }}>Configuration Required</h1>
+          <p style={{ margin: '0 0 12px 0', color: '#cbd5e1' }}>{supabaseConfigError}</p>
+          <p style={{ margin: 0, color: '#94a3b8' }}>
+            Update frontend-web/.env, then restart the Vite dev server.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   if (authLoading || (user && loading)) {
-    return <div style={{ height: '100vh', backgroundColor: 'var(--bg-primary)' }} />;
+    return (
+      <div
+        style={{
+          height: '100vh',
+          display: 'grid',
+          placeItems: 'center',
+          backgroundColor: 'var(--bg-primary, #0f172a)',
+          color: 'var(--text-primary, #e2e8f0)',
+          fontFamily: 'Inter, sans-serif',
+        }}
+      >
+        Initializing LedgerAI...
+      </div>
+    );
   }
 
   return (

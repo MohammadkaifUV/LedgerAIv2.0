@@ -3,165 +3,148 @@ import csv
 from dotenv import load_dotenv
 from supabase import create_client, Client
 
-# 1. Load Environment Variables from backend/.env
+# ─── Config ────────────────────────────────────────────────────────────────
 ROOT_DIR = "/run/media/kaifmomin/iDrive/LedgerAI v2.0"
 ENV_PATH = os.path.join(ROOT_DIR, 'backend', '.env')
+CSV_FILE_PATH = os.path.join(ROOT_DIR, 'extraStuff', 'coa.csv')
 
+ACCOUNT_TYPE_MAP = {
+    "assets": "ASSET", "liabilities": "LIABILITY", "equity": "EQUITY",
+    "income": "INCOME", "expense": "EXPENSE"
+}
+
+# ─── Load env ───────────────────────────────────────────────────────────────
 if not os.path.exists(ENV_PATH):
     print(f"❌ .env not found at: {ENV_PATH}")
     exit(1)
 
 load_dotenv(ENV_PATH)
-
 url = os.environ.get("SUPABASE_URL")
 key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
 
 if not url or not key:
-    print("❌ Missing Supabase Environment Variables in .env")
+    print("❌ Missing Supabase environment variables.")
     exit(1)
 
-print("Connecting to Supabase...")
+print("🔌 Connecting to Supabase...")
 supabase: Client = create_client(url, key)
 
-CSV_FILE_PATH = os.path.join(ROOT_DIR, 'extraStuff', 'coa.csv')
-
+# ─── Load CSV ───────────────────────────────────────────────────────────────
 if not os.path.exists(CSV_FILE_PATH):
-    print(f"❌ CSV file not found at: {CSV_FILE_PATH}")
+    print(f"❌ CSV not found at: {CSV_FILE_PATH}")
     exit(1)
 
-print("Fetching existing templates to avoid duplicates...")
+with open(CSV_FILE_PATH, mode='r', encoding='utf-8') as f:
+    reader = csv.DictReader(f)
+    rows = list(reader)
+
+if not rows:
+    print("❌ CSV is empty.")
+    exit(1)
+
+# Validate required columns
+required_cols = {'id', 'module_id', 'account_name', 'account_type', 'balance_nature', 'is_system_generated'}
+missing = required_cols - set(rows[0].keys())
+if missing:
+    print(f"❌ CSV is missing columns: {missing}")
+    print(f"   Found columns: {list(rows[0].keys())}")
+    exit(1)
+
+print(f"📄 Loaded {len(rows)} rows from CSV.")
+
+# ─── Fetch existing templates to skip duplicates ────────────────────────────
+print("🔍 Fetching existing templates from DB...")
 try:
-    response = supabase.table('coa_templates').select('template_id, account_name, module_id').execute()
-    existing_templates = response.data
-    # Store with their true IDs: {(name, module_id): id}
-    existing_templates_map = {
-        (row['account_name'].lower().strip(), row['module_id']): row['template_id']
-        for row in existing_templates
+    res = supabase.table('coa_templates').select('template_id, account_name, module_id').execute()
+    existing_map = {
+        (r['account_name'].lower().strip(), int(r['module_id'])): r['template_id']
+        for r in res.data
     }
-    print(f"Loaded {len(existing_templates_map)} existing templates.")
+    print(f"   Found {len(existing_map)} existing templates.")
 except Exception as e:
-    print(f"⚠️ Failed to fetch existing templates, continuing with assumption of empty table: {e}")
-    existing_templates_map = {}
+    print(f"⚠️  Could not fetch existing templates, assuming empty: {e}")
+    existing_map = {}
 
-print(f"Reading data from {CSV_FILE_PATH}...")
-payloads = []
-skipped_count = 0
+# ─── Insert row by row, tracking csv_id → db_template_id ───────────────────
+# This map is the key fix: resolves parent_template_id references from CSV ids
+# to actual auto-generated DB template_ids.
+csv_id_to_db_id: dict[int, int] = {}
 
-try:
-    with open(CSV_FILE_PATH, mode='r', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
-        rows = list(reader)
+# Pre-populate map with any rows that already exist in DB
+for row in rows:
+    csv_id = int(row['id'])
+    name = row['account_name'].strip()
+    module_id = int(row['module_id'])
+    key_tuple = (name.lower(), module_id)
+    if key_tuple in existing_map:
+        csv_id_to_db_id[csv_id] = existing_map[key_tuple]
 
-        if not rows:
-            print("❌ CSV is empty!")
-            exit(1)
-
-        first_row_item = rows[0]
-        first_account_name = first_row_item['account_name'].strip()
-        first_module_id = int(first_row_item['module_id'])
-        first_key = (first_account_name.lower(), first_module_id)
-
-        first_template_id = None
-
-        # Check if first row already exists
-        if first_key in existing_templates_map:
-            print(f"First template '{first_account_name}' already exists in DB.")
-            first_template_id = existing_templates_map[first_key]
-        else:
-            # Insert first row alone to get its newly generated template_id
-            print(f"Inserting first template '{first_account_name}' to resolve parent references...")
-            first_payload = {
-                "module_id": first_module_id,
-                "account_name": first_account_name,
-                "account_type": "ASSET",  #"Assets" mapped to ASSET
-                "balance_nature": "DEBIT", #"Debit" mapped to DEBIT
-                "is_system_generated": first_row_item['is_system_generated'].lower() == 'true'
-            }
-            res = supabase.table('coa_templates').insert(first_payload).execute()
-            if res.data:
-                first_template_id = res.data[0]['template_id']
-                print(f"✅ Created first template. ID: {first_template_id}")
-                # Save to map for subsequent checks
-                existing_templates_map[first_key] = first_template_id
-            else:
-                print("❌ Failed to insert first template row!")
-                exit(1)
-
-        # process the rest of the rows
-        for index, row in enumerate(rows):
-            # Skip first row because we already handled it above
-            if index == 0:
-                continue
-
-            module_id = int(row['module_id'])
-            account_name = row['account_name'].strip()
-            combo_key = (account_name.lower(), module_id)
-
-            if combo_key in existing_templates_map:
-                skipped_count += 1
-                continue
-
-            account_type_map = {
-                "assets": "ASSET", "liabilities": "LIABILITY", "equity": "EQUITY",
-                "income": "INCOME", "expense": "EXPENSE"
-            }
-            account_type_raw = row['account_type'].strip().lower()
-            account_type = account_type_map.get(account_type_raw, account_type_raw.upper())
-            balance_nature = row['balance_nature'].strip().upper()
-
-            payload = {
-                "module_id": module_id,
-                "account_name": account_name,
-                "account_type": account_type,
-                "balance_nature": balance_nature,
-                "is_system_generated": row['is_system_generated'].lower() == 'true'
-            }
-            
-            # Resolve parent_template_id = 1 to the first_template_id
-            if 'parent_template_id' in row and row['parent_template_id'].strip():
-                try:
-                    p_id = int(row['parent_template_id'])
-                    if p_id == 1:
-                        payload["parent_template_id"] = first_template_id
-                    else:
-                        payload["parent_template_id"] = p_id
-                except ValueError:
-                    pass
-
-            payloads.append(payload)
-
-except Exception as e:
-    print(f"❌ Error reading CSV: {str(e)}")
-    exit(1)
-
-if not payloads:
-    print(f"\nSummary: No new templates to add. Skipped {skipped_count} existing.")
-    exit(0)
-
-print(f"Inserting {len(payloads)} templates into Supabase...")
 success_count = 0
+skipped_count = 0
 fail_count = 0
 
-try:
-    batch_size = 50
-    for i in range(0, len(payloads), batch_size):
-        batch = payloads[i:i + batch_size]
-        response = supabase.table('coa_templates').insert(batch).execute()
-        success_count += len(batch)
-        print(f"✅ Inserted batch: {i // batch_size + 1}")
+print("\n🚀 Starting insertion...\n")
 
-except Exception as e:
-    print(f"❌ Failed to insert batch starting at index {i}: {str(e)}")
-    print(f"Falling back to single insertions for remaining batches to isolate errors...")
-    for payload in payloads[i:]:
+for row in rows:
+    csv_id     = int(row['id'])
+    module_id  = int(row['module_id'])
+    name       = row['account_name'].strip()
+    key_tuple  = (name.lower(), module_id)
+
+    # Skip if already in DB
+    if key_tuple in existing_map:
+        skipped_count += 1
+        csv_id_to_db_id[csv_id] = existing_map[key_tuple]
+        continue
+
+    # Map account_type
+    account_type_raw = row['account_type'].strip().lower()
+    account_type = ACCOUNT_TYPE_MAP.get(account_type_raw, account_type_raw.upper())
+
+    balance_nature = row['balance_nature'].strip().upper()
+    is_system_generated = row.get('is_system_generated', 'true').strip().lower() == 'true'
+
+    payload = {
+        "module_id": module_id,
+        "account_name": name,
+        "account_type": account_type,
+        "balance_nature": balance_nature,
+        "is_system_generated": is_system_generated,
+    }
+
+    # Resolve parent_template_id: look up the CSV id in our running map
+    parent_csv_id_raw = row.get('parent_template_id', '').strip()
+    if parent_csv_id_raw:
         try:
-            supabase.table('coa_templates').insert(payload).execute()
-            success_count += 1
-        except Exception as ex:
-            print(f"❌ Failed to insert '{payload['account_name']}': {str(ex)}")
-            fail_count += 1
+            parent_csv_id = int(parent_csv_id_raw)
+            resolved_parent_db_id = csv_id_to_db_id.get(parent_csv_id)
+            if resolved_parent_db_id:
+                payload["parent_template_id"] = resolved_parent_db_id
+            else:
+                print(f"⚠️  Row {csv_id} '{name}': parent CSV id={parent_csv_id} not yet inserted — skipping parent link")
+        except ValueError:
+            pass  # Non-integer parent ref, ignore
 
-print(f"\nSummary:")
-print(f"🎉 Successfully inserted: {success_count} (plus {1 if first_key not in existing_templates_map else 0} handled first)")
-print(f"⚠️ Skipped (Already Exists): {skipped_count}")
-print(f"❌ Failed: {fail_count}")
+    try:
+        res = supabase.table('coa_templates').insert(payload).execute()
+        if res.data:
+            db_id = res.data[0]['template_id']
+            csv_id_to_db_id[csv_id] = db_id       # Register in map for children
+            existing_map[key_tuple] = db_id        # Prevent re-insert if script is re-run
+            success_count += 1
+            print(f"   ✅ [{csv_id:>3}] {name} → DB id {db_id}")
+        else:
+            print(f"   ❌ [{csv_id:>3}] {name}: insert returned no data")
+            fail_count += 1
+    except Exception as e:
+        print(f"   ❌ [{csv_id:>3}] {name}: {e}")
+        fail_count += 1
+
+# ─── Summary ─────────────────────────────────────────────────────────────────
+print(f"""
+────────────────────────────
+ ✅ Inserted : {success_count}
+ ⏭️  Skipped  : {skipped_count}
+ ❌ Failed   : {fail_count}
+────────────────────────────
+""")

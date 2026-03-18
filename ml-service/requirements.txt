@@ -2,4 +2,3 @@ fastapi
 uvicorn
 spacy
 sentence-transformers
-pydantic

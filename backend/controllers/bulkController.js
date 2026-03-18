@@ -187,6 +187,47 @@ async function processUpload(req, res) {
       }
     }
 
+    // Normalize categorization key for transactions table writes.
+    for (const item of finalResults) {
+      if (item.account_id && !item.base_account_id) {
+        item.base_account_id = item.account_id;
+      }
+    }
+
+    // ==========================================
+    // 🛡️ STAGE 5: BATCH WRITE TO TRANSACTIONS
+    // ==========================================
+    const transactionsBatch = finalResults
+      .filter(item => item.base_account_id)
+      .map(item => ({
+        user_id: userId,
+        base_account_id: item.base_account_id,
+        offset_account_id: item.offset_account_id || null,
+        document_id: item.document_id,
+        transaction_date: item.txn_date,
+        details: item.details,
+        clean_merchant_name: item.clean_merchant_name || null,
+        amount: item.debit || item.credit || 0,
+        transaction_type: item.debit ? 'DEBIT' : 'CREDIT',
+        categorised_by: item.categorised_by || 'LLM_PREDICTION',
+        confidence_score: item.confidence_score || 0.50,
+        is_contra: item.is_contra || false,
+        posting_status: 'DRAFT',
+        attention_level: 'LOW',
+        review_status: 'PENDING',
+        uncategorized_transaction_id: item.uncategorized_transaction_id || null
+      }));
+
+    if (transactionsBatch.length > 0) {
+      const { error: insertError } = await supabase
+        .from('transactions')
+        .insert(transactionsBatch);
+
+      if (insertError) {
+        console.error('❌ Batch insert to transactions failed:', insertError);
+      }
+    }
+
     return res.status(200).json({
       success: true,
       data: finalResults

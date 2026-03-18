@@ -27,7 +27,9 @@ const Transactions = () => {
           details,
           debit,
           credit,
-          transactions (
+          document_id,
+          account_id,
+          transactions!uncategorized_transaction_id (
             review_status,
             offset_account_id,
             accounts:offset_account_id (

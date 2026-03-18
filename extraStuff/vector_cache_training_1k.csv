@@ -1,1001 +1,2628 @@
 clean_name,target_account_name
-txnparking,Retainer Income
-cardmaintenance,Senior Citizen Savings Schemes
-txnzomato,Freelance Equipment
-carduber,Payment Gateway Fees
-electronics,Travel & Holidays
-billtrain,Investments
-onlinetrain,Irrigation & Electricity
-onlinegasbill,Business Loans
-billdonation,Direct Labor
-onlinewifi,Business Equipment
-collegefees,Groceries
-onlinemaintenance,Cashbacks & Refunds
-amazon,Retirement Funds
-cardeducation,Legal & Professional Services
-collegefees,Farm Machinery
-schoolfees,Employee Provident Fund
-billrent,Professional Equipment
-onlinesubscription,Work Equipment & Home Office
-billmaintenance,Vehicles
-zomato,Work Equipment & Home Office
-mcdonalds,Salary
-onlinecharity,Harvested Inventory
-paymentgym,Employee Provident Fund
-hotel,Subscriptions
-billsalary,Senior Insurance Premiums
-cardconsulting,Royalties & Licensing
-onlinetrain,Family Support
-rent,Freelance Project Income
-collegefees,Credit Cards
-recharge,Rent / Housing Maintenance
-gasbill,Clothing & Personal Care
-amazon,Caregiver Services
-paymentcollegefees,Shipping / Delivery Income
-pizza,Clothing & Personal Care
-billrepair,Software & Digital Tools
-tax,Gifts & Donations
-schoolfees,Commission Income
-billspotify,Interest Income
-paymentburger,Crop Loans
-salary,Books & Study Materials
-paymentdiesel,Accounts Receivable
-paymentvegetables,Healthcare & Medical
-billola,Family Support
-cardvegetables,Trade Receivables
-billgym,Bank Accounts
-cardparking,Retained Earnings
-txnrepair,Livestock
-onlineamazon,Retirement Funds
-billdominos,Project Revenue
-netflix,Farm Machinery
-cardrepair,Crop Sales
-paymentdominos,Bank Accounts
-cardbonus,Platform Commission Income
-cardswiggy,Digital Wallets
-txndiesel,Insurance Premiums
-onlinewifi,Reimbursements
-txnswiggy,Utility Bills Payable
-flipkart,Fuel
-billola,Allowances / Pocket Money
-subscription,Pilgrimage Travel
-txnpharmacy,Farm Labor
-onlinepizza,Professional Memberships
-billtax,Supplier Discounts
-electricity,Professional Equipment
-maintenance,Retirement Funds
-onlinevegetables,Utility Bills Payable
-paymentmobile,Internet & Phone
-cardyoutube,Payment Gateway Fees
-parking,Restaurants & Food Delivery
-vegetables,Office Rent
-cardgym,Exam & Application Fees
-txnyoutube,Loans Payable
-billpizza,Professional Equipment
-zomato,Accounts Receivable
-txnyoutube,GST Input Credit
-txnrent,Subscriptions
-onlinevegetables,Learning & Professional Development
-txninvestment,Opening Balance Equity
-billhotel,Equipment Loans
-txnpetrol,Professional Development
-petrol,Crop Loans
-cardcharity,Digital Wallets
-onlineamazon,Crop Sales
-billdonation,Retained Earnings
-txnfuel,Student Activities & Clubs
-hotel,Supplier Discounts
-onlinedominos,GST Input Credit
-billbonus,Dairy Income
-onlinerecharge,Statutory Dues Payable
-flipkart,Service Revenue
-cardtoll,Cashbacks & Refunds
-hospital,Platform Commission Income
-txnrent,Gifts & Donations
-onlinegasbill,Employee Provident Fund
-paymentcharity,Senior Insurance Premiums
-cardfreelance,Bonuses & Incentives
-electricity,Subscriptions
-paymentgst,Allowances / Pocket Money
-carddiesel,Internet & Phone
-paymentconsulting,Tuition & Academic Fees
-paymentrent,Healthcare & Medical
-paymentrecharge,Co-working Space
-maintenance,Reimbursements
-txnsubscription,Retirement Funds
-billyoutube,Learning & Professional Development
-tax,Supplier Discounts
-donation,Machinery Fuel & Maintenance
-medical,Subcontractor Payments
-billmcdonalds,Subscriptions
-salary,Digital Wallets
-toll,Retainer Income
-billinsurance,Estate Planning & Legal Fees
-txninternet,Equipment Rental Income
-cardfreelance,Platform Commission Income
-cardmutualfund,Senior Insurance Premiums
-tax,Fuel
-electricity,Rent / Housing Maintenance
-onlineola,Groceries
-cardwaterbill,Cashbacks & Refunds
-billwaterbill,Inventory / Stock
-txngst,Purchases
-onlinehotel,Crop Loans
-diesel,Professional Memberships
-onlineshopping,Interest Income
-train,Internet & Phone
-txncollegefees,Employee Salaries
-cardtoll,Real Estate / Property
-electricity,Direct Labor
-cardburger,Inventory / Stock
-paymentmaintenance,Bank Charges & Fees
-billbonus,Dividend Income
-billcharity,Healthcare & Medical
-ola,Interest Income
-paymentinsurance,Senior Citizen Savings Schemes
-fuel,Books & Study Materials
-txnshopping,Government Subsidies
-netflix,Loans Payable
-paymentmetro,Statutory Dues Payable
-paymentmedical,Work Equipment & Home Office
-txnfuel,Crop Loans
-onlineburger,Dairy Income
-paymentnetflix,Agricultural Land
-diesel,Utility Bills Payable
-txnnetflix,Royalties & Licensing
-billmobile,Exam & Application Fees
-cardgst,Livestock
-onlineparking,Subscriptions
-onlinedonation,Accounts Receivable
-paymentdonation,Employee Salaries
-onlinezomato,Pilgrimage Travel
-paymentvegetables,Business Travel
-cardrepair,Annuity Payouts
-billshopping,Rent / Housing Maintenance
-onlineshopping,Allowances / Pocket Money
-txnservicecharge,Government Subsidies
-paymentinvestment,Livestock Feed & Veterinary Care
-billfreelance,Machinery Fuel & Maintenance
-txnsalary,Legal & Professional Services
-electricity,Caregiver Services
-insurance,Books & Study Materials
-youtube,Travel & Holidays
-paymentmedical,Machinery Fuel & Maintenance
-recharge,Tuition & Academic Fees
-billgst,Trade Receivables
-txnnetflix,Livestock Feed & Veterinary Care
-swiggy,Royalties & Licensing
-txngym,Office Rent
-carduber,Consulting Fees
-onlineconsulting,Electronics & Equipment
-onlinevegetables,Books & Study Materials
-gasbill,Farm Machinery
-billtrain,Payment Gateway Fees
-billtrain,Purchases
-cardtrain,Consulting Fees
-billgasbill,Bank Charges & Fees
-paymentgroceries,Business Equipment
-billmcdonalds,Work Equipment & Home Office
-hospital,Business Equipment
-onlineflight,Internet & Phone
-onlinemetro,Pilgrimage Travel
-paymentshopping,Employee Provident Fund
-rent,Senior Healthcare
-internet,Work Equipment & Home Office
-onlinespotify,Healthcare & Medical
-onlinedonation,Payment Gateway Fees
-cardwaterbill,Retainer Income
-billdiesel,Rental Income
-paymentschoolfees,Professional Memberships
-txninsurance,Clothing & Personal Care
-paymentyoutube,Senior Insurance Premiums
-billconsulting,Exam & Application Fees
-txnpizza,Legal & Professional Services
-cardola,Student Activities & Clubs
-billamazon,Entertainment & Media
-onlineswiggy,Client Meetings & Travel
-txninvestment,Entertainment & Media
-billgym,GST Input Credit
-servicecharge,Co-working Space
-paymentwifi,Electronics & Equipment
-cardshopping,Fuel
-txnamazon,Interest Income
-txninvestment,Freight / Logistics
-billtoll,Rental Income
-cardburger,Utility Bills Payable
-billinternet,Business Travel
-txnfreelance,Learning & Professional Development
-onlineinsurance,Equipment Loans
-onlineswiggy,Professional Development
-cardmedical,Business Travel
-paymentmobile,Credit Cards
-schoolfees,Cashbacks & Refunds
-cardwaterbill,Vehicles
-billpharmacy,Royalties & Licensing
-txnmedical,Freight / Logistics
-cardschoolfees,Statutory Dues Payable
-internet,Business Travel
-cardeducation,Irrigation & Electricity
-billwaterbill,Business Loans
-hospital,Co-working Space
-billuber,Freelance Project Income
-paymentconsulting,Irrigation & Electricity
-investment,Bank Charges & Fees
-paymentvegetables,Statutory Dues Payable
-billgroceries,Business Equipment
-consulting,Payment Gateway Fees
-txnsubscription,Clothing & Personal Care
-txntoll,Gifts & Donations
-flight,Books & Study Materials
-txnschoolfees,Senior Insurance Premiums
-paymentola,Agricultural Land
-onlineservicecharge,Business Equipment
-mobile,Royalties & Licensing
-txntax,Service Revenue
-txnburger,Cash on Hand
-billflight,Trade Payables
-uber,Service Revenue
-rent,Subscriptions
-pharmacy,Restaurants & Food Delivery
-billpetrol,Utility Bills Payable
-paymentinsurance,Retirement Funds
-billmaintenance,Livestock
-medical,Annuity Payouts
-cardschoolfees,Consulting Fees
-onlineburger,Pilgrimage Travel
-txngst,Family Support
-pharmacy,Opening Balance Equity
-billschoolfees,Electricity & Water
-paymentrepair,Employee Salaries
-cardsubscription,Freelance Equipment
-cardclothes,Internship Stipend
-billsubscription,Groceries
-tax,Freelance Equipment
-txnflipkart,Retained Earnings
-onlinesalary,Healthcare & Medical
-onlinesalary,Retirement Funds
-onlineinsurance,Learning & Professional Development
-txnclothes,Dairy Income
-onlinemobile,Student Activities & Clubs
-billzomato,Bank Charges & Fees
-cardpizza,Employee Provident Fund
-maintenance,Freight / Logistics
-onlinetax,Farm Machinery
-netflix,Bonuses & Incentives
-cardgroceries,Platform Commission Income
-paymentspotify,Client Meetings & Travel
-billclothes,Entertainment & Media
-cardservicecharge,Government Subsidies
-fuel,TDS Receivable
-cardelectronics,TDS Receivable
-billshopping,Royalties & Licensing
-paymentwaterbill,Retained Earnings
-onlinehospital,Learning & Professional Development
-electronics,Payment Gateway Fees
-txnrecharge,Freelance Project Income
-cardrepair,Co-working Space
-paymentburger,Shipping / Delivery Income
-cardhospital,Office Rent
-carduber,Business Loans
-onlinehotel,Freight / Logistics
-cardgroceries,Books & Study Materials
-onlinevegetables,Reimbursements
-onlinegroceries,Legal & Professional Services
-paymentnetflix,Scholarships & Grants
-onlinemetro,Service Revenue
-paymentwifi,Vehicle Maintenance & Tolls
-clothes,Trade Payables
-charity,Payment Gateway Fees
-paymenttoll,Marketing & Advertising
-paymentuber,Loans Payable
-spotify,Trade Receivables
-onlinetax,Statutory Dues Payable
-medical,Electricity & Water
-clothes,Freight / Logistics
-billmobile,Client Meetings & Travel
-onlinecharity,GST Input Credit
-txntrain,Fuel
-paymentflipkart,Books & Study Materials
-parking,Reimbursements
-groceries,Business Equipment
-cardtax,Work Equipment & Home Office
-cardelectronics,Hostel & Mess Charges
-txnnetflix,Machinery Fuel & Maintenance
-billschoolfees,GST Input Credit
-paymenthospital,Pension Income
-gasbill,Retirement Funds
-onlineparking,Machinery Fuel & Maintenance
-onlinerent,Professional Development
-dominos,Employee Salaries
-paymentmobile,Competition Prizes
-paymenthospital,Electricity & Water
-onlineyoutube,Tuition & Academic Fees
-onlineuber,Farm Labor
-txnsalary,Internet & Phone
-billmobile,Vehicles
-vegetables,TDS Receivable
-hotel,Books & Study Materials
-carduber,Scholarships & Grants
-onlinefreelance,Pilgrimage Travel
-paymentservicecharge,Professional Equipment
-onlinehospital,Learning & Professional Development
-billsalary,Commission Income
-paymentmedical,Company Stock / ESOPs
-onlinehospital,Bank Accounts
-onlinehospital,Company Stock / ESOPs
-cardsalary,Exam & Application Fees
-medical,Seeds & Fertilizers
-zomato,Seeds & Fertilizers
-onlinedominos,Annuities
-billrepair,Loans Payable
-txntoll,Internship Stipend
-txnpetrol,Annuity Payouts
-txnrent,Equipment Loans
-txnrecharge,Internship Stipend
-cardparking,Co-working Space
-toll,Senior Insurance Premiums
-paymentnetflix,Internet & Phone
-mutualfund,Vehicle Maintenance & Tolls
-paymentclothes,Hostel & Mess Charges
-billnetflix,Learning & Professional Development
-diesel,Freelance Project Income
-onlinerecharge,Consulting Fees
-paymentspotify,Exam & Application Fees
-cardpizza,Exam & Application Fees
-cardpetrol,Freelance Equipment
-billcollegefees,Tuition & Academic Fees
-onlineshopping,Accounts Receivable
-txnzomato,Public Transport / Cabs
-txnparking,Healthcare & Medical
-netflix,Farm Labor
-txnpharmacy,Consulting Fees
-txninternet,Payment Gateway Fees
-swiggy,Employee Salaries
-cardmutualfund,Public Transport / Cabs
-onlinecharity,Electricity & Water
-onlinedonation,Purchases
-paymentburger,Business Travel
-txnmaintenance,Entertainment & Media
-repair,Internet & Phone
-onlineeducation,Trade Receivables
-onlinetrain,Employee Provident Fund
-billservicecharge,Equipment Loans
-billgasbill,Statutory Dues Payable
-onlinemetro,GST Input Credit
-billcharity,Bank Accounts
-consulting,Opening Balance Equity
-billinvestment,Retirement Funds
-billschoolfees,Allowances
-uber,Rental Income
-toll,Business Equipment
-billparking,Subcontractor Payments
-paymenttax,Bonuses & Incentives
-billparking,Dairy Income
-mutualfund,Royalties & Licensing
-billinternet,Inventory / Stock
-salary,Product Sales
-txnuber,Hostel & Mess Charges
-cardzomato,Scholarships & Grants
-cardinternet,Senior Citizen Savings Schemes
-metro,Crop Sales
-billmobile,Rental Income
-billmaintenance,Statutory Dues Payable
-internet,Project Revenue
-paymentrecharge,Rent / Housing Maintenance
-cardtrain,Family Support
-subscription,Senior Healthcare
-onlineelectricity,Annuities
-onlinespotify,Annuities
-paymentmetro,Purchases
-cardfreelance,Legal & Professional Services
-mobile,Co-working Space
-billdiesel,Annuity Payouts
-txnflipkart,Commission Income
-onlinedominos,Caregiver Services
-cardyoutube,Inventory / Stock
-txninsurance,Tuition & Academic Fees
-cardwaterbill,Livestock
-txnmobile,Hostel & Mess Charges
-cardinternet,Retained Earnings
-amazon,Product Sales
-amazon,Hostel & Mess Charges
-cardspotify,Tuition & Academic Fees
-billbonus,Farm Machinery
-gst,Books & Study Materials
-onlinehospital,Dividend Income
-onlineswiggy,Business Travel
-cardgroceries,Dairy Income
-billgroceries,Freelance Equipment
-billpetrol,Bank Accounts
-onlinepharmacy,Rental Income
-groceries,Seeds & Fertilizers
-paymentuber,Trade Payables
-mobile,Senior Citizen Savings Schemes
-billparking,Electronics & Equipment
-ola,Estate Planning & Legal Fees
-pharmacy,Loans Payable
-rent,Allowances
-paymentwaterbill,Farm Machinery
-txncharity,Opening Balance Equity
-dominos,Business Travel
-pizza,Learning & Professional Development
-billgasbill,Statutory Dues Payable
-txngst,Vehicles
-gym,Rental Income
-paymentwaterbill,Internship Stipend
-paymentcollegefees,Business Equipment
-billgym,Co-working Space
-paymentschoolfees,Learning & Professional Development
-paymentgst,Public Transport / Cabs
-gasbill,Freight / Logistics
-paymenthotel,Learning & Professional Development
-txnfuel,Allowances / Pocket Money
-cardcollegefees,Employee Provident Fund
-paymentinsurance,Utility Bills Payable
-cardpetrol,Loans Payable
-billelectronics,Retained Earnings
-onlinetoll,Co-working Space
-toll,Business Travel
-onlinepetrol,Allowances
-gasbill,Estate Planning & Legal Fees
-onlinerecharge,Service Revenue
-billrent,Investments
-bonus,Books & Study Materials
-donation,Insurance Premiums
-metro,Subcontractor Payments
-cardola,Statutory Dues Payable
-pizza,Work Equipment & Home Office
-shopping,Restaurants & Food Delivery
-billswiggy,Equipment Rental Income
-cardfuel,Crop Loans
-onlinemutualfund,Dairy Income
-collegefees,Travel & Holidays
-paymentwifi,Family Support
-txnbonus,Tuition & Academic Fees
-dominos,Subcontractor Payments
-carddonation,Office Rent
-cardtoll,Equipment Rental Income
-billsalary,Public Transport / Cabs
-bonus,TDS Receivable
-onlinedonation,Harvested Inventory
-pizza,Caregiver Services
-salary,GST Input Credit
-insurance,Interest Income
-txnswiggy,Groceries
-onlinefuel,Estate Planning & Legal Fees
-swiggy,Shipping / Delivery Income
-toll,Direct Labor
-txnelectronics,Trade Payables
-billpetrol,Harvested Inventory
-dominos,Employee Salaries
-cardflight,Investments
-tax,Bank Charges & Fees
-paymenteducation,Employee Provident Fund
-paymentola,Pilgrimage Travel
-paymentola,Public Transport / Cabs
-onlinevegetables,Product Sales
-paymentbonus,Service Revenue
-billspotify,Legal & Professional Services
-cardtoll,Accounts Receivable
-onlineclothes,Freight / Logistics
-onlineclothes,Work Equipment & Home Office
-cardburger,Supplier Discounts
-onlinemedical,Rental Income
-onlinesalary,Clothing & Personal Care
-onlinetrain,Employee Salaries
-diesel,Fuel
-txngym,Entertainment & Media
-cardswiggy,Restaurants & Food Delivery
-txntoll,Loans Payable
-paymentdominos,Estate Planning & Legal Fees
-onlineuber,Scholarships & Grants
-billbonus,Supplier Discounts
-txnwaterbill,TDS Receivable
-onlineservicecharge,Software & Digital Tools
-billpizza,Work Equipment & Home Office
-carddonation,Reimbursements
-cardzomato,Investments
-diesel,Purchases
-txninternet,Vehicles
-txnconsulting,Livestock Feed & Veterinary Care
-txnhospital,Senior Insurance Premiums
-groceries,Interest Income
-vegetables,Reimbursements
-clothes,Digital Wallets
-txnconsulting,Electricity & Water
-billcollegefees,Purchases
-cardgym,Rent / Housing Maintenance
-txnhotel,Software & Digital Tools
-billshopping,Family Support
-paymentdominos,Employee Provident Fund
-txnflipkart,Agricultural Land
-cardgroceries,Business Loans
-billservicecharge,Digital Wallets
-txntoll,Shipping / Delivery Income
-cardparking,Service Revenue
-txnyoutube,Tuition & Academic Fees
-education,Electricity & Water
-ola,Agricultural Land
-txntoll,Business Loans
-cardmcdonalds,Annuity Payouts
-cardparking,Employee Salaries
-txnzomato,Equipment Loans
-billfuel,Senior Insurance Premiums
-petrol,Allowances / Pocket Money
-txnnetflix,TDS Receivable
-paymentconsulting,Trade Receivables
-dominos,Dividend Income
-mutualfund,Platform Commission Income
-onlinebonus,Inventory / Stock
-cardservicecharge,Gifts & Donations
-onlinefuel,Clothing & Personal Care
-spotify,Vehicle Maintenance & Tolls
-onlineinternet,TDS Receivable
-billamazon,Livestock
-txnmobile,Pilgrimage Travel
-education,Gifts & Donations
-hospital,Subscriptions
-onlineservicecharge,Product Sales
-recharge,Bonuses & Incentives
-train,Electronics & Equipment
-onlinepetrol,Project Revenue
-billuber,Co-working Space
-onlinepizza,Legal & Professional Services
-paymentmutualfund,Bank Accounts
-gst,Business Equipment
-flight,Scholarships & Grants
-onlineelectricity,Electricity & Water
-medical,Subcontractor Payments
-billmaintenance,GST Input Credit
-paymenttoll,Electronics & Equipment
-fuel,Rent / Housing Maintenance
-uber,Professional Development
-cardspotify,Dividend Income
-onlineswiggy,Public Transport / Cabs
-txnmutualfund,Digital Wallets
-maintenance,Employee Salaries
-bonus,Clothing & Personal Care
-paymentfreelance,Allowances / Pocket Money
-onlinetoll,Supplier Discounts
-txndonation,Bank Accounts
-billcharity,Bonuses & Incentives
-cardconsulting,Consulting Fees
-onlineflipkart,Livestock Feed & Veterinary Care
-txnflight,GST Input Credit
-onlineflight,Annuities
-billtax,Government Subsidies
-billeducation,Business Travel
-diesel,Cashbacks & Refunds
-maintenance,Internship Stipend
-paymentclothes,Subscriptions
-maintenance,Agricultural Land
-flight,Payment Gateway Fees
-onlineclothes,Books & Study Materials
-txntax,Business Equipment
-cardrecharge,Harvested Inventory
-txntax,Dairy Income
-shopping,Payment Gateway Fees
-billflipkart,Senior Insurance Premiums
-cardmedical,Business Travel
-txninternet,Allowances / Pocket Money
-billrecharge,Senior Insurance Premiums
-internet,Service Revenue
-onlinediesel,Livestock
-txnhotel,TDS Receivable
-paymentrent,Employee Provident Fund
-txnsalary,Business Travel
-cardzomato,Groceries
-netflix,Trade Receivables
-spotify,Business Equipment
-txngroceries,Credit Cards
-onlinemcdonalds,Pilgrimage Travel
-pharmacy,Digital Wallets
-tax,Machinery Fuel & Maintenance
-onlineelectricity,Gifts & Donations
-train,Annuity Payouts
-onlinesalary,Learning & Professional Development
-paymentconsulting,Annuities
-paymenttoll,Accounts Receivable
-txninsurance,Government Subsidies
-billpharmacy,Retainer Income
-recharge,Senior Citizen Savings Schemes
-billmetro,Shipping / Delivery Income
-onlineyoutube,Allowances / Pocket Money
-billgym,Professional Memberships
-flipkart,Marketing & Advertising
-cardfuel,Farm Labor
-txnclothes,Senior Citizen Savings Schemes
-mcdonalds,Supplier Discounts
-billmcdonalds,Supplier Discounts
-cardtoll,Vehicle Maintenance & Tolls
-carddonation,Loans Payable
-txnamazon,Direct Labor
-cardmaintenance,Royalties & Licensing
-cardtax,Learning & Professional Development
-onlineelectronics,Platform Commission Income
-paymentmetro,Vehicles
-billparking,Purchases
-onlinerecharge,Equipment Loans
-metro,Subcontractor Payments
-uber,Estate Planning & Legal Fees
-billzomato,Business Travel
-billbonus,Credit Cards
-onlinedonation,Co-working Space
-txnburger,Loans Payable
-paymenthospital,Payment Gateway Fees
-onlinediesel,Retainer Income
-cardclothes,Internship Stipend
-dominos,Allowances / Pocket Money
-txnelectricity,Equipment Loans
-carddiesel,Pension Income
-cardgst,Hostel & Mess Charges
-billtoll,Subscriptions
-billgym,Product Sales
-gst,Insurance Premiums
-txninsurance,Senior Citizen Savings Schemes
-waterbill,Reimbursements
-paymenttoll,Consulting Fees
-billelectronics,Groceries
-education,Competition Prizes
-onlineflipkart,Electricity & Water
-onlineparking,Office Rent
-paymentmedical,Retainer Income
-schoolfees,Subscriptions
-txnmcdonalds,Dividend Income
-billmetro,Professional Development
-paymenttrain,Internet & Phone
-cardzomato,Shipping / Delivery Income
-cardwifi,Company Stock / ESOPs
-youtube,Reimbursements
-parking,Pilgrimage Travel
-paymentgym,Internet & Phone
-spotify,Employee Provident Fund
-billuber,Healthcare & Medical
-txnservicecharge,Estate Planning & Legal Fees
-flipkart,Purchases
-billgst,Pilgrimage Travel
-txnrecharge,Product Sales
-diesel,Co-working Space
-billinternet,Insurance Premiums
-txnservicecharge,Consulting Fees
-onlinetrain,Equipment Loans
-paymentbonus,Crop Sales
-pharmacy,Insurance Premiums
-onlinepharmacy,Vehicle Maintenance & Tolls
-onlinemaintenance,Royalties & Licensing
-txnzomato,Supplier Discounts
-txnvegetables,Company Stock / ESOPs
-collegefees,Rental Income
-paymentbonus,Professional Development
-billyoutube,Competition Prizes
-onlinerecharge,Office Rent
-cardburger,Digital Wallets
-onlinemcdonalds,Payment Gateway Fees
-paymentmobile,Seeds & Fertilizers
-txnmutualfund,Farm Machinery
-shopping,Subcontractor Payments
-mobile,Bank Charges & Fees
-paymentflipkart,Allowances / Pocket Money
-dominos,Allowances
-freelance,Allowances
-billmutualfund,Retirement Funds
-zomato,Professional Development
-onlineparking,Reimbursements
-billsalary,Loans Payable
-cardclothes,Reimbursements
-vegetables,Insurance Premiums
-onlinemobile,Agricultural Land
-txnbonus,Senior Insurance Premiums
-billgst,Senior Healthcare
-swiggy,Freight / Logistics
-paymentspotify,Clothing & Personal Care
-servicecharge,Shipping / Delivery Income
-charity,Livestock Feed & Veterinary Care
-onlinesalary,Bank Charges & Fees
-rent,Interest Income
-repair,Inventory / Stock
-schoolfees,Pilgrimage Travel
-tax,Competition Prizes
-cardmobile,Entertainment & Media
-txntoll,Healthcare & Medical
-billsubscription,Gifts & Donations
-billinvestment,Senior Healthcare
-swiggy,Gifts & Donations
-tax,Client Meetings & Travel
-paymentinsurance,Service Revenue
-gasbill,Purchases
-cardflipkart,Pilgrimage Travel
-groceries,Real Estate / Property
-paymentmedical,Freelance Project Income
-amazon,Tuition & Academic Fees
-carduber,Cash on Hand
-billeducation,Royalties & Licensing
-paymentinternet,Freelance Equipment
-txngst,Equipment Rental Income
-cardbonus,Trade Payables
-dominos,Equipment Rental Income
-billmutualfund,Agricultural Land
-tax,Supplier Discounts
-onlinefuel,Travel & Holidays
-billwifi,Rental Income
-onlinewifi,TDS Receivable
-cardelectronics,Cashbacks & Refunds
-repair,Dairy Income
-paymenteducation,Legal & Professional Services
-servicecharge,Dairy Income
-cardinsurance,Estate Planning & Legal Fees
-billmetro,Crop Loans
-txnhospital,Machinery Fuel & Maintenance
-onlineschoolfees,Software & Digital Tools
-onlinedonation,Learning & Professional Development
-onlinespotify,Harvested Inventory
-netflix,Scholarships & Grants
-subscription,Livestock
-cardhotel,Work Equipment & Home Office
-txnmutualfund,Insurance Premiums
-rent,Legal & Professional Services
-onlinesalary,Loans Payable
-consulting,Bonuses & Incentives
-onlineschoolfees,Livestock Feed & Veterinary Care
-cardschoolfees,Pension Income
-txnamazon,Livestock Feed & Veterinary Care
-onlinerent,Insurance Premiums
-maintenance,Learning & Professional Development
-billmaintenance,Project Revenue
-paymentmetro,Insurance Premiums
-charity,Bank Accounts
-donation,Vehicle Maintenance & Tolls
-cardfuel,Entertainment & Media
-billola,Inventory / Stock
-onlinegroceries,Clothing & Personal Care
-billinvestment,Subscriptions
-shopping,Shipping / Delivery Income
-cardtoll,Trade Receivables
-txnmobile,GST Input Credit
-onlinedominos,Real Estate / Property
-paymentmaintenance,Clothing & Personal Care
-paymentuber,Machinery Fuel & Maintenance
-cardbonus,Direct Labor
-donation,Insurance Premiums
-txnmobile,Equipment Rental Income
-cardhotel,Caregiver Services
-cardmetro,Equipment Loans
-cardmcdonalds,Dividend Income
-txnvegetables,Electricity & Water
-onlinewifi,Reimbursements
-onlinenetflix,GST Input Credit
-maintenance,Bank Accounts
-paymenthotel,Investments
-billrent,Harvested Inventory
-donation,Trade Payables
-onlinerent,Bank Charges & Fees
-paymentamazon,Platform Commission Income
-onlinetax,Caregiver Services
-petrol,Utility Bills Payable
-cardeducation,Exam & Application Fees
-pharmacy,Irrigation & Electricity
-cardfuel,Harvested Inventory
-onlineclothes,Project Revenue
-txndiesel,Learning & Professional Development
-onlinemobile,Learning & Professional Development
-billsubscription,Supplier Discounts
-cardeducation,Pilgrimage Travel
-billola,Dairy Income
-paymentclothes,Dividend Income
-cardola,Pension Income
-billservicecharge,TDS Receivable
-paymentmaintenance,Hostel & Mess Charges
-carddominos,Consulting Fees
-onlinemobile,Caregiver Services
-txninvestment,Internet & Phone
-txnmcdonalds,Software & Digital Tools
-onlinewifi,Public Transport / Cabs
-amazon,Service Revenue
-paymentzomato,Freelance Project Income
-schoolfees,Payment Gateway Fees
-billgroceries,Pension Income
-pizza,Co-working Space
-onlineshopping,Cash on Hand
-onlineyoutube,Gifts & Donations
-mcdonalds,Purchases
-onlinecharity,Exam & Application Fees
-consulting,Real Estate / Property
-schoolfees,Estate Planning & Legal Fees
-onlineservicecharge,Farm Machinery
-paymentparking,Electronics & Equipment
-cardzomato,Annuity Payouts
-billrecharge,Vehicle Maintenance & Tolls
-paymentsubscription,Accounts Receivable
-uber,Irrigation & Electricity
-paymentdiesel,Internship Stipend
-electronics,Utility Bills Payable
-paymentbonus,Pilgrimage Travel
-onlinezomato,Seeds & Fertilizers
-txninsurance,Machinery Fuel & Maintenance
-paymentconsulting,Retainer Income
-cardpetrol,Farm Labor
-txnhospital,Accounts Receivable
-txnfreelance,Agricultural Land
-billinsurance,Equipment Rental Income
-txnshopping,Dairy Income
-paymentwaterbill,Machinery Fuel & Maintenance
-shopping,Pension Income
-cardburger,Allowances / Pocket Money
-txnshopping,Reimbursements
-onlinerecharge,Fuel
-txngroceries,Crop Loans
-billeducation,GST Input Credit
-paymentnetflix,Purchases
-txnmcdonalds,Machinery Fuel & Maintenance
-billservicecharge,Annuities
-repair,Electronics & Equipment
-paymentmedical,Vehicle Maintenance & Tolls
-cardburger,Student Activities & Clubs
-onlineola,Caregiver Services
-onlineschoolfees,Clothing & Personal Care
-mobile,Professional Memberships
-billmutualfund,Direct Labor
-paymentschoolfees,Service Revenue
-txnburger,Gifts & Donations
-cardpharmacy,Platform Commission Income
-burger,Entertainment & Media
-dominos,Fuel
-txndominos,Service Revenue
-diesel,Restaurants & Food Delivery
-electricity,Trade Receivables
-onlinetrain,Freelance Project Income
-onlineschoolfees,Employee Provident Fund
-onlineinvestment,Entertainment & Media
-onlinedonation,GST Input Credit
-paymentwifi,TDS Receivable
-txnfreelance,Dividend Income
-mcdonalds,Equipment Rental Income
-paymentdonation,Loans Payable
-paymentrent,Subcontractor Payments
-cardconsulting,Professional Memberships
-billgasbill,Tuition & Academic Fees
-carddiesel,Public Transport / Cabs
-txnmutualfund,Electricity & Water
-groceries,Retainer Income
-billamazon,Exam & Application Fees
-onlinemutualfund,Annuity Payouts
-netflix,Crop Sales
-paymentmcdonalds,Business Loans
-txngasbill,Business Equipment
-onlinesubscription,Direct Labor
-collegefees,Crop Loans
-paymentrecharge,Annuity Payouts
-paymentburger,GST Input Credit
-onlineuber,Cashbacks & Refunds
-txnmutualfund,Direct Labor
-cardola,Professional Memberships
-txneducation,Tuition & Academic Fees
-diesel,Bank Accounts
-paymenteducation,Statutory Dues Payable
-tax,Retirement Funds
-paymentola,Freight / Logistics
-onlinerent,Crop Sales
-pharmacy,Accounts Receivable
-subscription,Business Equipment
-billinternet,Family Support
-txntoll,Business Travel
-uber,Cashbacks & Refunds
-billmetro,Retainer Income
-billpharmacy,TDS Receivable
-cardspotify,Bank Charges & Fees
-uber,Real Estate / Property
-billpizza,Insurance Premiums
-txnhospital,Estate Planning & Legal Fees
-billgasbill,Digital Wallets
-wifi,Cash on Hand
-billeducation,Annuity Payouts
-hotel,Pilgrimage Travel
-investment,Internship Stipend
-cardtax,Allowances / Pocket Money
-cardrepair,Books & Study Materials
-ola,Annuities
-txnpharmacy,Annuity Payouts
-billmaintenance,Platform Commission Income
-txnburger,Client Meetings & Travel
-onlinemcdonalds,Software & Digital Tools
-cardola,Marketing & Advertising
-fuel,Purchases
-billgym,Co-working Space
-billinternet,Entertainment & Media
-repair,Restaurants & Food Delivery
-vegetables,Insurance Premiums
-onlineinternet,Restaurants & Food Delivery
-billcharity,Family Support
-cardswiggy,Utility Bills Payable
-rent,Farm Machinery
-cardgym,Bank Accounts
-onlineola,Senior Healthcare
-paymentpharmacy,TDS Receivable
-onlineola,Salary
-txnbonus,Purchases
-cardelectricity,Fuel
-dominos,Rental Income
-onlineinvestment,Public Transport / Cabs
-mcdonalds,Bank Accounts
-txninsurance,Marketing & Advertising
-billinvestment,Subscriptions
-paymentinternet,Company Stock / ESOPs
-internet,Senior Citizen Savings Schemes
-diesel,Reimbursements
-txngst,Seeds & Fertilizers
-paymentfreelance,Farm Machinery
-txnzomato,Bonuses & Incentives
-billzomato,Work Equipment & Home Office
-paymentmedical,Investments
-waterbill,Retainer Income
-txnflipkart,Agricultural Land
-onlinefuel,Office Rent
-billbonus,Livestock Feed & Veterinary Care
-insurance,Professional Equipment
-paymentdiesel,Electricity & Water
-paymentspotify,Hostel & Mess Charges
-pharmacy,Business Loans
-txnpetrol,Harvested Inventory
-onlineflipkart,Client Meetings & Travel
-paymentinternet,Crop Sales
-txnmaintenance,Agricultural Land
-txninternet,Client Meetings & Travel
-paymentspotify,Family Support
-cardswiggy,Interest Income
-billinternet,Professional Memberships
-paymentgym,Livestock Feed & Veterinary Care
-onlinesalary,Agricultural Land
-paymentdonation,Bonuses & Incentives
-donation,Internet & Phone
-txninvestment,Business Loans
-clothes,Opening Balance Equity
-cardinvestment,Pension Income
-paymentflight,Professional Equipment
-txngym,Equipment Rental Income
-hotel,Inventory / Stock
-electronics,GST Input Credit
-wifi,Clothing & Personal Care
-onlineamazon,Healthcare & Medical
-billpetrol,Insurance Premiums
-paymentamazon,Loans Payable
-shopping,Trade Payables
-billinsurance,Senior Insurance Premiums
-txnzomato,Electronics & Equipment
-onlineschoolfees,Pension Income
-cardmcdonalds,Cashbacks & Refunds
-paymentpharmacy,Pilgrimage Travel
-cardmutualfund,Bonuses & Incentives
-tax,Legal & Professional Services
-donation,Dividend Income
-cardzomato,Travel & Holidays
-paymentbonus,Allowances / Pocket Money
-txnspotify,Legal & Professional Services
-freelance,Employee Salaries
-pizza,Internet & Phone
-txnelectricity,Hostel & Mess Charges
-txnrecharge,Rent / Housing Maintenance
-paymentsalary,Service Revenue
-cardclothes,Vehicle Maintenance & Tolls
-paymentmcdonalds,Clothing & Personal Care
-txngasbill,Payment Gateway Fees
-collegefees,Digital Wallets
-dominos,Livestock
-billcollegefees,Subscriptions
-txntax,Inventory / Stock
-swiggy,Credit Cards
-onlineshopping,Employee Salaries
-txnconsulting,Opening Balance Equity
-paymentmobile,Rent / Housing Maintenance
-paymentinternet,Pilgrimage Travel
-billmedical,Healthcare & Medical
-train,Retainer Income
-onlinepharmacy,Exam & Application Fees
-billmaintenance,Accounts Receivable
-electricity,Crop Loans
-onlinegasbill,Electricity & Water
-diesel,Crop Loans
-billgasbill,Opening Balance Equity
-txnrent,Accounts Receivable
-paymentrepair,Professional Equipment
-shopping,Salary
-billburger,Entertainment & Media
+ATM WITHDRAWAL,Cash and equivalents
+CASH WITHDRAWAL,Cash and equivalents
+ATM CASH,Cash and equivalents
+CASH DEPOSIT,Cash and equivalents
+ATM DEBIT,Cash and equivalents
+CASH AT HAND,Cash and equivalents
+CASH TRANSACTION,Cash and equivalents
+ATM@SBI,Cash and equivalents
+ATM@HDFC,Cash and equivalents
+ATM@ICICI,Cash and equivalents
+ATM@AXIS,Cash and equivalents
+ATM@KOTAK,Cash and equivalents
+CASH RECEIVED,Cash and equivalents
+CASH PAID,Cash and equivalents
+PETTY CASH,Cash and equivalents
+ATM USAGE,Cash and equivalents
+CASH BALANCE,Cash and equivalents
+COUNTER WITHDRAWAL,Cash and equivalents
+TELLER CASH,Cash and equivalents
+BRANCH CASH,Cash and equivalents
+CURRENCY WITHDRAWAL,Cash and equivalents
+CASH ADVANCE,Cash and equivalents
+SELF CHEQUE,Cash and equivalents
+CASH TRANSFER,Cash and equivalents
+ZOMATO,Food & Dining
+SWIGGY,Food & Dining
+MAGICPIN,Food & Dining
+EAZYDINER,Food & Dining
+DOMINOS,Food & Dining
+PIZZA HUT,Food & Dining
+MCDONALDS,Food & Dining
+KFC,Food & Dining
+SUBWAY INDIA,Food & Dining
+STARBUCKS,Food & Dining
+CAFE COFFEE DAY,Food & Dining
+CHAAYOS,Food & Dining
+BARBEQUE NATION,Food & Dining
+FOOD DELIVERY,Food & Dining
+RESTAURANT,Food & Dining
+DINING OUT,Food & Dining
+UPI/ZOMATO,Food & Dining
+UPI/SWIGGY,Food & Dining
+POS RESTAURANT,Food & Dining
+HOTEL DINING,Food & Dining
+MESS FEES,Food & Dining
+CANTEEN PAYMENT,Food & Dining
+EATCLUB,Food & Dining
+BOX8,Food & Dining
+FRESHMENU,Food & Dining
+QUICK BITE,Food & Dining
+FAST FOOD,Food & Dining
+FOOD ORDER,Food & Dining
+OLA,Travel & Transport
+UBER,Travel & Transport
+RAPIDO,Travel & Transport
+MERU CABS,Travel & Transport
+IRCTC,Travel & Transport
+METRO CARD,Travel & Transport
+BUS TICKET,Travel & Transport
+AUTO FARE,Travel & Transport
+INDIGO,Travel & Transport
+AIR INDIA,Travel & Transport
+SPICEJET,Travel & Transport
+VISTARA,Travel & Transport
+AKASA AIR,Travel & Transport
+MAKEMYTRIP,Travel & Transport
+GOIBIBO,Travel & Transport
+REDBUS,Travel & Transport
+FASTAG,Travel & Transport
+TOLL PAYMENT,Travel & Transport
+PETROL PUMP,Travel & Transport
+HPCL,Travel & Transport
+BPCL,Travel & Transport
+INDIAN OIL,Travel & Transport
+UPI/OLA,Travel & Transport
+UPI/UBER,Travel & Transport
+UPI/RAPIDO,Travel & Transport
+CAB BOOKING,Travel & Transport
+FUEL STATION,Travel & Transport
+ABHIBUS,Travel & Transport
+OLA ELECTRIC,Travel & Transport
+YULU RIDE,Travel & Transport
+PARKING CHARGES,Travel & Transport
+TRAIN TICKET,Travel & Transport
+RENT PAYMENT,Housing & Rent
+HOUSE RENT,Housing & Rent
+MONTHLY RENT,Housing & Rent
+IMPS RENT,Housing & Rent
+NEFT RENT,Housing & Rent
+UPI RENT,Housing & Rent
+RENT TRANSFER,Housing & Rent
+RENT@UPI,Housing & Rent
+SOCIETY MAINTENANCE,Housing & Rent
+MAINTENANCE CHARGES,Housing & Rent
+SECURITY DEPOSIT,Housing & Rent
+ADVANCE RENT,Housing & Rent
+LANDLORD PAYMENT,Housing & Rent
+FLAT RENT,Housing & Rent
+PG RENT,Housing & Rent
+NOBROKER,Housing & Rent
+MAGICBRICKS,Housing & Rent
+HOUSING.COM,Housing & Rent
+OWNER TRANSFER,Housing & Rent
+PROPERTY RENT,Housing & Rent
+ACCOMMODATION RENT,Housing & Rent
+HOME RENT,Housing & Rent
+RENTAL PAYMENT,Housing & Rent
+HOUSING RENT NEFT,Housing & Rent
+IMPS HOUSE RENT,Housing & Rent
+ELECTRICITY BILL,Utilities
+BESCOM,Utilities
+MSEDCL,Utilities
+TATA POWER,Utilities
+WATER BILL,Utilities
+MOBILE RECHARGE,Utilities
+JIO RECHARGE,Utilities
+AIRTEL RECHARGE,Utilities
+VODAFONE VI,Utilities
+BSNL RECHARGE,Utilities
+TATA SKY,Utilities
+DISH TV,Utilities
+DTH RECHARGE,Utilities
+BROADBAND BILL,Utilities
+INTERNET BILL,Utilities
+JIO FIBER,Utilities
+AIRTEL FIBER,Utilities
+GAS BILL,Utilities
+MAHANAGAR GAS,Utilities
+IGL PAYMENT,Utilities
+BBPS ELECTRICITY,Utilities
+BBPS WATER,Utilities
+TNEB BILL,Utilities
+CESC BILL,Utilities
+PREPAID METER,Utilities
+UTILITY PAYMENT,Utilities
+PHONE BILL,Utilities
+CABLE TV,Utilities
+NYKAA,Personal Care
+MYNTRA,Personal Care
+PURPLLE,Personal Care
+MAMAEARTH,Personal Care
+SALON PAYMENT,Personal Care
+HAIRCUT,Personal Care
+SPA PAYMENT,Personal Care
+BEAUTY PARLOUR,Personal Care
+FOREST ESSENTIALS,Personal Care
+HEALTH AND GLOW,Personal Care
+LAKMÉ,Personal Care
+HIMALAYA,Personal Care
+GROOMING,Personal Care
+BODYCARE,Personal Care
+SKINCARE PURCHASE,Personal Care
+LENSKART,Personal Care
+CULT FIT,Personal Care
+GYM FEES,Personal Care
+FITNESS MEMBERSHIP,Personal Care
+HEALTHIFY ME,Personal Care
+WAXING SALON,Personal Care
+BEAUTY SALON,Personal Care
+PERSONAL HYGIENE,Personal Care
+PEDICURE SALON,Personal Care
+UPI/NYKAA,Personal Care
+UPI/MYNTRA,Personal Care
+COSMETICS PURCHASE,Personal Care
+WELLNESS CENTRE,Personal Care
+SALARY CREDIT,Base Salary
+MONTHLY SALARY,Base Salary
+NEFT SALARY,Base Salary
+SALARY TRANSFER,Base Salary
+PAYROLL CREDIT,Base Salary
+EMPLOYER CREDIT,Base Salary
+WAGE CREDIT,Base Salary
+SALARY DISBURSEMENT,Base Salary
+IMPS SALARY,Base Salary
+HR PAYROLL,Base Salary
+DIRECT DEPOSIT,Base Salary
+SALARY INWARD,Base Salary
+CTC CREDIT,Base Salary
+MONTHLY WAGES,Base Salary
+BASIC SALARY,Base Salary
+SALARY@NEFT,Base Salary
+COMPANY SALARY,Base Salary
+EMPLOYER TRANSFER,Base Salary
+STAFF SALARY,Base Salary
+PAY CREDIT,Base Salary
+NACH SALARY,Base Salary
+ECS SALARY,Base Salary
+SALARY FROM EMPLOYER,Base Salary
+TAKE HOME PAY,Base Salary
+BONUS CREDIT,Bonus & Incentives
+PERFORMANCE BONUS,Bonus & Incentives
+INCENTIVE CREDIT,Bonus & Incentives
+ANNUAL BONUS,Bonus & Incentives
+DIWALI BONUS,Bonus & Incentives
+FESTIVAL BONUS,Bonus & Incentives
+VARIABLE PAY,Bonus & Incentives
+QUARTERLY BONUS,Bonus & Incentives
+EX-GRATIA,Bonus & Incentives
+JOINING BONUS,Bonus & Incentives
+SIGN ON BONUS,Bonus & Incentives
+SALES INCENTIVE,Bonus & Incentives
+TARGET BONUS,Bonus & Incentives
+APPRAISAL BONUS,Bonus & Incentives
+RETENTION BONUS,Bonus & Incentives
+SPOT BONUS,Bonus & Incentives
+HALF YEARLY BONUS,Bonus & Incentives
+YEAR END BONUS,Bonus & Incentives
+NEFT BONUS,Bonus & Incentives
+PLI BONUS,Bonus & Incentives
+OVERTIME CREDIT,Overtime Pay
+OT PAYMENT,Overtime Pay
+EXTRA HOURS PAY,Overtime Pay
+OVERTIME WAGE,Overtime Pay
+OT ALLOWANCE,Overtime Pay
+SHIFT ALLOWANCE,Overtime Pay
+WEEKEND OVERTIME,Overtime Pay
+HOLIDAY PAY,Overtime Pay
+NEFT OT CREDIT,Overtime Pay
+OVERTIME TRANSFER,Overtime Pay
+EXTRA SHIFT PAY,Overtime Pay
+OT CREDIT,Overtime Pay
+EXTENDED HOURS PAY,Overtime Pay
+OT SALARY,Overtime Pay
+ADDITIONAL HOURS,Overtime Pay
+OVERTIME NEFT,Overtime Pay
+OVERTIME IMPS,Overtime Pay
+SHIFT OVERTIME,Overtime Pay
+SPECIAL DUTY PAY,Overtime Pay
+NIGHTSHIFT PAY,Overtime Pay
+TDS DEDUCTION,Income Tax (TDS)
+INCOME TAX DEBIT,Income Tax (TDS)
+TDS PAYMENT,Income Tax (TDS)
+ADVANCE TAX,Income Tax (TDS)
+INCOME TAX CHALLAN,Income Tax (TDS)
+TAX PAYMENT,Income Tax (TDS)
+NSDL TAX,Income Tax (TDS)
+OLTAS PAYMENT,Income Tax (TDS)
+SELF ASSESSMENT TAX,Income Tax (TDS)
+INCOME TAX DEPT,Income Tax (TDS)
+CHALLAN 280,Income Tax (TDS)
+TDS ON SALARY,Income Tax (TDS)
+DIRECT TAX PAYMENT,Income Tax (TDS)
+ITNS 280,Income Tax (TDS)
+IT PAYMENT,Income Tax (TDS)
+INCOME TAX REFUND,Income Tax (TDS)
+TDS CHALLAN,Income Tax (TDS)
+TAX DEDUCTED SOURCE,Income Tax (TDS)
+INCOME TAX ONLINE,Income Tax (TDS)
+ADVANCE INCOME TAX,Income Tax (TDS)
+IT ADVANCE TAX,Income Tax (TDS)
+TDS DEDUCTED,Income Tax (TDS)
+I-T DEPT PAYMENT,Income Tax (TDS)
+INCOME TAX PAID,Income Tax (TDS)
+PROFESSIONAL TAX,Professional Tax
+PT DEDUCTION,Professional Tax
+PTAX DEDUCTION,Professional Tax
+PT PAYMENT,Professional Tax
+STATE TAX DEBIT,Professional Tax
+PROF TAX,Professional Tax
+KARNATAKA PT,Professional Tax
+MAHARASHTRA PT,Professional Tax
+EMPLOYMENT TAX,Professional Tax
+PT CHALLAN,Professional Tax
+PROFESSION TAX,Professional Tax
+PTAX CHALLAN,Professional Tax
+PT DEDUCTED,Professional Tax
+PROFESSIONAL TAX NEFT,Professional Tax
+GOVT PT PAYMENT,Professional Tax
+PTAX STATE,Professional Tax
+PT STATE GOVT,Professional Tax
+STATE PROFESSIONAL TAX,Professional Tax
+MUNICIPAL PROF TAX,Professional Tax
+PT ONLINE,Professional Tax
+EPF DEDUCTION,Employee Provident Fund (EPF)
+PF CONTRIBUTION,Employee Provident Fund (EPF)
+EPFO CREDIT,Employee Provident Fund (EPF)
+PF TRANSFER,Employee Provident Fund (EPF)
+PROVIDENT FUND,Employee Provident Fund (EPF)
+EPF PAYMENT,Employee Provident Fund (EPF)
+EMPLOYEES PF,Employee Provident Fund (EPF)
+UAN TRANSFER,Employee Provident Fund (EPF)
+EPFO PAYMENT,Employee Provident Fund (EPF)
+PF WITHDRAWAL,Employee Provident Fund (EPF)
+EPF WITHDRAWAL,Employee Provident Fund (EPF)
+EPFO SETTLEMENT,Employee Provident Fund (EPF)
+PF SETTLEMENT,Employee Provident Fund (EPF)
+EPF FINAL SETTLEMENT,Employee Provident Fund (EPF)
+EPFO NEFT,Employee Provident Fund (EPF)
+UAN CREDIT,Employee Provident Fund (EPF)
+NACH PF DEDUCTION,Employee Provident Fund (EPF)
+ECS PF,Employee Provident Fund (EPF)
+EPF ADVANCE,Employee Provident Fund (EPF)
+EPFO CLAIM,Employee Provident Fund (EPF)
+PF BALANCE CREDIT,Employee Provident Fund (EPF)
+EPF CORPUS,Employee Provident Fund (EPF)
+EMPLOYEES PROVIDENT FUND,Employee Provident Fund (EPF)
+PF MONTHLY,Employee Provident Fund (EPF)
+VPF CONTRIBUTION,Voluntary Provident Fund (VPF)
+VOLUNTARY PF,Voluntary Provident Fund (VPF)
+VPF DEDUCTION,Voluntary Provident Fund (VPF)
+EXTRA PF,Voluntary Provident Fund (VPF)
+VPF TRANSFER,Voluntary Provident Fund (VPF)
+VOLUNTARY PROVIDENT,Voluntary Provident Fund (VPF)
+VPF MONTHLY,Voluntary Provident Fund (VPF)
+ADDED PF,Voluntary Provident Fund (VPF)
+ADDITIONAL PF,Voluntary Provident Fund (VPF)
+VPF CREDIT,Voluntary Provident Fund (VPF)
+VPF DEBIT,Voluntary Provident Fund (VPF)
+TOPUP PF,Voluntary Provident Fund (VPF)
+VOLUNTARY EPF,Voluntary Provident Fund (VPF)
+VPF EPFO,Voluntary Provident Fund (VPF)
+VOLUNTARY FUND,Voluntary Provident Fund (VPF)
+ENHANCED PF,Voluntary Provident Fund (VPF)
+VPF EMPLOYEE,Voluntary Provident Fund (VPF)
+VPF CORPUS,Voluntary Provident Fund (VPF)
+VPF NEFT,Voluntary Provident Fund (VPF)
+PF VOLUNTARY,Voluntary Provident Fund (VPF)
+LINKEDIN PREMIUM,Work-related Subscriptions
+ZOOM PRO,Work-related Subscriptions
+MICROSOFT 365,Work-related Subscriptions
+SLACK PREMIUM,Work-related Subscriptions
+GITHUB PRO,Work-related Subscriptions
+JETBRAINS,Work-related Subscriptions
+FIGMA SUBSCRIPTION,Work-related Subscriptions
+NOTION PREMIUM,Work-related Subscriptions
+ATLASSIAN JIRA,Work-related Subscriptions
+PROFESSIONAL SUBSCRIPTION,Work-related Subscriptions
+WORK TOOLS,Work-related Subscriptions
+GOOGLE WORKSPACE,Work-related Subscriptions
+OFFICE 365,Work-related Subscriptions
+ADOBE ACROBAT,Work-related Subscriptions
+DROPBOX WORK,Work-related Subscriptions
+MIRO SUBSCRIPTION,Work-related Subscriptions
+TRELLO PREMIUM,Work-related Subscriptions
+ASANA WORK,Work-related Subscriptions
+WORK SAAS,Work-related Subscriptions
+MONDAY.COM WORK,Work-related Subscriptions
+CONFLUENCE SUB,Work-related Subscriptions
+PROFESSIONAL TOOL SUB,Work-related Subscriptions
+WORK PLATFORM FEE,Work-related Subscriptions
+WEBEX PLAN,Work-related Subscriptions
+CONSULTING RECEIPT,Service Income
+CLIENT PAYMENT NEFT,Service Income
+SERVICE CHARGE CREDIT,Service Income
+PROJECT PAYMENT,Service Income
+INVOICE RECEIPT,Service Income
+PROFESSIONAL SERVICES CREDIT,Service Income
+NEFT FROM CLIENT,Service Income
+IMPS CLIENT PAYMENT,Service Income
+SERVICE FEE CREDIT,Service Income
+ADVISORY RECEIPT,Service Income
+CLIENT CREDIT,Service Income
+SERVICE REVENUE NEFT,Service Income
+PAYMENT FOR SERVICES,Service Income
+CONSULTING INCOME,Service Income
+BILLABLE SERVICES,Service Income
+CLIENT TRANSFER,Service Income
+SERVICE INVOICE PAID,Service Income
+PROFESSIONAL RECEIPT,Service Income
+CONSULTING FEE INWARD,Service Income
+B2B SERVICE PAYMENT,Service Income
+SERVICE DELIVERY PAYMENT,Service Income
+MANAGED SERVICES INCOME,Service Income
+IT SERVICES PAYMENT,Service Income
+SERVICE CONTRACT RECEIPT,Service Income
+SALES RECEIPT,Product Sales
+PRODUCT PAYMENT,Product Sales
+CUSTOMER PAYMENT,Product Sales
+SALE PROCEEDS,Product Sales
+SHOPIFY PAYOUT,Product Sales
+AMAZON SELLER CREDIT,Product Sales
+FLIPKART SELLER,Product Sales
+MEESHO PAYOUT,Product Sales
+E-COMMERCE RECEIPT,Product Sales
+ONLINE SALES,Product Sales
+INDIAMART ORDER,Product Sales
+RETAIL SALE,Product Sales
+GOODS SOLD,Product Sales
+PRODUCT INVOICE PAID,Product Sales
+SALES INCOME,Product Sales
+ITEM SOLD,Product Sales
+CASH SALE,Product Sales
+POS SALE,Product Sales
+STORE SALE,Product Sales
+PRODUCT DISPATCH PAYMENT,Product Sales
+TRADE SALE,Product Sales
+DISTRIBUTOR PAYMENT,Product Sales
+WHOLESALE INCOME,Product Sales
+MARKET SALE,Product Sales
+COGS PAYMENT,Cost of Goods Sold (COGS)
+GOODS COST,Cost of Goods Sold (COGS)
+MANUFACTURING COST,Cost of Goods Sold (COGS)
+PRODUCTION COST,Cost of Goods Sold (COGS)
+COST OF GOODS,Cost of Goods Sold (COGS)
+DIRECT COST,Cost of Goods Sold (COGS)
+FACTORY COST,Cost of Goods Sold (COGS)
+MATERIAL COGS,Cost of Goods Sold (COGS)
+COST OF SALE,Cost of Goods Sold (COGS)
+PURCHASE COST,Cost of Goods Sold (COGS)
+GOODS PURCHASED,Cost of Goods Sold (COGS)
+RAW MATERIAL COGS,Cost of Goods Sold (COGS)
+PRODUCTION MATERIAL,Cost of Goods Sold (COGS)
+GOODS COST DEBIT,Cost of Goods Sold (COGS)
+UNIT COST,Cost of Goods Sold (COGS)
+PRODUCT COST,Cost of Goods Sold (COGS)
+FINISHED GOODS COST,Cost of Goods Sold (COGS)
+BILL OF MATERIALS,Cost of Goods Sold (COGS)
+DIRECT PRODUCTION COST,Cost of Goods Sold (COGS)
+COGS DEBIT,Cost of Goods Sold (COGS)
+RAW MATERIAL PURCHASE,Direct Material Costs
+MATERIAL COST,Direct Material Costs
+SUPPLIER PAYMENT,Direct Material Costs
+VENDOR PAYMENT,Direct Material Costs
+PURCHASE OF GOODS,Direct Material Costs
+STOCK PURCHASE,Direct Material Costs
+MATERIAL PROCUREMENT,Direct Material Costs
+FACTORY SUPPLIES,Direct Material Costs
+INDIAMART PURCHASE,Direct Material Costs
+TRADEINDIA PURCHASE,Direct Material Costs
+RAW STOCK BUY,Direct Material Costs
+DIRECT MATERIAL,Direct Material Costs
+COMPONENT PURCHASE,Direct Material Costs
+SPARE PARTS BUY,Direct Material Costs
+PRODUCTION INPUT,Direct Material Costs
+MATERIAL VENDOR,Direct Material Costs
+STEEL PURCHASE,Direct Material Costs
+FABRIC PURCHASE,Direct Material Costs
+CHEMICAL PURCHASE,Direct Material Costs
+PARTS PROCUREMENT,Direct Material Costs
+INPUT MATERIAL,Direct Material Costs
+SUBASSEMBLY PURCHASE,Direct Material Costs
+MANUFACTURING INPUT,Direct Material Costs
+PRODUCTION VENDOR,Direct Material Costs
+SHIPROCKET,Shipping & Freight
+DELHIVERY,Shipping & Freight
+BLUEDART,Shipping & Freight
+DTDC COURIER,Shipping & Freight
+ECOM EXPRESS,Shipping & Freight
+FREIGHT CHARGES,Shipping & Freight
+COURIER CHARGES,Shipping & Freight
+LOGISTICS PAYMENT,Shipping & Freight
+SHIPPING COST,Shipping & Freight
+FEDEX INDIA,Shipping & Freight
+DHL INDIA,Shipping & Freight
+XPRESSBEES,Shipping & Freight
+AMAZON LOGISTICS,Shipping & Freight
+LAST MILE DELIVERY,Shipping & Freight
+DISPATCH CHARGES,Shipping & Freight
+TRANSPORT VENDOR,Shipping & Freight
+CARGO CHARGES,Shipping & Freight
+COURIER PARTNER,Shipping & Freight
+DELIVERY CHARGES,Shipping & Freight
+EKART LOGISTICS,Shipping & Freight
+SHADOWFAX,Shipping & Freight
+SMARTSHIP,Shipping & Freight
+PACKING FREIGHT,Shipping & Freight
+OUTWARD FREIGHT,Shipping & Freight
+GOOGLE ADS,Marketing & Advertising
+META ADS,Marketing & Advertising
+FACEBOOK ADS,Marketing & Advertising
+INSTAGRAM ADS,Marketing & Advertising
+YOUTUBE ADS,Marketing & Advertising
+DIGITAL MARKETING,Marketing & Advertising
+GOOGLE ADWORDS,Marketing & Advertising
+INFLUENCER PAYMENT,Marketing & Advertising
+PR AGENCY,Marketing & Advertising
+PRINT ADVERTISING,Marketing & Advertising
+JUSTDIAL ADS,Marketing & Advertising
+INDIAMART SUBSCRIPTION,Marketing & Advertising
+ADVERTISING SPEND,Marketing & Advertising
+MARKETING AGENCY,Marketing & Advertising
+SEO SERVICES,Marketing & Advertising
+CONTENT MARKETING,Marketing & Advertising
+BRAND PROMOTION,Marketing & Advertising
+AD CAMPAIGN,Marketing & Advertising
+HOARDING CHARGES,Marketing & Advertising
+RADIO ADS,Marketing & Advertising
+SMS MARKETING,Marketing & Advertising
+EMAIL MARKETING,Marketing & Advertising
+PROMOTIONAL SPEND,Marketing & Advertising
+MEDIA BUYING,Marketing & Advertising
+ZOHO SUBSCRIPTION,Software & SaaS Subscriptions
+FRESHWORKS,Software & SaaS Subscriptions
+TALLY SUBSCRIPTION,Software & SaaS Subscriptions
+QUICKBOOKS,Software & SaaS Subscriptions
+AWS SUBSCRIPTION,Software & SaaS Subscriptions
+AZURE CLOUD,Software & SaaS Subscriptions
+SALESFORCE,Software & SaaS Subscriptions
+HUBSPOT,Software & SaaS Subscriptions
+ZENDESK SUBSCRIPTION,Software & SaaS Subscriptions
+SAAS PAYMENT,Software & SaaS Subscriptions
+CLOUD SUBSCRIPTION,Software & SaaS Subscriptions
+SOFTWARE LICENSE,Software & SaaS Subscriptions
+ERP SUBSCRIPTION,Software & SaaS Subscriptions
+CRM SUBSCRIPTION,Software & SaaS Subscriptions
+ACCOUNTING SOFTWARE,Software & SaaS Subscriptions
+BILLING SOFTWARE,Software & SaaS Subscriptions
+SAP SUBSCRIPTION,Software & SaaS Subscriptions
+ORACLE CLOUD,Software & SaaS Subscriptions
+FRESHDESK,Software & SaaS Subscriptions
+RAZORPAY DASHBOARD,Software & SaaS Subscriptions
+MIXPANEL,Software & SaaS Subscriptions
+SEGMENT SUB,Software & SaaS Subscriptions
+INTERCOM FEES,Software & SaaS Subscriptions
+CHARGEBEE FEES,Software & SaaS Subscriptions
+BUSINESS TRIP,Business Travel & Meals
+CORPORATE TRAVEL,Business Travel & Meals
+CLIENT DINNER,Business Travel & Meals
+BUSINESS MEAL,Business Travel & Meals
+CONFERENCE TRAVEL,Business Travel & Meals
+HOTEL STAY BUSINESS,Business Travel & Meals
+FLIGHT BUSINESS,Business Travel & Meals
+CLIENT ENTERTAINMENT,Business Travel & Meals
+BUSINESS LUNCH,Business Travel & Meals
+IRCTC BUSINESS,Business Travel & Meals
+CORPORATE FLIGHT,Business Travel & Meals
+BUSINESS HOTEL,Business Travel & Meals
+TEAM DINNER,Business Travel & Meals
+BUSINESS CLASS TICKET,Business Travel & Meals
+CORPORATE HOTEL,Business Travel & Meals
+CLIENT MEETING MEAL,Business Travel & Meals
+CONFERENCE STAY,Business Travel & Meals
+BOARDROOM LUNCH,Business Travel & Meals
+SALES TRIP,Business Travel & Meals
+TRADE SHOW TRAVEL,Business Travel & Meals
+TEAM OFFSITE,Business Travel & Meals
+OFFSITE TRAVEL,Business Travel & Meals
+CLIENT VISIT TRAVEL,Business Travel & Meals
+CORP FLIGHT BOOKING,Business Travel & Meals
+OFFICE RENT,Office Rent & Utilities
+COMMERCIAL RENT,Office Rent & Utilities
+COWORKING SPACE,Office Rent & Utilities
+WEWORK PAYMENT,Office Rent & Utilities
+OFFICE ELECTRICITY,Office Rent & Utilities
+BUSINESS UTILITIES,Office Rent & Utilities
+COWRKS,Office Rent & Utilities
+AWFIS PAYMENT,Office Rent & Utilities
+91SPRINGBOARD,Office Rent & Utilities
+OFFICE MAINTENANCE,Office Rent & Utilities
+COMMERCIAL LEASE,Office Rent & Utilities
+OFFICE POWER BILL,Office Rent & Utilities
+BUSINESS INTERNET,Office Rent & Utilities
+OFFICE BROADBAND,Office Rent & Utilities
+COMMERCIAL WATER,Office Rent & Utilities
+SHOP RENT,Office Rent & Utilities
+GOOFFICE,Office Rent & Utilities
+INNOV8 COWORK,Office Rent & Utilities
+SMARTWORKS,Office Rent & Utilities
+TRADE OFFICE RENT,Office Rent & Utilities
+COMMERCIAL PREMISES,Office Rent & Utilities
+FACTORY RENT,Office Rent & Utilities
+WAREHOUSE RENT,Office Rent & Utilities
+BUSINESS PREMISE,Office Rent & Utilities
+GST PAYMENT,GST/VAT Payable
+GST CHALLAN,GST/VAT Payable
+GSTN PAYMENT,GST/VAT Payable
+IGST PAYMENT,GST/VAT Payable
+CGST SGST PAYMENT,GST/VAT Payable
+GST RETURN PAYMENT,GST/VAT Payable
+PMT-06,GST/VAT Payable
+GST PORTAL,GST/VAT Payable
+COMMERCIAL TAX,GST/VAT Payable
+GST NEFT,GST/VAT Payable
+GSTIN PAYMENT,GST/VAT Payable
+VAT PAYMENT,GST/VAT Payable
+GST OUTWARD,GST/VAT Payable
+GST DEBIT,GST/VAT Payable
+INDIRECT TAX PAYMENT,GST/VAT Payable
+GSTN PORTAL,GST/VAT Payable
+INTEGRATED GST,GST/VAT Payable
+STATE GST,GST/VAT Payable
+CENTRAL GST,GST/VAT Payable
+GST QUARTERLY,GST/VAT Payable
+GST MONTHLY,GST/VAT Payable
+GST ANNUAL,GST/VAT Payable
+GST COMPLIANCE,GST/VAT Payable
+GST REMITTANCE,GST/VAT Payable
+BUSINESS LOAN EMI,Business Loan/Credit Line
+LOAN EMI,Business Loan/Credit Line
+CC LIMIT USAGE,Business Loan/Credit Line
+OVERDRAFT USAGE,Business Loan/Credit Line
+WORKING CAPITAL LOAN,Business Loan/Credit Line
+OD ACCOUNT,Business Loan/Credit Line
+BUSINESS CREDIT,Business Loan/Credit Line
+LOAN REPAYMENT,Business Loan/Credit Line
+NACH LOAN EMI,Business Loan/Credit Line
+CREDIT LINE DEBIT,Business Loan/Credit Line
+WC LOAN EMI,Business Loan/Credit Line
+OD INTEREST,Business Loan/Credit Line
+CC REPAYMENT,Business Loan/Credit Line
+CASH CREDIT,Business Loan/Credit Line
+WORKING CAPITAL DEBIT,Business Loan/Credit Line
+BUSINESS OD,Business Loan/Credit Line
+MSME LOAN EMI,Business Loan/Credit Line
+MUDRA LOAN EMI,Business Loan/Credit Line
+CURRENT OD,Business Loan/Credit Line
+TRADE CREDIT,Business Loan/Credit Line
+INVOICE FINANCING,Business Loan/Credit Line
+FACTORING DEBIT,Business Loan/Credit Line
+TERM LOAN REPAY,Business Loan/Credit Line
+BUSINESS EMI,Business Loan/Credit Line
+INVENTORY PURCHASE,Inventory
+WAREHOUSE PURCHASE,Inventory
+GOODS IN STOCK,Inventory
+MERCHANDISE PURCHASE,Inventory
+STOCK RECEIPT,Inventory
+INVENTORY PAYMENT,Inventory
+STOCK REPLENISHMENT,Inventory
+TRADING GOODS,Inventory
+INVENTORY CREDIT,Inventory
+FINISHED GOODS,Inventory
+WIP INVENTORY,Inventory
+SEMI FINISHED STOCK,Inventory
+GOODS FOR RESALE,Inventory
+RETAIL STOCK,Inventory
+BULK PURCHASE,Inventory
+STOCK PROCUREMENT,Inventory
+INVENTORY BUILD,Inventory
+RAW STOCK,Inventory
+BUFFER STOCK,Inventory
+SAFETY STOCK PURCHASE,Inventory
+SEASONAL STOCK,Inventory
+CONSIGNMENT GOODS,Inventory
+ADVISORY FEES CREDIT,Consultation Fees
+CONSULTATION CREDIT,Consultation Fees
+ADVISORY INCOME,Consultation Fees
+CLIENT CONSULTING,Consultation Fees
+STRATEGY CONSULTING,Consultation Fees
+MGMT CONSULTING,Consultation Fees
+EXPERT FEES CREDIT,Consultation Fees
+ADVISORY PAYMENT INWARD,Consultation Fees
+CONSULT RECEIPT,Consultation Fees
+PROFESSIONAL ADVICE INCOME,Consultation Fees
+EXPERT CONSULTATION,Consultation Fees
+CONSULTING INCOME NEFT,Consultation Fees
+ADVISORY CREDIT,Consultation Fees
+EXPERT ADVISORY,Consultation Fees
+DOCTOR FEE INCOME,Consultation Fees
+MEDICAL CONSULTATION INCOME,Consultation Fees
+LEGAL ADVICE INCOME,Consultation Fees
+CA CONSULTING INCOME,Consultation Fees
+ARCHITECT CONSULT,Consultation Fees
+VALUER FEES INCOME,Consultation Fees
+CONSULT NEFT,Consultation Fees
+TEACHING FEE,Teaching & Speaking Fees
+LECTURE FEES,Teaching & Speaking Fees
+SPEAKING FEE,Teaching & Speaking Fees
+SEMINAR INCOME,Teaching & Speaking Fees
+TUITION INCOME,Teaching & Speaking Fees
+COACHING INCOME,Teaching & Speaking Fees
+CLASS INCOME,Teaching & Speaking Fees
+TRAINER FEES,Teaching & Speaking Fees
+WORKSHOP FEES INCOME,Teaching & Speaking Fees
+KEYNOTE FEES,Teaching & Speaking Fees
+TUTORING INCOME,Teaching & Speaking Fees
+FACULTY INCOME,Teaching & Speaking Fees
+GUEST LECTURE FEES,Teaching & Speaking Fees
+VISITING FACULTY,Teaching & Speaking Fees
+ACADEMIC INCOME,Teaching & Speaking Fees
+COACHING CLASS,Teaching & Speaking Fees
+ONLINE COACHING,Teaching & Speaking Fees
+TEACHING CREDIT,Teaching & Speaking Fees
+MENTORING FEES,Teaching & Speaking Fees
+EDUCATION INCOME,Teaching & Speaking Fees
+CORPORATE TRAINING,Teaching & Speaking Fees
+SPEAKER HONORARIUM,Teaching & Speaking Fees
+WEBINAR INCOME,Teaching & Speaking Fees
+TRAINING RECEIPT,Teaching & Speaking Fees
+RETAINER PAYMENT,Retainers/Project Income
+PROJECT FEES,Retainers/Project Income
+MONTHLY RETAINER,Retainers/Project Income
+CLIENT RETAINER,Retainers/Project Income
+FIXED FEE PROJECT,Retainers/Project Income
+RETAINER CREDIT,Retainers/Project Income
+ANNUAL RETAINER,Retainers/Project Income
+QUARTERLY RETAINER,Retainers/Project Income
+PROJECT MILESTONE,Retainers/Project Income
+DELIVERABLE PAYMENT,Retainers/Project Income
+RETAINER INWARD,Retainers/Project Income
+ONGOING FEES,Retainers/Project Income
+RETAINER NEFT,Retainers/Project Income
+PROJECT CREDIT,Retainers/Project Income
+MILESTONE CREDIT,Retainers/Project Income
+PHASE PAYMENT,Retainers/Project Income
+PROJECT INVOICE PAID,Retainers/Project Income
+LUMP SUM FEES,Retainers/Project Income
+CONTRACT FEES,Retainers/Project Income
+RETAINER MONTHLY,Retainers/Project Income
+LEGAL RETAINER,Retainers/Project Income
+CA RETAINER,Retainers/Project Income
+PROJECT INCOME,Retainers/Project Income
+CONSULTANT RETAINER,Retainers/Project Income
+LICENSE RENEWAL,Licensing & Certifications
+CERTIFICATION FEES,Licensing & Certifications
+ICAI FEES,Licensing & Certifications
+ICSI FEES,Licensing & Certifications
+BAR COUNCIL FEES,Licensing & Certifications
+CA MEMBERSHIP,Licensing & Certifications
+PROFESSIONAL LICENSE,Licensing & Certifications
+TRADE LICENSE,Licensing & Certifications
+SHOP LICENSE,Licensing & Certifications
+FSSAI LICENSE,Licensing & Certifications
+BUSINESS REGISTRATION FEES,Licensing & Certifications
+DRUG LICENSE,Licensing & Certifications
+CPA LICENSE,Licensing & Certifications
+MEDICAL COUNCIL,Licensing & Certifications
+BCI FEES,Licensing & Certifications
+RENEWAL LICENSE,Licensing & Certifications
+GOVT CERTIFICATION,Licensing & Certifications
+ISO CERTIFICATION,Licensing & Certifications
+BUREAU FEES,Licensing & Certifications
+STATUTORY LICENSE,Licensing & Certifications
+PRACTITIONER LICENSE,Licensing & Certifications
+LICENSE FEE DEBIT,Licensing & Certifications
+CERT RENEWAL,Licensing & Certifications
+ANNUAL LICENSE,Licensing & Certifications
+PI INSURANCE,Professional Indemnity Insurance
+INDEMNITY INSURANCE,Professional Indemnity Insurance
+PROFESSIONAL INSURANCE,Professional Indemnity Insurance
+ERROR INSURANCE,Professional Indemnity Insurance
+LIABILITY INSURANCE,Professional Indemnity Insurance
+MALPRACTICE INSURANCE,Professional Indemnity Insurance
+PI POLICY,Professional Indemnity Insurance
+PROFESSIONAL LIABILITY,Professional Indemnity Insurance
+BAJAJ ALLIANZ PI,Professional Indemnity Insurance
+ICICI PI INSURANCE,Professional Indemnity Insurance
+INDEMNITY POLICY,Professional Indemnity Insurance
+E&O INSURANCE,Professional Indemnity Insurance
+ERRORS OMISSIONS,Professional Indemnity Insurance
+PROFESSIONAL RISK,Professional Indemnity Insurance
+TATA AIG PI,Professional Indemnity Insurance
+NEW INDIA PI,Professional Indemnity Insurance
+PROFESSIONAL COVER,Professional Indemnity Insurance
+RISK INSURANCE,Professional Indemnity Insurance
+POLICY PREMIUM PI,Professional Indemnity Insurance
+PROFESSIONAL INDEMNITY PREMIUM,Professional Indemnity Insurance
+INDEMNITY PREMIUM,Professional Indemnity Insurance
+LIABILITY PREMIUM,Professional Indemnity Insurance
+WORKSHOP FEES,Continuing Education & Research
+SEMINAR REGISTRATION,Continuing Education & Research
+CME CREDITS,Continuing Education & Research
+RESEARCH SUBSCRIPTION,Continuing Education & Research
+JOURNAL SUBSCRIPTION,Continuing Education & Research
+ACADEMIC CONFERENCE,Continuing Education & Research
+TRAINING PROGRAM,Continuing Education & Research
+PROFESSIONAL COURSE,Continuing Education & Research
+UPSKILLING COST,Continuing Education & Research
+CERTIFICATION COURSE,Continuing Education & Research
+RESEARCH PAPER,Continuing Education & Research
+MEDSCAPE CME,Continuing Education & Research
+CLE CREDITS,Continuing Education & Research
+CPD COURSE,Continuing Education & Research
+CONTINUING EDUCATION,Continuing Education & Research
+ADVANCED TRAINING,Continuing Education & Research
+SPECIALIST TRAINING,Continuing Education & Research
+PROFESSIONAL LEARNING,Continuing Education & Research
+CONFERENCE REGISTRATION,Continuing Education & Research
+SUMMIT FEES,Continuing Education & Research
+ONLINE COURSE DEBIT,Continuing Education & Research
+E-LEARNING PROFESSIONAL,Continuing Education & Research
+SKILL UPGRADE,Continuing Education & Research
+RESEARCH FEES,Continuing Education & Research
+PROFESSIONAL MEMBERSHIP,Memberships & Subscriptions
+CLUB MEMBERSHIP,Memberships & Subscriptions
+INDUSTRY ASSOCIATION,Memberships & Subscriptions
+CHAMBER OF COMMERCE,Memberships & Subscriptions
+BAR ASSOCIATION FEES,Memberships & Subscriptions
+CII MEMBERSHIP,Memberships & Subscriptions
+ASSOCHAM FEES,Memberships & Subscriptions
+FICCI MEMBERSHIP,Memberships & Subscriptions
+PROFESSIONAL BODY FEES,Memberships & Subscriptions
+CLUB ANNUAL FEES,Memberships & Subscriptions
+ROTARY CLUB,Memberships & Subscriptions
+LIONS CLUB,Memberships & Subscriptions
+TRADE BODY MEMBERSHIP,Memberships & Subscriptions
+FEDERATION FEES,Memberships & Subscriptions
+GUILD MEMBERSHIP,Memberships & Subscriptions
+SECTORAL BODY,Memberships & Subscriptions
+ASSOCIATION DUES,Memberships & Subscriptions
+MEMBER ANNUAL FEE,Memberships & Subscriptions
+CORPORATE CLUB,Memberships & Subscriptions
+GOLF CLUB DUES,Memberships & Subscriptions
+ICAI MEMBER FEE,Memberships & Subscriptions
+IMA MEMBERSHIP,Memberships & Subscriptions
+NASSCOM FEES,Memberships & Subscriptions
+PHD CHAMBER,Memberships & Subscriptions
+STATIONERY PURCHASE,Practice/Office Supplies
+OFFICE SUPPLIES,Practice/Office Supplies
+PRINTER CARTRIDGE,Practice/Office Supplies
+PAPER PURCHASE,Practice/Office Supplies
+CLINIC SUPPLIES,Practice/Office Supplies
+PRACTICE MATERIALS,Practice/Office Supplies
+OFFICE CONSUMABLES,Practice/Office Supplies
+DESK SUPPLIES,Practice/Office Supplies
+PEN PENCIL SUPPLIES,Practice/Office Supplies
+TONER PURCHASE,Practice/Office Supplies
+NOTEPAD PURCHASE,Practice/Office Supplies
+FILE FOLDER,Practice/Office Supplies
+OFFICE STATIONERY,Practice/Office Supplies
+RECEPTION SUPPLIES,Practice/Office Supplies
+MEDICAL CONSUMABLES,Practice/Office Supplies
+BANDAGE SUPPLY,Practice/Office Supplies
+GLOVES SUPPLY,Practice/Office Supplies
+DISPOSABLES PURCHASE,Practice/Office Supplies
+FORMS PRINTING,Practice/Office Supplies
+LETTERHEAD PRINTING,Practice/Office Supplies
+VISITING CARDS,Practice/Office Supplies
+RUBBER STAMP,Practice/Office Supplies
+STAPLER PIN,Practice/Office Supplies
+SCOTCH TAPE,Practice/Office Supplies
+MEDICAL EQUIPMENT,Professional Equipment
+DIAGNOSTIC MACHINE,Professional Equipment
+LAPTOP PURCHASE,Professional Equipment
+COMPUTER BUY,Professional Equipment
+CAMERA EQUIPMENT,Professional Equipment
+STUDIO GEAR,Professional Equipment
+PROFESSIONAL TOOLS,Professional Equipment
+LAB EQUIPMENT,Professional Equipment
+SURGICAL INSTRUMENTS,Professional Equipment
+STETHOSCOPE,Professional Equipment
+ECG MACHINE,Professional Equipment
+ULTRASOUND MACHINE,Professional Equipment
+DENTAL EQUIPMENT,Professional Equipment
+LEGAL SCANNER,Professional Equipment
+CA HARDWARE,Professional Equipment
+MEASUREMENT INSTRUMENT,Professional Equipment
+ARCHITECT TOOLS,Professional Equipment
+ENGINEERING TOOLS,Professional Equipment
+PROFESSIONAL GADGET,Professional Equipment
+SERVER PURCHASE,Professional Equipment
+HIGH-END PRINTER,Professional Equipment
+PROJECTOR PURCHASE,Professional Equipment
+RECORDING EQUIPMENT,Professional Equipment
+STUDIO CAMERA,Professional Equipment
+APMC RECEIPT,Crop Sales
+MANDI PAYMENT,Crop Sales
+CROP SALE CREDIT,Crop Sales
+PRODUCE RECEIPT,Crop Sales
+GRAIN SALE,Crop Sales
+WHEAT SALE,Crop Sales
+RICE SALE,Crop Sales
+VEGETABLE SALE,Crop Sales
+COTTON SALE,Crop Sales
+KISAN CREDIT,Crop Sales
+FARMER RECEIPT,Crop Sales
+MANDI INCOME,Crop Sales
+AGRICULTURE INCOME,Crop Sales
+SUGARCANE SALE,Crop Sales
+TOMATO SALE,Crop Sales
+ONION SALE,Crop Sales
+POTATO SALE,Crop Sales
+HORTICULTURE INCOME,Crop Sales
+CROP INCOME,Crop Sales
+FARM PRODUCE SALE,Crop Sales
+HARVEST SALE,Crop Sales
+AGRI PRODUCE,Crop Sales
+MARKET SALE FARMER,Crop Sales
+CROP NEFT,Crop Sales
+CATTLE SALE,Livestock Sales
+ANIMAL SALE,Livestock Sales
+DAIRY SALE,Livestock Sales
+MILK SALE INCOME,Livestock Sales
+POULTRY SALE,Livestock Sales
+EGG SALE,Livestock Sales
+LIVESTOCK RECEIPT,Livestock Sales
+GOAT SALE,Livestock Sales
+SHEEP SALE,Livestock Sales
+BUFFALO SALE,Livestock Sales
+ANIMAL MARKET RECEIPT,Livestock Sales
+DAIRY INCOME,Livestock Sales
+MEAT SALE,Livestock Sales
+BULLOCK SALE,Livestock Sales
+HORSE SALE,Livestock Sales
+LIVESTOCK CREDIT,Livestock Sales
+MANDI ANIMAL SALE,Livestock Sales
+PASHU MELA INCOME,Livestock Sales
+ANIMAL FAIR,Livestock Sales
+COW SALE,Livestock Sales
+PASHU CREDIT,Livestock Sales
+LIVESTOCK NEFT,Livestock Sales
+DAIRY FARM INCOME,Livestock Sales
+POULTRY INCOME,Livestock Sales
+PM KISAN CREDIT,Government Subsidies & Grants
+GOVT SUBSIDY,Government Subsidies & Grants
+KISAN SAMMAN NIDHI,Government Subsidies & Grants
+PMFBY CLAIM,Government Subsidies & Grants
+AGRICULTURE SUBSIDY,Government Subsidies & Grants
+CROP INSURANCE,Government Subsidies & Grants
+RURAL SUBSIDY,Government Subsidies & Grants
+DBT CREDIT,Government Subsidies & Grants
+GOVT TRANSFER,Government Subsidies & Grants
+DBT FARMER,Government Subsidies & Grants
+KISAN DBT,Government Subsidies & Grants
+FARM SUBSIDY CREDIT,Government Subsidies & Grants
+SOIL HEALTH CARD,Government Subsidies & Grants
+AGRICULTURE DEPT,Government Subsidies & Grants
+HORTICULTURE SUBSIDY,Government Subsidies & Grants
+DRIP IRRIGATION SUBSIDY,Government Subsidies & Grants
+SOLAR PUMP SUBSIDY,Government Subsidies & Grants
+FERTILIZER SUBSIDY,Government Subsidies & Grants
+SEED SUBSIDY,Government Subsidies & Grants
+AGRI GRANT,Government Subsidies & Grants
+RURAL GRANT,Government Subsidies & Grants
+NABARD GRANT,Government Subsidies & Grants
+SCHEME CREDIT,Government Subsidies & Grants
+GOVT FARMING SCHEME,Government Subsidies & Grants
+SEED PURCHASE,Seeds & Saplings
+KRISHI KENDRA,Seeds & Saplings
+NURSERY PURCHASE,Seeds & Saplings
+SAPLING COST,Seeds & Saplings
+SEED COMPANY PAYMENT,Seeds & Saplings
+AGRO INPUT,Seeds & Saplings
+BAYER SEEDS,Seeds & Saplings
+SYNGENTA SEEDS,Seeds & Saplings
+PIONEER SEEDS,Seeds & Saplings
+UPL SEEDS,Seeds & Saplings
+KAVERI SEEDS,Seeds & Saplings
+MAHYCO SEEDS,Seeds & Saplings
+SEEDLING PURCHASE,Seeds & Saplings
+GRAFTED PLANT,Seeds & Saplings
+HYBRID SEED,Seeds & Saplings
+VEGETABLE SEEDS,Seeds & Saplings
+PADDY SEEDS,Seeds & Saplings
+WHEAT SEEDS,Seeds & Saplings
+COTTON SEEDS,Seeds & Saplings
+AGRI SEED STORE,Seeds & Saplings
+HORTICULTURAL PLANT,Seeds & Saplings
+PLANT NURSERY,Seeds & Saplings
+GOVT SEEDS,Seeds & Saplings
+KRISHI VIBHAG,Seeds & Saplings
+FERTILIZER PURCHASE,Fertilizers & Pesticides
+PESTICIDE COST,Fertilizers & Pesticides
+AGRO CHEMICALS,Fertilizers & Pesticides
+KISAN CHEMICALS,Fertilizers & Pesticides
+UREA PURCHASE,Fertilizers & Pesticides
+DAP FERTILIZER,Fertilizers & Pesticides
+COROMANDEL,Fertilizers & Pesticides
+IFFCO PURCHASE,Fertilizers & Pesticides
+INSECTICIDE PURCHASE,Fertilizers & Pesticides
+HERBICIDE,Fertilizers & Pesticides
+FUNGICIDE,Fertilizers & Pesticides
+NPK FERTILIZER,Fertilizers & Pesticides
+POTASH PURCHASE,Fertilizers & Pesticides
+CALCIUM NITRATE,Fertilizers & Pesticides
+NEEM PESTICIDE,Fertilizers & Pesticides
+CROP PROTECTION,Fertilizers & Pesticides
+BAYER AGRO,Fertilizers & Pesticides
+SYNGENTA AGRO,Fertilizers & Pesticides
+UPL AGRO,Fertilizers & Pesticides
+RALLIS INDIA,Fertilizers & Pesticides
+AGRI INPUT STORE,Fertilizers & Pesticides
+FERTILIZER DEPOT,Fertilizers & Pesticides
+KHAAD PURCHASE,Fertilizers & Pesticides
+RASAYAN KENDRA,Fertilizers & Pesticides
+VET PAYMENT,Livestock Feed & Veterinary
+ANIMAL FEED,Livestock Feed & Veterinary
+CATTLE FEED,Livestock Feed & Veterinary
+POULTRY FEED,Livestock Feed & Veterinary
+VET CLINIC,Livestock Feed & Veterinary
+ANIMAL DOCTOR,Livestock Feed & Veterinary
+VETERINARY MEDICINES,Livestock Feed & Veterinary
+LIVESTOCK VET,Livestock Feed & Veterinary
+CATTLE MEDICINE,Livestock Feed & Veterinary
+DAIRY FEED,Livestock Feed & Veterinary
+GOAT FEED,Livestock Feed & Veterinary
+FISH FEED,Livestock Feed & Veterinary
+CHARA PURCHASE,Livestock Feed & Veterinary
+FODDER PURCHASE,Livestock Feed & Veterinary
+SILAGE PURCHASE,Livestock Feed & Veterinary
+PIG FEED,Livestock Feed & Veterinary
+HORSE FEED,Livestock Feed & Veterinary
+BUFFALO FEED,Livestock Feed & Veterinary
+SHEEP FEED,Livestock Feed & Veterinary
+ANIMAL VACCINE,Livestock Feed & Veterinary
+VET SURGEON FEES,Livestock Feed & Veterinary
+VETERINARY CLINIC,Livestock Feed & Veterinary
+PASHU CHIKITSA,Livestock Feed & Veterinary
+VET MEDICINE,Livestock Feed & Veterinary
+IRRIGATION FEES,Irrigation & Water Charges
+WATER CHARGES FARM,Irrigation & Water Charges
+BOREWELL CHARGES,Irrigation & Water Charges
+CANAL WATER FEE,Irrigation & Water Charges
+DRIP IRRIGATION,Irrigation & Water Charges
+PUMP CHARGES,Irrigation & Water Charges
+WATER TAX AGRI,Irrigation & Water Charges
+IRRIGATION DEPT,Irrigation & Water Charges
+SPRINKLER SYSTEM,Irrigation & Water Charges
+MICRO IRRIGATION,Irrigation & Water Charges
+SINCHAI VIBHAG,Irrigation & Water Charges
+NAHAR CHARGES,Irrigation & Water Charges
+GROUNDWATER CHARGES,Irrigation & Water Charges
+TUBEWELL CHARGES,Irrigation & Water Charges
+PUMP ELECTRICITY,Irrigation & Water Charges
+FARM WATER,Irrigation & Water Charges
+IRRIGATION AUTHORITY,Irrigation & Water Charges
+WATER BOARD FARM,Irrigation & Water Charges
+SINCHAI FEES,Irrigation & Water Charges
+KISAN JALHAR,Irrigation & Water Charges
+JAL SINCHAI,Irrigation & Water Charges
+PUMP FUEL WATER,Irrigation & Water Charges
+NALKOOP FEES,Irrigation & Water Charges
+WATER BOARD AGRI,Irrigation & Water Charges
+LABOR PAYMENT,Farm Labor Wages
+FARM WORKER WAGES,Farm Labor Wages
+HARVEST LABOR,Farm Labor Wages
+DAILY WAGE PAYMENT,Farm Labor Wages
+MAZDOOR PAYMENT,Farm Labor Wages
+KISAN MAJDOOR,Farm Labor Wages
+AGRICULTURAL LABOR,Farm Labor Wages
+FARM STAFF PAY,Farm Labor Wages
+SOWING LABOR,Farm Labor Wages
+WEEDING WAGES,Farm Labor Wages
+PLANTATION LABOR,Farm Labor Wages
+PICKING LABOR,Farm Labor Wages
+SEASONAL WORKER,Farm Labor Wages
+MIGRANT WORKER PAY,Farm Labor Wages
+THRESHING LABOR,Farm Labor Wages
+FIELD LABOR,Farm Labor Wages
+FARM HAND WAGES,Farm Labor Wages
+AGRI DAILY WAGES,Farm Labor Wages
+CHAKKAR WAGES,Farm Labor Wages
+LABOUR CONTRACTOR,Farm Labor Wages
+MAZDOOR DAILY,Farm Labor Wages
+FARM WAGES NEFT,Farm Labor Wages
+WAGES TO LABOUR,Farm Labor Wages
+AGRI MAZDOOR,Farm Labor Wages
+TRACTOR FUEL,Fuel & Machinery Maintenance
+DIESEL FARM,Fuel & Machinery Maintenance
+MACHINERY REPAIR,Fuel & Machinery Maintenance
+TRACTOR SERVICE,Fuel & Machinery Maintenance
+PUMP REPAIR,Fuel & Machinery Maintenance
+EQUIPMENT MAINTENANCE,Fuel & Machinery Maintenance
+FARM DIESEL,Fuel & Machinery Maintenance
+AGRI MACHINERY,Fuel & Machinery Maintenance
+COMBINE HARVESTER SERVICE,Fuel & Machinery Maintenance
+CULTIVATOR REPAIR,Fuel & Machinery Maintenance
+TRACTOR PART,Fuel & Machinery Maintenance
+DIESEL PURCHASE,Fuel & Machinery Maintenance
+PETROL PUMP FARM,Fuel & Machinery Maintenance
+LUBRICANTS PURCHASE,Fuel & Machinery Maintenance
+ENGINE OIL,Fuel & Machinery Maintenance
+SPARE PART TRACTOR,Fuel & Machinery Maintenance
+WORKSHOP FARM,Fuel & Machinery Maintenance
+MECHANIC PAYMENT,Fuel & Machinery Maintenance
+HYDRAULIC OIL,Fuel & Machinery Maintenance
+BATTERY FARM,Fuel & Machinery Maintenance
+WELDING CHARGES,Fuel & Machinery Maintenance
+BLACKSMITH FEES,Fuel & Machinery Maintenance
+GENERATOR FUEL,Fuel & Machinery Maintenance
+PUMP DIESEL,Fuel & Machinery Maintenance
+LAND RENT,Land Lease & Rent
+FARM LEASE,Land Lease & Rent
+AGRICULTURAL RENT,Land Lease & Rent
+FARM LAND RENT,Land Lease & Rent
+LAND LEASE PAYMENT,Land Lease & Rent
+KHET KIRAYA,Land Lease & Rent
+PATTA LAND RENT,Land Lease & Rent
+LEASE AGRI,Land Lease & Rent
+LAND OWNER PAYMENT,Land Lease & Rent
+PLOT RENT FARM,Land Lease & Rent
+KHETI BHADA,Land Lease & Rent
+LEASE HOLDER,Land Lease & Rent
+ZAMINDARI PAYMENT,Land Lease & Rent
+LANDLORD FARMER,Land Lease & Rent
+FARM OWNER RENT,Land Lease & Rent
+KHETIWADI,Land Lease & Rent
+BARGAS PAYMENT,Land Lease & Rent
+TENANT FARMER RENT,Land Lease & Rent
+CROP SHARE RENT,Land Lease & Rent
+LAND RENTAL,Land Lease & Rent
+SEASONAL LAND LEASE,Land Lease & Rent
+ANNUAL LAND RENT,Land Lease & Rent
+FARM RENT NEFT,Land Lease & Rent
+LAND BHADA,Land Lease & Rent
+CATTLE PURCHASE,Livestock (Biological Assets)
+ANIMAL PURCHASE,Livestock (Biological Assets)
+LIVESTOCK BUY,Livestock (Biological Assets)
+BUFFALO PURCHASE,Livestock (Biological Assets)
+GOAT PURCHASE,Livestock (Biological Assets)
+SHEEP PURCHASE,Livestock (Biological Assets)
+DAIRY COW PURCHASE,Livestock (Biological Assets)
+POULTRY PURCHASE,Livestock (Biological Assets)
+HEN PURCHASE,Livestock (Biological Assets)
+BULL PURCHASE,Livestock (Biological Assets)
+HEIFER BUY,Livestock (Biological Assets)
+CALF PURCHASE,Livestock (Biological Assets)
+ANIMAL FAIR BUY,Livestock (Biological Assets)
+PASHU MELA BUY,Livestock (Biological Assets)
+CATTLE MARKET,Livestock (Biological Assets)
+LIVESTOCK MARKET,Livestock (Biological Assets)
+FISH FINGERLINGS,Livestock (Biological Assets)
+PRAWN SEED BUY,Livestock (Biological Assets)
+AQUACULTURE BUY,Livestock (Biological Assets)
+PIGGERY PURCHASE,Livestock (Biological Assets)
+RAM PURCHASE,Livestock (Biological Assets)
+EWE PURCHASE,Livestock (Biological Assets)
+CAMEL PURCHASE,Livestock (Biological Assets)
+HORSE BUY,Livestock (Biological Assets)
+TRACTOR PURCHASE,Farm Machinery & Equipment
+HARVESTER BUY,Farm Machinery & Equipment
+FARM EQUIPMENT BUY,Farm Machinery & Equipment
+AGRI MACHINERY BUY,Farm Machinery & Equipment
+PUMP SET PURCHASE,Farm Machinery & Equipment
+THRESHER BUY,Farm Machinery & Equipment
+ROTAVATOR,Farm Machinery & Equipment
+CULTIVATOR BUY,Farm Machinery & Equipment
+SPRAYER MACHINE,Farm Machinery & Equipment
+SEEDER PURCHASE,Farm Machinery & Equipment
+PLOUGH BUY,Farm Machinery & Equipment
+RICE TRANSPLANTER,Farm Machinery & Equipment
+COMBINE HARVESTER,Farm Machinery & Equipment
+CHAFF CUTTER,Farm Machinery & Equipment
+POWER TILLER,Farm Machinery & Equipment
+LASER LEVELER,Farm Machinery & Equipment
+DRIP KIT PURCHASE,Farm Machinery & Equipment
+SOLAR PUMP BUY,Farm Machinery & Equipment
+SUBMERSIBLE PUMP,Farm Machinery & Equipment
+WATER PUMP BUY,Farm Machinery & Equipment
+AGRI MOTOR,Farm Machinery & Equipment
+FARM TOOL PURCHASE,Farm Machinery & Equipment
+IMPLEMENTS BUY,Farm Machinery & Equipment
+DISC HARROW,Farm Machinery & Equipment
+WAREHOUSE STORAGE,Stored Harvest (Inventory)
+COLD STORAGE FEES,Stored Harvest (Inventory)
+GRAIN STORAGE,Stored Harvest (Inventory)
+CROP STORAGE,Stored Harvest (Inventory)
+MANDI STORAGE,Stored Harvest (Inventory)
+PRODUCE STORAGE,Stored Harvest (Inventory)
+SILO CHARGES,Stored Harvest (Inventory)
+GODOWN RENT,Stored Harvest (Inventory)
+WAREHOUSE RENT AGRI,Stored Harvest (Inventory)
+COLD CHAIN STORAGE,Stored Harvest (Inventory)
+POTATO STORAGE,Stored Harvest (Inventory)
+ONION STORAGE,Stored Harvest (Inventory)
+GRAIN GODOWN,Stored Harvest (Inventory)
+FOOD CORP STORAGE,Stored Harvest (Inventory)
+FCI STORAGE,Stored Harvest (Inventory)
+NAFED STORAGE,Stored Harvest (Inventory)
+HARVEST STOCKING,Stored Harvest (Inventory)
+COMMODITY STORAGE,Stored Harvest (Inventory)
+AGRI WAREHOUSE,Stored Harvest (Inventory)
+CROP STACKING,Stored Harvest (Inventory)
+FARMER STORAGE SHED,Stored Harvest (Inventory)
+RURAL GODOWN,Stored Harvest (Inventory)
+CUSTOM MILLING,Stored Harvest (Inventory)
+AGRI STOCKIST,Stored Harvest (Inventory)
+KCC LOAN,Agricultural Loans (KCC)
+KISAN CREDIT CARD,Agricultural Loans (KCC)
+AGRI LOAN EMI,Agricultural Loans (KCC)
+FARM LOAN REPAYMENT,Agricultural Loans (KCC)
+KCC REPAYMENT,Agricultural Loans (KCC)
+KISAN LOAN DEBIT,Agricultural Loans (KCC)
+NACH AGRI EMI,Agricultural Loans (KCC)
+AGRI LOAN NACH,Agricultural Loans (KCC)
+KCC DEBIT,Agricultural Loans (KCC)
+CROP LOAN,Agricultural Loans (KCC)
+SEASONAL LOAN,Agricultural Loans (KCC)
+SBI KISAN LOAN,Agricultural Loans (KCC)
+NABARD LOAN,Agricultural Loans (KCC)
+PNB AGRI LOAN,Agricultural Loans (KCC)
+BANK KISAN LOAN,Agricultural Loans (KCC)
+RURAL LOAN,Agricultural Loans (KCC)
+AGRI CREDIT,Agricultural Loans (KCC)
+KCC INTEREST,Agricultural Loans (KCC)
+FARM CREDIT EMI,Agricultural Loans (KCC)
+COOPERATIVE LOAN,Agricultural Loans (KCC)
+DISTRICT BANK LOAN,Agricultural Loans (KCC)
+AGRI EMI NACH,Agricultural Loans (KCC)
+KISAN LOAN NEFT,Agricultural Loans (KCC)
+KCC MONTHLY,Agricultural Loans (KCC)
+INTERNSHIP CREDIT,Internship Stipend
+STIPEND CREDIT,Internship Stipend
+INTERN STIPEND,Internship Stipend
+TRAINING STIPEND,Internship Stipend
+INTERN SALARY,Internship Stipend
+FELLOWSHIP STIPEND,Internship Stipend
+NEFT STIPEND,Internship Stipend
+IMPS INTERN PAY,Internship Stipend
+COMPANY INTERN PAY,Internship Stipend
+INDUSTRIAL TRAINING,Internship Stipend
+INTERNSHIP NEFT,Internship Stipend
+TRAINEE PAY,Internship Stipend
+SUMMER INTERN,Internship Stipend
+WINTER INTERN,Internship Stipend
+PAID INTERNSHIP,Internship Stipend
+STIPEND INWARD,Internship Stipend
+APPRENTICE STIPEND,Internship Stipend
+LEARNER STIPEND,Internship Stipend
+GRAD TRAINEE,Internship Stipend
+CAMPUS INTERN,Internship Stipend
+INDUSTRIAL STIPEND,Internship Stipend
+GOVT INTERNSHIP,Internship Stipend
+STARTUP INTERN,Internship Stipend
+CORPORATE INTERN,Internship Stipend
+SCHOLARSHIP CREDIT,Scholarships & Grants
+MERIT SCHOLARSHIP,Scholarships & Grants
+GOVT SCHOLARSHIP,Scholarships & Grants
+EDUCATION GRANT,Scholarships & Grants
+NSP SCHOLARSHIP,Scholarships & Grants
+STATE SCHOLARSHIP,Scholarships & Grants
+NEFT SCHOLARSHIP,Scholarships & Grants
+DBT SCHOLARSHIP,Scholarships & Grants
+MINORITY SCHOLARSHIP,Scholarships & Grants
+FELLOWSHIP GRANT,Scholarships & Grants
+NATIONAL SCHOLARSHIP,Scholarships & Grants
+MERIT GRANT,Scholarships & Grants
+ICCR SCHOLARSHIP,Scholarships & Grants
+AICTE SCHOLARSHIP,Scholarships & Grants
+UGC FELLOWSHIP,Scholarships & Grants
+CSIR FELLOWSHIP,Scholarships & Grants
+INSPIRE SCHOLARSHIP,Scholarships & Grants
+MAULANA AZAD,Scholarships & Grants
+SC SCHOLARSHIP,Scholarships & Grants
+ST SCHOLARSHIP,Scholarships & Grants
+OBC SCHOLARSHIP,Scholarships & Grants
+PRIME MINISTER SCHOLARSHIP,Scholarships & Grants
+SCHOLARSHIP INWARD,Scholarships & Grants
+GOVT BURSARY,Scholarships & Grants
+PARENT TRANSFER,Parental Support/Allowance
+FAMILY SUPPORT,Parental Support/Allowance
+MONTHLY ALLOWANCE,Parental Support/Allowance
+POCKET MONEY,Parental Support/Allowance
+HOME REMITTANCE,Parental Support/Allowance
+FAMILY TRANSFER,Parental Support/Allowance
+NEFT FROM PARENT,Parental Support/Allowance
+IMPS FROM PARENT,Parental Support/Allowance
+GUARDIAN TRANSFER,Parental Support/Allowance
+REMITTANCE FAMILY,Parental Support/Allowance
+FATHER TRANSFER,Parental Support/Allowance
+MOTHER TRANSFER,Parental Support/Allowance
+PARENTAL NEFT,Parental Support/Allowance
+HOME MONEY,Parental Support/Allowance
+FAMILY NEFT,Parental Support/Allowance
+UPI FROM FAMILY,Parental Support/Allowance
+GUARDIAN SUPPORT,Parental Support/Allowance
+PARENT ALLOWANCE,Parental Support/Allowance
+HOME ALLOWANCE,Parental Support/Allowance
+FAMILY ALLOWANCE,Parental Support/Allowance
+MONTHLY SUPPORT,Parental Support/Allowance
+HOUSEHOLD TRANSFER,Parental Support/Allowance
+KIN TRANSFER,Parental Support/Allowance
+DOMESTIC REMITTANCE,Parental Support/Allowance
+COLLEGE FEES,Tuition & College Fees
+UNIVERSITY FEES,Tuition & College Fees
+TUITION PAYMENT,Tuition & College Fees
+ADMISSION FEES,Tuition & College Fees
+SEMESTER FEES,Tuition & College Fees
+COURSE FEES,Tuition & College Fees
+NEFT COLLEGE,Tuition & College Fees
+SCHOOL FEES,Tuition & College Fees
+INSTITUTE FEES,Tuition & College Fees
+IIT FEES,Tuition & College Fees
+NIT FEES,Tuition & College Fees
+DU FEES,Tuition & College Fees
+COLLEGE FEE PAYMENT,Tuition & College Fees
+ANNUAL COLLEGE FEES,Tuition & College Fees
+TERM FEES,Tuition & College Fees
+ENROLLMENT FEES,Tuition & College Fees
+EXAM PORTAL FEES,Tuition & College Fees
+MANAGEMENT FEES,Tuition & College Fees
+DEVELOPMENT FEES,Tuition & College Fees
+UNIVERSITY PORTAL,Tuition & College Fees
+ONLINE TUITION,Tuition & College Fees
+COACHING FEES,Tuition & College Fees
+JEE COACHING,Tuition & College Fees
+NEET COACHING,Tuition & College Fees
+AMAZON BOOKS,Books & Digital Learning
+KINDLE PURCHASE,Books & Digital Learning
+CHEGG SUBSCRIPTION,Books & Digital Learning
+BYJUS PAYMENT,Books & Digital Learning
+VEDANTU FEES,Books & Digital Learning
+UNACADEMY FEES,Books & Digital Learning
+COURSERA PAYMENT,Books & Digital Learning
+SKILLSHARE,Books & Digital Learning
+UDEMY COURSE,Books & Digital Learning
+EDTECH PAYMENT,Books & Digital Learning
+TEXTBOOK PURCHASE,Books & Digital Learning
+STUDY MATERIAL,Books & Digital Learning
+SCRIBD SUBSCRIPTION,Books & Digital Learning
+TOPPR PAYMENT,Books & Digital Learning
+EDUREKA,Books & Digital Learning
+SIMPLILEARN,Books & Digital Learning
+O REILLY SUBSCRIPTION,Books & Digital Learning
+PLURALSIGHT,Books & Digital Learning
+NPTEL COURSE,Books & Digital Learning
+SWAYAM FEES,Books & Digital Learning
+DIGITAL LIBRARY,Books & Digital Learning
+E-BOOK PURCHASE,Books & Digital Learning
+REFERENCE BOOK,Books & Digital Learning
+ACADEMIC JOURNAL,Books & Digital Learning
+UPSC FEES,Exam & Certification Fees
+NEET FEES,Exam & Certification Fees
+JEE FEES,Exam & Certification Fees
+EXAM FORM FEES,Exam & Certification Fees
+GATE FEES,Exam & Certification Fees
+CAT FEES,Exam & Certification Fees
+GMAT FEES,Exam & Certification Fees
+GRE FEES,Exam & Certification Fees
+BOARD EXAM FEES,Exam & Certification Fees
+UNIVERSITY EXAM,Exam & Certification Fees
+COMPETITIVE EXAM,Exam & Certification Fees
+TEST FEES,Exam & Certification Fees
+BANK EXAM FEES,Exam & Certification Fees
+SSC FEES,Exam & Certification Fees
+RAILWAY EXAM,Exam & Certification Fees
+STATE PSC FEES,Exam & Certification Fees
+ADMIT CARD FEES,Exam & Certification Fees
+HALL TICKET FEES,Exam & Certification Fees
+PROMETRIC EXAM,Exam & Certification Fees
+PEARSON EXAM,Exam & Certification Fees
+CERTIFICATION EXAM,Exam & Certification Fees
+IELTS FEES,Exam & Certification Fees
+TOEFL FEES,Exam & Certification Fees
+SAT FEES,Exam & Certification Fees
+LAB MATERIAL,Project & Lab Supplies
+PROJECT SUPPLIES,Project & Lab Supplies
+EXPERIMENT MATERIAL,Project & Lab Supplies
+SCIENCE PROJECT,Project & Lab Supplies
+LAB EQUIPMENT SMALL,Project & Lab Supplies
+COLLEGE PROJECT,Project & Lab Supplies
+RESEARCH MATERIAL,Project & Lab Supplies
+PROTOTYPE COST,Project & Lab Supplies
+LAB CHEMICALS,Project & Lab Supplies
+GLASSWARE PURCHASE,Project & Lab Supplies
+ELECTRONICS COMPONENTS,Project & Lab Supplies
+ARDUINO KIT,Project & Lab Supplies
+RASPBERRY PI,Project & Lab Supplies
+CIRCUIT COMPONENTS,Project & Lab Supplies
+PROJECT TOOLS,Project & Lab Supplies
+LAB CONSUMABLES,Project & Lab Supplies
+FABRICATION MATERIAL,Project & Lab Supplies
+DESIGN PROJECT,Project & Lab Supplies
+CAD SOFTWARE,Project & Lab Supplies
+3D PRINT MATERIAL,Project & Lab Supplies
+LAB REAGENTS,Project & Lab Supplies
+WORKSHOP MATERIAL,Project & Lab Supplies
+CRAFT MATERIAL,Project & Lab Supplies
+MODEL KIT,Project & Lab Supplies
+HOSTEL FEES,Hostel & Student Housing
+HOSTEL RENT,Hostel & Student Housing
+PG PAYMENT,Hostel & Student Housing
+PAYING GUEST FEES,Hostel & Student Housing
+STUDENT ACCOMMODATION,Hostel & Student Housing
+DORM FEES,Hostel & Student Housing
+ROOM RENT STUDENT,Hostel & Student Housing
+COLLEGE HOSTEL,Hostel & Student Housing
+HOSTEL MONTHLY,Hostel & Student Housing
+MESS CHARGES,Hostel & Student Housing
+HOSTEL MESS,Hostel & Student Housing
+STUDENT HOUSING,Hostel & Student Housing
+SHARED ROOM RENT,Hostel & Student Housing
+STUDENT PG,Hostel & Student Housing
+CAMPUS HOUSING,Hostel & Student Housing
+UNIVERSITY HOSTEL,Hostel & Student Housing
+HOSTEL CAUTION DEPOSIT,Hostel & Student Housing
+BOARDING FEES,Hostel & Student Housing
+LODGING STUDENT,Hostel & Student Housing
+RESIDENCY FEES,Hostel & Student Housing
+HALL OF RESIDENCE,Hostel & Student Housing
+STUDENT LODGE,Hostel & Student Housing
+HOSTEL ADVANCE,Hostel & Student Housing
+PG ADVANCE,Hostel & Student Housing
+EDUCATION LOAN EMI,Student Loan (Education)
+STUDY LOAN,Student Loan (Education)
+SBI EDUCATION LOAN,Student Loan (Education)
+HDFC EDUCATION LOAN,Student Loan (Education)
+STUDENT EMI,Student Loan (Education)
+EDUCATION EMI,Student Loan (Education)
+VIDYA LAKSHMI,Student Loan (Education)
+EDUCATION LOAN PAYMENT,Student Loan (Education)
+STUDY LOAN REPAY,Student Loan (Education)
+STUDENT LOAN NACH,Student Loan (Education)
+EDLOAN EMI,Student Loan (Education)
+EDUCATION DEBT EMI,Student Loan (Education)
+BANK EDUCATION LOAN,Student Loan (Education)
+PVTBANK EDLOAN,Student Loan (Education)
+EDUCATION LOAN NEFT,Student Loan (Education)
+COLLEGE LOAN EMI,Student Loan (Education)
+ICICI EDUCATION LOAN,Student Loan (Education)
+AXIS EDUCATION LOAN,Student Loan (Education)
+CANARA EDUCATION LOAN,Student Loan (Education)
+AVANSE LOAN,Student Loan (Education)
+AUXILO LOAN,Student Loan (Education)
+CREDILA LOAN,Student Loan (Education)
+INCRED EDUCATION,Student Loan (Education)
+STUDENT FINANCE EMI,Student Loan (Education)
+CHROMEBOOK BUY,Laptop & Educational Tech
+TABLET PURCHASE,Laptop & Educational Tech
+IPAD PURCHASE,Laptop & Educational Tech
+EDUCATIONAL DEVICE,Laptop & Educational Tech
+STUDY GADGET,Laptop & Educational Tech
+HEADPHONES STUDY,Laptop & Educational Tech
+WEBCAM PURCHASE,Laptop & Educational Tech
+LAPTOP AMAZON,Laptop & Educational Tech
+LAPTOP FLIPKART,Laptop & Educational Tech
+HP LAPTOP,Laptop & Educational Tech
+DELL LAPTOP,Laptop & Educational Tech
+LENOVO LAPTOP,Laptop & Educational Tech
+ACER LAPTOP,Laptop & Educational Tech
+ASUS LAPTOP,Laptop & Educational Tech
+MACBOOK STUDENT,Laptop & Educational Tech
+GRAPHICS TABLET,Laptop & Educational Tech
+SCIENTIFIC CALCULATOR,Laptop & Educational Tech
+STYLUS PEN,Laptop & Educational Tech
+DRAWING TABLET,Laptop & Educational Tech
+STUDENT COMPUTER,Laptop & Educational Tech
+STUDY TABLET,Laptop & Educational Tech
+E-READER,Laptop & Educational Tech
+KINDLE DEVICE,Laptop & Educational Tech
+PENSION CREDIT,Pension & Social Security
+PENSION PAYMENT,Pension & Social Security
+GOVERNMENT PENSION,Pension & Social Security
+ARMY PENSION,Pension & Social Security
+EPF PENSION,Pension & Social Security
+EPS CREDIT,Pension & Social Security
+PENSIONER CREDIT,Pension & Social Security
+MONTHLY PENSION,Pension & Social Security
+EMPLOYEE PENSION,Pension & Social Security
+EPFO PENSION,Pension & Social Security
+CIVIL PENSION,Pension & Social Security
+DEFENCE PENSION,Pension & Social Security
+RAILWAYS PENSION,Pension & Social Security
+FAMILY PENSION,Pension & Social Security
+TEACHER PENSION,Pension & Social Security
+STATE PENSION,Pension & Social Security
+CENTRAL GOVT PENSION,Pension & Social Security
+PENSION INWARD,Pension & Social Security
+PENSION NEFT,Pension & Social Security
+PENSION BANK CREDIT,Pension & Social Security
+ESIC PENSION,Pension & Social Security
+NPS PENSION,Pension & Social Security
+PENSION ANNUITY,Pension & Social Security
+ANNUITY CREDIT,Annuity Payouts
+INSURANCE ANNUITY,Annuity Payouts
+LIC ANNUITY,Annuity Payouts
+MONTHLY ANNUITY,Annuity Payouts
+PENSION PLAN PAYOUT,Annuity Payouts
+ANNUITY RECEIPT,Annuity Payouts
+RETIREMENT ANNUITY,Annuity Payouts
+ANNUITY PAYMENT,Annuity Payouts
+IMMEDIATE ANNUITY,Annuity Payouts
+DEFERRED ANNUITY,Annuity Payouts
+ANNUITY NEFT,Annuity Payouts
+HDFC ANNUITY,Annuity Payouts
+SBI ANNUITY,Annuity Payouts
+ICICI PRUD ANNUITY,Annuity Payouts
+BAJAJ ANNUITY,Annuity Payouts
+KOTAK ANNUITY,Annuity Payouts
+TATA AIA ANNUITY,Annuity Payouts
+MAX LIFE ANNUITY,Annuity Payouts
+BIRLA SL ANNUITY,Annuity Payouts
+ANNUITY INWARD,Annuity Payouts
+REGULAR ANNUITY,Annuity Payouts
+LIFE ANNUITY,Annuity Payouts
+ANNUITY SCHEME,Annuity Payouts
+ASSURED ANNUITY,Annuity Payouts
+FD INTEREST,Interest & Dividend Income
+RD INTEREST,Interest & Dividend Income
+DIVIDEND CREDIT,Interest & Dividend Income
+BANK INTEREST,Interest & Dividend Income
+SAVINGS INTEREST,Interest & Dividend Income
+INTEREST CREDIT,Interest & Dividend Income
+DIVIDEND RECEIPT,Interest & Dividend Income
+MUTUAL FUND DIVIDEND,Interest & Dividend Income
+ZERODHA DIVIDEND,Interest & Dividend Income
+NSE DIVIDEND,Interest & Dividend Income
+STOCK DIVIDEND,Interest & Dividend Income
+BOND INTEREST,Interest & Dividend Income
+PPF INTEREST,Interest & Dividend Income
+NPS RETURN,Interest & Dividend Income
+INTEREST INWARD,Interest & Dividend Income
+SB INTEREST,Interest & Dividend Income
+FD MATURITY,Interest & Dividend Income
+RD MATURITY,Interest & Dividend Income
+INTEREST INCOME,Interest & Dividend Income
+QUARTERLY INTEREST,Interest & Dividend Income
+ANNUAL INTEREST,Interest & Dividend Income
+FIXED DEPOSIT INTEREST,Interest & Dividend Income
+INTEREST ON SAVINGS,Interest & Dividend Income
+DIVIDEND INWARD,Interest & Dividend Income
+APOLLO PHARMACY,Medications & Pharmacy
+NETMEDS,Medications & Pharmacy
+PHARMEASY,Medications & Pharmacy
+MEDPLUS,Medications & Pharmacy
+1MG MEDICINE,Medications & Pharmacy
+PHARMACY PURCHASE,Medications & Pharmacy
+MEDICINE BILL,Medications & Pharmacy
+DRUG STORE,Medications & Pharmacy
+CHEMIST PAYMENT,Medications & Pharmacy
+DAVA PURCHASE,Medications & Pharmacy
+MEDICAL STORE,Medications & Pharmacy
+UPI/APOLLOPHARMACY,Medications & Pharmacy
+POS PHARMACY,Medications & Pharmacy
+TATA 1MG,Medications & Pharmacy
+WELLNESS PHARMACY,Medications & Pharmacy
+PRESCRIPTION MEDICINE,Medications & Pharmacy
+OTC MEDICINE,Medications & Pharmacy
+GENERIC MEDICINE,Medications & Pharmacy
+MEDICAL SHOP,Medications & Pharmacy
+AYURVEDIC PHARMACY,Medications & Pharmacy
+HOMEOPATHY STORE,Medications & Pharmacy
+MEDICAL SUPPLIES,Medications & Pharmacy
+HEALTH PRODUCT,Medications & Pharmacy
+DRUG PURCHASE,Medications & Pharmacy
+APOLLO HOSPITAL,Doctor Consultations & Tests
+FORTIS HOSPITAL,Doctor Consultations & Tests
+MAX HEALTHCARE,Doctor Consultations & Tests
+MANIPAL HOSPITAL,Doctor Consultations & Tests
+PRACTO PAYMENT,Doctor Consultations & Tests
+DOCTOR FEE,Doctor Consultations & Tests
+CONSULTATION FEE,Doctor Consultations & Tests
+CLINIC PAYMENT,Doctor Consultations & Tests
+DIAGNOSTIC LAB,Doctor Consultations & Tests
+LAB TEST,Doctor Consultations & Tests
+THYROCARE,Doctor Consultations & Tests
+DR LAL PATHLAB,Doctor Consultations & Tests
+DOCPRIME,Doctor Consultations & Tests
+SRL DIAGNOSTICS,Doctor Consultations & Tests
+METROPOLIS,Doctor Consultations & Tests
+PATHOLOGY FEES,Doctor Consultations & Tests
+RADIOLOGY FEES,Doctor Consultations & Tests
+MRI SCAN,Doctor Consultations & Tests
+CT SCAN,Doctor Consultations & Tests
+BLOOD TEST,Doctor Consultations & Tests
+ECG FEES,Doctor Consultations & Tests
+DOCTOR VISIT,Doctor Consultations & Tests
+SPECIALIST FEES,Doctor Consultations & Tests
+OPD CHARGES,Doctor Consultations & Tests
+HEALTH INSURANCE,Health Insurance Premiums
+MEDICLAIM,Health Insurance Premiums
+NIVA BUPA,Health Insurance Premiums
+STAR HEALTH,Health Insurance Premiums
+CARE HEALTH,Health Insurance Premiums
+RELIGARE HEALTH,Health Insurance Premiums
+HDFC ERGO HEALTH,Health Insurance Premiums
+INSURANCE PREMIUM,Health Insurance Premiums
+MEDICLAIM PREMIUM,Health Insurance Premiums
+GROUP INSURANCE,Health Insurance Premiums
+HEALTH POLICY,Health Insurance Premiums
+MAX BUPA,Health Insurance Premiums
+APOLLO MUNICH,Health Insurance Premiums
+NEW INDIA HEALTH,Health Insurance Premiums
+NATIONAL HEALTH INS,Health Insurance Premiums
+ORIENTAL INSURANCE,Health Insurance Premiums
+UNITED INDIA HEALTH,Health Insurance Premiums
+BAJAJ HEALTH,Health Insurance Premiums
+TATA AIG HEALTH,Health Insurance Premiums
+ADITYA BIRLA HEALTH,Health Insurance Premiums
+FAMILY FLOATER,Health Insurance Premiums
+SUPER TOP UP,Health Insurance Premiums
+CRITICAL ILLNESS,Health Insurance Premiums
+HEALTH RIDER PREMIUM,Health Insurance Premiums
+DONATION,Gifts & Philanthropy
+CHARITY PAYMENT,Gifts & Philanthropy
+NGO DONATION,Gifts & Philanthropy
+TEMPLE DONATION,Gifts & Philanthropy
+CHURCH OFFERING,Gifts & Philanthropy
+MASJID DONATION,Gifts & Philanthropy
+GIFT TRANSFER,Gifts & Philanthropy
+WEDDING GIFT,Gifts & Philanthropy
+BIRTHDAY GIFT,Gifts & Philanthropy
+DAAN,Gifts & Philanthropy
+CHARITABLE TRUST,Gifts & Philanthropy
+PM CARES FUND,Gifts & Philanthropy
+CRY DONATION,Gifts & Philanthropy
+MILAAP DONATION,Gifts & Philanthropy
+GIVEINDIA,Gifts & Philanthropy
+KETTO DONATE,Gifts & Philanthropy
+RELIEF FUND,Gifts & Philanthropy
+DISASTER FUND,Gifts & Philanthropy
+COMPASSION INDIA,Gifts & Philanthropy
+CHILD CARE FUND,Gifts & Philanthropy
+EDUCATIONAL DONATION,Gifts & Philanthropy
+HOSPITAL DONATION,Gifts & Philanthropy
+ORPHANAGE DONATION,Gifts & Philanthropy
+RAKHI GIFT,Gifts & Philanthropy
+SCSS INVESTMENT,Senior Citizen Savings Scheme (SCSS)
+SCSS DEPOSIT,Senior Citizen Savings Scheme (SCSS)
+SENIOR SAVINGS SCHEME,Senior Citizen Savings Scheme (SCSS)
+POST OFFICE SCSS,Senior Citizen Savings Scheme (SCSS)
+SCSS ACCOUNT,Senior Citizen Savings Scheme (SCSS)
+SENIOR CITIZEN SCHEME,Senior Citizen Savings Scheme (SCSS)
+SCSS MATURITY,Senior Citizen Savings Scheme (SCSS)
+SCSS INTEREST,Senior Citizen Savings Scheme (SCSS)
+SCSS RENEWAL,Senior Citizen Savings Scheme (SCSS)
+SCSS QUARTERLY,Senior Citizen Savings Scheme (SCSS)
+SCSS NEFT,Senior Citizen Savings Scheme (SCSS)
+SCSS CREDIT,Senior Citizen Savings Scheme (SCSS)
+POSTOFFICE SCSS,Senior Citizen Savings Scheme (SCSS)
+SCSS BANK,Senior Citizen Savings Scheme (SCSS)
+SBI SCSS,Senior Citizen Savings Scheme (SCSS)
+CANARA SCSS,Senior Citizen Savings Scheme (SCSS)
+SCSS OPENING,Senior Citizen Savings Scheme (SCSS)
+SCSS TERM,Senior Citizen Savings Scheme (SCSS)
+SCSS ACCOUNT DEBIT,Senior Citizen Savings Scheme (SCSS)
+SCSS EXTENSION,Senior Citizen Savings Scheme (SCSS)
+POST OFFICE MIS,Post Office Savings/MIS
+PO SAVINGS,Post Office Savings/MIS
+INDIA POST MIS,Post Office Savings/MIS
+MONTHLY INCOME SCHEME,Post Office Savings/MIS
+POST OFFICE DEPOSIT,Post Office Savings/MIS
+INDIAPOST PAYMENT,Post Office Savings/MIS
+PO RD,Post Office Savings/MIS
+POST OFFICE RD,Post Office Savings/MIS
+PO FD,Post Office Savings/MIS
+INDIAPOST FD,Post Office Savings/MIS
+POSTOFFICE ACCOUNT,Post Office Savings/MIS
+NSC PURCHASE,Post Office Savings/MIS
+KVP PURCHASE,Post Office Savings/MIS
+POST OFFICE NSC,Post Office Savings/MIS
+POST SAVINGS BANK,Post Office Savings/MIS
+POSB INTEREST,Post Office Savings/MIS
+INDIA POST SAVINGS,Post Office Savings/MIS
+MIS INTEREST,Post Office Savings/MIS
+PO MIS CREDIT,Post Office Savings/MIS
+INDIAPOST MATURITY,Post Office Savings/MIS
+POST OFFICE FD,Post Office Savings/MIS
+SAVINGS CERT,Post Office Savings/MIS
+KISAN VIKAS PATRA,Post Office Savings/MIS
+NATIONAL SAVINGS,Post Office Savings/MIS
+REVERSE MORTGAGE RECEIPT,Reverse Mortgage
+HOME EQUITY INCOME,Reverse Mortgage
+SENIOR HOME EQUITY,Reverse Mortgage
+REVERSE MTG CREDIT,Reverse Mortgage
+MORTGAGE INCOME,Reverse Mortgage
+HOME MORTGAGE SENIOR,Reverse Mortgage
+HDFC REVERSE MORTGAGE,Reverse Mortgage
+SBI REVERSE MORTGAGE,Reverse Mortgage
+CANARA REVERSE MTG,Reverse Mortgage
+MONTHLY MORTGAGE PAY,Reverse Mortgage
+REVERSE MORTGAGE PAYOUT,Reverse Mortgage
+HOME EQUITY LOAN,Reverse Mortgage
+EQUITY RELEASE,Reverse Mortgage
+PROPERTY BACKED LOAN,Reverse Mortgage
+SENIOR PROPERTY LOAN,Reverse Mortgage
+REVERSE LOAN CREDIT,Reverse Mortgage
+HOUSE LOAN SENIOR,Reverse Mortgage
+OLD AGE LOAN,Reverse Mortgage
+VIPAREETA MORTGAGE,Reverse Mortgage
+REVERSE HOME LOAN,Reverse Mortgage
+PARTNER A CAPITAL,Partner A - Capital
+CAPITAL CONTRIBUTION A,Partner A - Capital
+PARTNER CAPITAL INFUSION A,Partner A - Capital
+PARTNER A EQUITY,Partner A - Capital
+INITIAL CAPITAL A,Partner A - Capital
+FOUNDER CAPITAL A,Partner A - Capital
+PROPRIETOR CAPITAL A,Partner A - Capital
+PARTNER A INVEST,Partner A - Capital
+EQUITY PARTNER A,Partner A - Capital
+CAPITAL DEPOSIT A,Partner A - Capital
+PROMOTER CAPITAL A,Partner A - Capital
+WORKING PARTNER CAPITAL A,Partner A - Capital
+SLEEPING PARTNER CAPITAL A,Partner A - Capital
+FIRM CAPITAL A,Partner A - Capital
+CAPITAL ACCOUNT A,Partner A - Capital
+PARTNER A CONTRIBUTION,Partner A - Capital
+OWNERSHIP CAPITAL A,Partner A - Capital
+FIXED CAPITAL A,Partner A - Capital
+PARTNER B CAPITAL,Partner B - Capital
+CAPITAL CONTRIBUTION B,Partner B - Capital
+PARTNER CAPITAL INFUSION B,Partner B - Capital
+PARTNER B EQUITY,Partner B - Capital
+INITIAL CAPITAL B,Partner B - Capital
+FOUNDER CAPITAL B,Partner B - Capital
+PROPRIETOR CAPITAL B,Partner B - Capital
+PARTNER B INVEST,Partner B - Capital
+EQUITY PARTNER B,Partner B - Capital
+CAPITAL DEPOSIT B,Partner B - Capital
+PROMOTER CAPITAL B,Partner B - Capital
+WORKING PARTNER CAPITAL B,Partner B - Capital
+SLEEPING PARTNER CAPITAL B,Partner B - Capital
+FIRM CAPITAL B,Partner B - Capital
+CAPITAL ACCOUNT B,Partner B - Capital
+PARTNER B CONTRIBUTION,Partner B - Capital
+OWNERSHIP CAPITAL B,Partner B - Capital
+FIXED CAPITAL B,Partner B - Capital
+PARTNER A CURRENT,Partner A - Current Account
+CURRENT ACCOUNT A,Partner A - Current Account
+PARTNER A TRANSACTION,Partner A - Current Account
+PARTNER A DEBIT,Partner A - Current Account
+PARTNER A CREDIT,Partner A - Current Account
+PARTNER A WITHDRAW,Partner A - Current Account
+PARTNER A DEPOSIT,Partner A - Current Account
+PARTNER A ACCOUNT,Partner A - Current Account
+CURRENT PARTNER A,Partner A - Current Account
+PARTNER A BALANCE,Partner A - Current Account
+FLOAT ACCOUNT A,Partner A - Current Account
+PARTNER CURRENT A,Partner A - Current Account
+FIRM ACCOUNT PARTNER A,Partner A - Current Account
+RUNNING ACCOUNT A,Partner A - Current Account
+PARTNER A ENTRY,Partner A - Current Account
+DAILY ACCOUNT PARTNER A,Partner A - Current Account
+OPERATIONAL PARTNER A,Partner A - Current Account
+PARTNER ACCOUNT A,Partner A - Current Account
+PARTNER B CURRENT,Partner B - Current Account
+CURRENT ACCOUNT B,Partner B - Current Account
+PARTNER B TRANSACTION,Partner B - Current Account
+PARTNER B DEBIT,Partner B - Current Account
+PARTNER B CREDIT,Partner B - Current Account
+PARTNER B WITHDRAW,Partner B - Current Account
+PARTNER B DEPOSIT,Partner B - Current Account
+PARTNER B ACCOUNT,Partner B - Current Account
+CURRENT PARTNER B,Partner B - Current Account
+PARTNER B BALANCE,Partner B - Current Account
+FLOAT ACCOUNT B,Partner B - Current Account
+PARTNER CURRENT B,Partner B - Current Account
+FIRM ACCOUNT PARTNER B,Partner B - Current Account
+RUNNING ACCOUNT B,Partner B - Current Account
+PARTNER B ENTRY,Partner B - Current Account
+DAILY ACCOUNT PARTNER B,Partner B - Current Account
+OPERATIONAL PARTNER B,Partner B - Current Account
+PARTNER ACCOUNT B,Partner B - Current Account
+PARTNER A DRAWING,Partner A - Drawings
+DRAWING DEBIT A,Partner A - Drawings
+PARTNER A WITHDRAWAL,Partner A - Drawings
+PROPRIETOR DRAW A,Partner A - Drawings
+OWNER DRAW A,Partner A - Drawings
+PERSONAL DRAW A,Partner A - Drawings
+PARTNER A PERSONAL USE,Partner A - Drawings
+FIRM DRAW PARTNER A,Partner A - Drawings
+DRAWINGS A,Partner A - Drawings
+CAPITAL DRAW A,Partner A - Drawings
+PARTNER WITHDRAWAL A,Partner A - Drawings
+PERSONAL EXPENSE A,Partner A - Drawings
+DRAW FROM FIRM A,Partner A - Drawings
+PROPRIETOR WITHDRAWAL A,Partner A - Drawings
+OWNER CASH A,Partner A - Drawings
+PERSONAL EXPENSE FIRM A,Partner A - Drawings
+ADVANCE DRAW A,Partner A - Drawings
+DRAW ACCOUNT A,Partner A - Drawings
+PARTNER B DRAWING,Partner B - Drawings
+DRAWING DEBIT B,Partner B - Drawings
+PARTNER B WITHDRAWAL,Partner B - Drawings
+PROPRIETOR DRAW B,Partner B - Drawings
+OWNER DRAW B,Partner B - Drawings
+PERSONAL DRAW B,Partner B - Drawings
+PARTNER B PERSONAL USE,Partner B - Drawings
+FIRM DRAW PARTNER B,Partner B - Drawings
+DRAWINGS B,Partner B - Drawings
+CAPITAL DRAW B,Partner B - Drawings
+PARTNER WITHDRAWAL B,Partner B - Drawings
+PERSONAL EXPENSE B,Partner B - Drawings
+DRAW FROM FIRM B,Partner B - Drawings
+PROPRIETOR WITHDRAWAL B,Partner B - Drawings
+OWNER CASH B,Partner B - Drawings
+PERSONAL EXPENSE FIRM B,Partner B - Drawings
+ADVANCE DRAW B,Partner B - Drawings
+DRAW ACCOUNT B,Partner B - Drawings
+PARTNER SALARY,Partner Salaries/Bonus
+PARTNER BONUS,Partner Salaries/Bonus
+WORKING PARTNER SALARY,Partner Salaries/Bonus
+FIRM SALARY,Partner Salaries/Bonus
+ACTIVE PARTNER PAY,Partner Salaries/Bonus
+REMUNERATION PARTNER,Partner Salaries/Bonus
+SALARY TO PARTNER,Partner Salaries/Bonus
+PARTNER PAY NEFT,Partner Salaries/Bonus
+WORKING PARTNER PAY,Partner Salaries/Bonus
+PARTNER MONTHLY SALARY,Partner Salaries/Bonus
+PARTNER ANNUAL BONUS,Partner Salaries/Bonus
+PARTNER WAGE,Partner Salaries/Bonus
+PARTNER INCENTIVE,Partner Salaries/Bonus
+PARTNER PERFORMANCE PAY,Partner Salaries/Bonus
+FIRM SALARY DEBIT,Partner Salaries/Bonus
+REMUNERATION DEBIT FIRM,Partner Salaries/Bonus
+SALARY WORKING PARTNER,Partner Salaries/Bonus
+PARTNER EMOLUMENT,Partner Salaries/Bonus
+PARTNER EARNING,Partner Salaries/Bonus
+PARTNER INTEREST,Interest on Partner Capital
+CAPITAL INTEREST PARTNER,Interest on Partner Capital
+INTEREST TO PARTNER,Interest on Partner Capital
+PARTNERSHIP INTEREST,Interest on Partner Capital
+FIRM INTEREST CAPITAL,Interest on Partner Capital
+CAPITAL INTEREST FIRM,Interest on Partner Capital
+PARTNER CAPITAL RETURN,Interest on Partner Capital
+INTEREST ON CAPITAL,Interest on Partner Capital
+PARTNER LOAN INTEREST,Interest on Partner Capital
+FIRM CAPITAL INTEREST,Interest on Partner Capital
+CAPITAL REMUNERATION,Interest on Partner Capital
+PARTNER FINANCE COST,Interest on Partner Capital
+PARTNER INTEREST DEBIT,Interest on Partner Capital
+FIXED CAPITAL INTEREST,Interest on Partner Capital
+FIRM INTEREST PAID,Interest on Partner Capital
+PARTNER INTEREST CREDIT,Interest on Partner Capital
+CAPITAL YIELD,Interest on Partner Capital
+PARTNER RETURN CAPITAL,Interest on Partner Capital
+PARTNER LOAN,Loans from Partners
+LOAN FROM PARTNER,Loans from Partners
+DIRECTOR LOAN FIRM,Loans from Partners
+PARTNER ADVANCE,Loans from Partners
+PROPRIETOR LOAN,Loans from Partners
+FIRM LOAN PARTNER,Loans from Partners
+PARTNER CREDIT FIRM,Loans from Partners
+LOAN RECEIVED PARTNER,Loans from Partners
+WORKING CAPITAL PARTNER,Loans from Partners
+PARTNER DEBT,Loans from Partners
+PARTNER BORROWING,Loans from Partners
+UNSECURED PARTNER LOAN,Loans from Partners
+PARTNER FUND,Loans from Partners
+INFORMAL LOAN PARTNER,Loans from Partners
+PARTNER FINANCE,Loans from Partners
+LOAN CAPITAL PARTNER,Loans from Partners
+PARTNER LEND,Loans from Partners
+OWNER LOAN FIRM,Loans from Partners
+CAPITAL LOAN,Loans from Partners
+ADVANCE PARTNER FIRM,Loans from Partners
+ROC FEES,Firm Registration & Legal
+FIRM REGISTRATION,Firm Registration & Legal
+LEGAL FEES,Firm Registration & Legal
+ADVOCATE FEES,Firm Registration & Legal
+COMPANY LAWYER,Firm Registration & Legal
+NOTARY FEES,Firm Registration & Legal
+STAMP DUTY,Firm Registration & Legal
+COURT FEES,Firm Registration & Legal
+SOLICITOR FEES,Firm Registration & Legal
+DRAFTING FEES,Firm Registration & Legal
+REGISTRATION STAMP,Firm Registration & Legal
+DEED REGISTRATION,Firm Registration & Legal
+PARTNERSHIP DEED,Firm Registration & Legal
+FIRM DEED COST,Firm Registration & Legal
+LEGAL DOCUMENTATION,Firm Registration & Legal
+ADVOCATE RETAINER,Firm Registration & Legal
+CORPORATE LAWYER,Firm Registration & Legal
+COMPLIANCE LEGAL,Firm Registration & Legal
+LEGAL COUNSEL FEES,Firm Registration & Legal
+AGREEMENT DRAFTING,Firm Registration & Legal
+CONTRACT LEGAL,Firm Registration & Legal
+NOTARIZATION FEES,Firm Registration & Legal
+FIRM LEGAL,Firm Registration & Legal
+SHARE ALLOTMENT,Paid-up Equity Share Capital
+EQUITY CAPITAL,Paid-up Equity Share Capital
+IPO RECEIPT,Paid-up Equity Share Capital
+SHARE SUBSCRIPTION,Paid-up Equity Share Capital
+CAPITAL ALLOTMENT,Paid-up Equity Share Capital
+EQUITY ALLOTMENT,Paid-up Equity Share Capital
+SHARE ISSUE CREDIT,Paid-up Equity Share Capital
+PVTLTD CAPITAL,Paid-up Equity Share Capital
+FOUNDER SHARE,Paid-up Equity Share Capital
+PROMOTER SHARE,Paid-up Equity Share Capital
+PAID UP CAPITAL,Paid-up Equity Share Capital
+EQUITY ISSUE,Paid-up Equity Share Capital
+SHARE CERTIFICATE,Paid-up Equity Share Capital
+PVTLTD EQUITY,Paid-up Equity Share Capital
+CAPITAL RAISE,Paid-up Equity Share Capital
+STARTUP EQUITY,Paid-up Equity Share Capital
+SHARE SUBSCRIPTION MONEY,Paid-up Equity Share Capital
+RIGHTS ISSUE,Paid-up Equity Share Capital
+PREFERENTIAL ALLOTMENT,Paid-up Equity Share Capital
+FDI EQUITY,Paid-up Equity Share Capital
+SHARE PREMIUM,Securities Premium Account
+SECURITIES PREMIUM,Securities Premium Account
+PREMIUM ON SHARES,Securities Premium Account
+IPO PREMIUM,Securities Premium Account
+SHARE PREMIUM ACCOUNT,Securities Premium Account
+EQUITY PREMIUM,Securities Premium Account
+PREMIUM ALLOTMENT,Securities Premium Account
+ISSUE PREMIUM,Securities Premium Account
+PREMIUM CAPITAL,Securities Premium Account
+PVTLTD PREMIUM,Securities Premium Account
+ADDITIONAL EQUITY PREMIUM,Securities Premium Account
+STARTUP PREMIUM,Securities Premium Account
+PREFERENTIAL PREMIUM,Securities Premium Account
+RIGHTS PREMIUM,Securities Premium Account
+VALUATION PREMIUM,Securities Premium Account
+SHARE AT PREMIUM,Securities Premium Account
+PREMIUM ISSUE,Securities Premium Account
+PREMIUM RECEIPT,Securities Premium Account
+ABOVE PAR VALUE,Securities Premium Account
+SHARE OVERPRICE,Securities Premium Account
+GENERAL RESERVE,General Reserve
+PROFIT TO RESERVE,General Reserve
+RESERVE TRANSFER,General Reserve
+RESERVE FUND,General Reserve
+STATUTORY RESERVE,General Reserve
+PROFIT APPROPRIATION,General Reserve
+RESERVE ALLOCATION,General Reserve
+SURPLUS RESERVE,General Reserve
+RETAINED PROFIT,General Reserve
+UNDISTRIBUTED RESERVE,General Reserve
+COMPANY RESERVE,General Reserve
+FIRM RESERVE,General Reserve
+VOLUNTARY RESERVE,General Reserve
+PROFIT RESERVE,General Reserve
+ANNUAL RESERVE,General Reserve
+FREE RESERVE,General Reserve
+BUFFER RESERVE,General Reserve
+PRUDENTIAL RESERVE,General Reserve
+CORPORATE RESERVE,General Reserve
+PROFIT PLOUGHBACK,General Reserve
+TERM LOAN RECEIPT,Secured Loans (Bank/Term Loans)
+BANK LOAN CREDIT,Secured Loans (Bank/Term Loans)
+SECURED LOAN,Secured Loans (Bank/Term Loans)
+PROJECT LOAN,Secured Loans (Bank/Term Loans)
+HDFC TERM LOAN,Secured Loans (Bank/Term Loans)
+SBI TERM LOAN,Secured Loans (Bank/Term Loans)
+CAPEX LOAN,Secured Loans (Bank/Term Loans)
+INFRASTRUCTURE LOAN,Secured Loans (Bank/Term Loans)
+MACHINERY LOAN,Secured Loans (Bank/Term Loans)
+EQUIPMENT LOAN,Secured Loans (Bank/Term Loans)
+VEHICLE LOAN PVTLTD,Secured Loans (Bank/Term Loans)
+PROPERTY LOAN,Secured Loans (Bank/Term Loans)
+MORTGAGE LOAN,Secured Loans (Bank/Term Loans)
+BANK SANCTION,Secured Loans (Bank/Term Loans)
+LOAN DISBURSEMENT,Secured Loans (Bank/Term Loans)
+TERM LOAN CREDIT,Secured Loans (Bank/Term Loans)
+AXIS TERM LOAN,Secured Loans (Bank/Term Loans)
+ICICI TERM LOAN,Secured Loans (Bank/Term Loans)
+KOTAK TERM LOAN,Secured Loans (Bank/Term Loans)
+BANK FINANCE,Secured Loans (Bank/Term Loans)
+PROJECT FINANCE,Secured Loans (Bank/Term Loans)
+ASSET BACKED LOAN,Secured Loans (Bank/Term Loans)
+COLLATERAL LOAN,Secured Loans (Bank/Term Loans)
+SECURED TERM,Secured Loans (Bank/Term Loans)
+DIRECTOR LOAN,Unsecured Loans (From Directors/Members)
+UNSECURED LOAN,Unsecured Loans (From Directors/Members)
+MEMBER LOAN,Unsecured Loans (From Directors/Members)
+PROMOTER ADVANCE,Unsecured Loans (From Directors/Members)
+SHAREHOLDER ADVANCE,Unsecured Loans (From Directors/Members)
+DIRECTOR ADVANCE,Unsecured Loans (From Directors/Members)
+LOAN FROM DIRECTOR,Unsecured Loans (From Directors/Members)
+DIRECTOR FUND,Unsecured Loans (From Directors/Members)
+MEMBER ADVANCE,Unsecured Loans (From Directors/Members)
+SHAREHOLDER LOAN,Unsecured Loans (From Directors/Members)
+DIRECTOR CREDIT,Unsecured Loans (From Directors/Members)
+INTERNAL LOAN,Unsecured Loans (From Directors/Members)
+DIRECTOR UNSECURED,Unsecured Loans (From Directors/Members)
+COMPANY DIRECTOR LOAN,Unsecured Loans (From Directors/Members)
+PROMOTER FUNDING,Unsecured Loans (From Directors/Members)
+DIRECTOR DEPOSIT,Unsecured Loans (From Directors/Members)
+RELATED PARTY LOAN,Unsecured Loans (From Directors/Members)
+DIRECTOR RECEIVABLE,Unsecured Loans (From Directors/Members)
+OWNER FUNDING,Unsecured Loans (From Directors/Members)
+DIRECTOR CONTRIBUTION,Unsecured Loans (From Directors/Members)
+DIRECTOR SALARY,Directors' Remuneration
+MD SALARY,Directors' Remuneration
+CEO PAY,Directors' Remuneration
+DIRECTOR FEES,Directors' Remuneration
+BOARD REMUNERATION,Directors' Remuneration
+MANAGING DIRECTOR PAY,Directors' Remuneration
+DIRECTOR COMMISSION,Directors' Remuneration
+EXECUTIVE DIRECTOR PAY,Directors' Remuneration
+DIRECTOR MONTHLY,Directors' Remuneration
+WHOLE TIME DIRECTOR,Directors' Remuneration
+DIRECTOR ANNUAL PAY,Directors' Remuneration
+DIRECTOR BONUS,Directors' Remuneration
+MD REMUNERATION,Directors' Remuneration
+CEO MONTHLY,Directors' Remuneration
+DIRECTOR ALLOWANCE,Directors' Remuneration
+DIRECTOR COMPENSATION,Directors' Remuneration
+BOARD MEMBER PAY,Directors' Remuneration
+MD FEES,Directors' Remuneration
+DIRECTOR SITTING FEES,Directors' Remuneration
+DIRECTOR PAYROLL,Directors' Remuneration
+DIRECTOR EMOLUMENTS,Directors' Remuneration
+ED SALARY,Directors' Remuneration
+AUDIT FEES,Statutory Audit Fees
+CA AUDIT FEES,Statutory Audit Fees
+STATUTORY AUDIT,Statutory Audit Fees
+AUDITOR PAYMENT,Statutory Audit Fees
+CA FIRM FEES,Statutory Audit Fees
+AUDIT CHARGES,Statutory Audit Fees
+ANNUAL AUDIT,Statutory Audit Fees
+EXTERNAL AUDIT,Statutory Audit Fees
+AUDIT FIRM PAYMENT,Statutory Audit Fees
+STATUTORY AUDITOR,Statutory Audit Fees
+AUDIT ENGAGEMENT,Statutory Audit Fees
+YEAR END AUDIT,Statutory Audit Fees
+AUDITOR RETAINER,Statutory Audit Fees
+AUDIT EXPENSE,Statutory Audit Fees
+CA STATUTORY FEES,Statutory Audit Fees
+PVTLTD AUDIT,Statutory Audit Fees
+DELOITTE FEES,Statutory Audit Fees
+PWC FEES,Statutory Audit Fees
+EY FEES,Statutory Audit Fees
+KPMG FEES,Statutory Audit Fees
+ROC FILING,ROC Filing & Legal Compliance
+MCA PAYMENT,ROC Filing & Legal Compliance
+FORM AOC-4,ROC Filing & Legal Compliance
+ANNUAL RETURN FILING,ROC Filing & Legal Compliance
+MCA FEES,ROC Filing & Legal Compliance
+COMPANY SECRETARY FEES,ROC Filing & Legal Compliance
+CS FEES,ROC Filing & Legal Compliance
+ANNUAL FILING,ROC Filing & Legal Compliance
+FORM MGT-7,ROC Filing & Legal Compliance
+ROC ANNUAL RETURN,ROC Filing & Legal Compliance
+MCA PORTAL,ROC Filing & Legal Compliance
+CS COMPLIANCE,ROC Filing & Legal Compliance
+COMPANY LAW FEES,ROC Filing & Legal Compliance
+MCA FORM FEES,ROC Filing & Legal Compliance
+FORM DIR-3,ROC Filing & Legal Compliance
+FORM SH-7,ROC Filing & Legal Compliance
+PVTLTD COMPLIANCE,ROC Filing & Legal Compliance
+COMPANY ANNUAL FILING,ROC Filing & Legal Compliance
+ROC PENALTY,ROC Filing & Legal Compliance
+SECRETARIAL FEES,ROC Filing & Legal Compliance
+CSR DONATION,CSR Expenses
+CORPORATE SOCIAL,CSR Expenses
+CSR ACTIVITY,CSR Expenses
+CSR FUND,CSR Expenses
+SOCIAL RESPONSIBILITY,CSR Expenses
+CSR NGO PAYMENT,CSR Expenses
+CSR PROGRAM,CSR Expenses
+CSR PROJECT,CSR Expenses
+COMMUNITY FUND,CSR Expenses
+CSR BENEFICIARY,CSR Expenses
+CSR COMPLIANCE,CSR Expenses
+CSR INITIATIVE,CSR Expenses
+CSR TRUST,CSR Expenses
+CSR EDUCATION,CSR Expenses
+CSR HEALTHCARE,CSR Expenses
+CSR ENVIRONMENT,CSR Expenses
+2% CSR,CSR Expenses
+CSR ANNUAL,CSR Expenses
+CSR EXPENDITURE,CSR Expenses
+CSR TRANSFER,CSR Expenses
+INCORPORATION FEES,Preliminary/Incorporation Expenses
+COMPANY FORMATION,Preliminary/Incorporation Expenses
+REGISTRATION FEES,Preliminary/Incorporation Expenses
+INCORPORATION COST,Preliminary/Incorporation Expenses
+STARTUP REGISTRATION,Preliminary/Incorporation Expenses
+MCA INCORPORATION,Preliminary/Incorporation Expenses
+COMPANY SETUP COST,Preliminary/Incorporation Expenses
+FORMATION EXPENSE,Preliminary/Incorporation Expenses
+PROSPECTUS COST,Preliminary/Incorporation Expenses
+MEMORANDUM COST,Preliminary/Incorporation Expenses
+MOA AOA FILING,Preliminary/Incorporation Expenses
+PROMOTER EXPENSE,Preliminary/Incorporation Expenses
+PRE-OPERATIVE COST,Preliminary/Incorporation Expenses
+STARTUP LEGAL FEES,Preliminary/Incorporation Expenses
+INCORPORATION STAMP,Preliminary/Incorporation Expenses
+COMPANY LEGAL SETUP,Preliminary/Incorporation Expenses
+ROC INCORPORATION,Preliminary/Incorporation Expenses
+MCA INCORPORATION FEE,Preliminary/Incorporation Expenses
+NAME RESERVATION,Preliminary/Incorporation Expenses
+DIN FEES,Preliminary/Incorporation Expenses
+DESIGNATED PARTNER A,Designated Partner A - Contribution
+DP A CONTRIBUTION,Designated Partner A - Contribution
+LLP PARTNER A CAPITAL,Designated Partner A - Contribution
+LLP CAPITAL PARTNER A,Designated Partner A - Contribution
+DP CONTRIBUTION A,Designated Partner A - Contribution
+LLP FOUNDING PARTNER A,Designated Partner A - Contribution
+PARTNER A LLP FUND,Designated Partner A - Contribution
+DPIN PARTNER A,Designated Partner A - Contribution
+LLP EQUITY A,Designated Partner A - Contribution
+LLP INVESTOR A,Designated Partner A - Contribution
+LLP PROMOTER A,Designated Partner A - Contribution
+LLP CAPITAL INFUSION A,Designated Partner A - Contribution
+LLP PARTNER A DEPOSIT,Designated Partner A - Contribution
+DP A INVEST,Designated Partner A - Contribution
+LLP DESIGNATED A,Designated Partner A - Contribution
+LLP FOUNDER A,Designated Partner A - Contribution
+LLP CONTRIBUTION A,Designated Partner A - Contribution
+LLP PARTNER A ACCOUNT,Designated Partner A - Contribution
+DESIGNATED PARTNER B,Designated Partner B - Contribution
+DP B CONTRIBUTION,Designated Partner B - Contribution
+LLP PARTNER B CAPITAL,Designated Partner B - Contribution
+LLP CAPITAL PARTNER B,Designated Partner B - Contribution
+DP CONTRIBUTION B,Designated Partner B - Contribution
+LLP FOUNDING PARTNER B,Designated Partner B - Contribution
+PARTNER B LLP FUND,Designated Partner B - Contribution
+DPIN PARTNER B,Designated Partner B - Contribution
+LLP EQUITY B,Designated Partner B - Contribution
+LLP INVESTOR B,Designated Partner B - Contribution
+LLP PROMOTER B,Designated Partner B - Contribution
+LLP CAPITAL INFUSION B,Designated Partner B - Contribution
+LLP PARTNER B DEPOSIT,Designated Partner B - Contribution
+DP B INVEST,Designated Partner B - Contribution
+LLP DESIGNATED B,Designated Partner B - Contribution
+LLP FOUNDER B,Designated Partner B - Contribution
+LLP CONTRIBUTION B,Designated Partner B - Contribution
+LLP PARTNER B ACCOUNT,Designated Partner B - Contribution
+LLP PARTNER PAY,Remuneration to Designated Partners
+DESIGNATED PARTNER SALARY,Remuneration to Designated Partners
+LLP DP REMUNERATION,Remuneration to Designated Partners
+LLP SALARY DP,Remuneration to Designated Partners
+PARTNER REMUNERATION LLP,Remuneration to Designated Partners
+DP SALARY LLP,Remuneration to Designated Partners
+LLP WORKING PARTNER PAY,Remuneration to Designated Partners
+LLP ACTIVE PARTNER,Remuneration to Designated Partners
+DP MONTHLY PAY,Remuneration to Designated Partners
+LLP DESIGNATED SALARY,Remuneration to Designated Partners
+LLP DP MONTHLY,Remuneration to Designated Partners
+LLP PARTNER MONTHLY,Remuneration to Designated Partners
+DESIGNATED PARTNER BONUS,Remuneration to Designated Partners
+LLP REMUNERATION DEBIT,Remuneration to Designated Partners
+LLP PARTNER BONUS,Remuneration to Designated Partners
+DP ANNUAL PAY,Remuneration to Designated Partners
+LLP DP EMOLUMENT,Remuneration to Designated Partners
+LLP PARTNER WAGE,Remuneration to Designated Partners
+LLP PARTNER INTEREST,Interest on Partners' Contribution
+INTEREST LLP CAPITAL,Interest on Partners' Contribution
+DP CAPITAL INTEREST,Interest on Partners' Contribution
+LLP CAPITAL RETURN,Interest on Partners' Contribution
+PARTNER CONTRIBUTION INTEREST,Interest on Partners' Contribution
+LLP INTEREST DEBIT,Interest on Partners' Contribution
+LLP FINANCE COST,Interest on Partners' Contribution
+LLP INTEREST CREDIT,Interest on Partners' Contribution
+LLP CAPITAL YIELD,Interest on Partners' Contribution
+PARTNER INTEREST LLP,Interest on Partners' Contribution
+DESIGNATED PARTNER INTEREST,Interest on Partners' Contribution
+LLP FUND INTEREST,Interest on Partners' Contribution
+LLP PARTNER RETURN,Interest on Partners' Contribution
+CONTRIBUTION INTEREST LLP,Interest on Partners' Contribution
+LLP INTEREST PAID,Interest on Partners' Contribution
+PARTNER INTEREST RATE LLP,Interest on Partners' Contribution
+LLP CAPITAL REMUNERATION,Interest on Partners' Contribution
+DP INTEREST CREDIT,Interest on Partners' Contribution
+FORM 8 FILING,ROC Filing Fees (Form 8/11)
+FORM 11 LLP,ROC Filing Fees (Form 8/11)
+LLP ROC FEES,ROC Filing Fees (Form 8/11)
+LLP ANNUAL RETURN,ROC Filing Fees (Form 8/11)
+LLP FILING FEES,ROC Filing Fees (Form 8/11)
+FORM 8 LLP,ROC Filing Fees (Form 8/11)
+LLP MCA FEES,ROC Filing Fees (Form 8/11)
+LLP ROC PAYMENT,ROC Filing Fees (Form 8/11)
+LLP COMPLIANCE FEE,ROC Filing Fees (Form 8/11)
+MCA LLP FILING,ROC Filing Fees (Form 8/11)
+LLP STATEMENT ACCOUNT,ROC Filing Fees (Form 8/11)
+LLP ANNUAL FILING,ROC Filing Fees (Form 8/11)
+ROC LLP FEES,ROC Filing Fees (Form 8/11)
+LLP FORM FEES,ROC Filing Fees (Form 8/11)
+LLP FILING MCA,ROC Filing Fees (Form 8/11)
+LLP FORM 8 FEES,ROC Filing Fees (Form 8/11)
+LLP FORM 11 FEES,ROC Filing Fees (Form 8/11)
+LLP RETURN FILING,ROC Filing Fees (Form 8/11)
+LLP MCA PORTAL,ROC Filing Fees (Form 8/11)
+LLP AUDIT FEES,Statutory Audit & Tax Fees
+TAX AUDIT FEES,Statutory Audit & Tax Fees
+AUDIT TAX,Statutory Audit & Tax Fees
+INCOME TAX AUDIT,Statutory Audit & Tax Fees
+CA TAX FEES,Statutory Audit & Tax Fees
+LLP CA FEES,Statutory Audit & Tax Fees
+LLP AUDITOR FEES,Statutory Audit & Tax Fees
+TAX AUDIT CA,Statutory Audit & Tax Fees
+FORM 3CD FEES,Statutory Audit & Tax Fees
+AUDIT ENGAGEMENT LLP,Statutory Audit & Tax Fees
+TAX CONSULTANT FEES,Statutory Audit & Tax Fees
+LLP STATUTORY AUDIT,Statutory Audit & Tax Fees
+LLP ANNUAL AUDIT,Statutory Audit & Tax Fees
+AUDIT LLP DEBIT,Statutory Audit & Tax Fees
+ITR FILING FEES,Statutory Audit & Tax Fees
+TAX RETURN FILING,Statutory Audit & Tax Fees
+TAX PREPARER FEES,Statutory Audit & Tax Fees
+AUDIT FIRM LLP,Statutory Audit & Tax Fees
+LLP AUDIT EXPENSE,Statutory Audit & Tax Fees
+STATUTORY AUDIT LLP,Statutory Audit & Tax Fees
+PARTNER LOAN LLP,Loans from Partners/Members
+MEMBER LOAN LLP,Loans from Partners/Members
+LLP PARTNER ADVANCE,Loans from Partners/Members
+LLP MEMBER FUND,Loans from Partners/Members
+LOAN TO LLP,Loans from Partners/Members
+LLP PARTNER DEBT,Loans from Partners/Members
+PARTNER FUNDING LLP,Loans from Partners/Members
+MEMBER ADVANCE LLP,Loans from Partners/Members
+LLP INTERNAL LOAN,Loans from Partners/Members
+DESIGNATED PARTNER LOAN,Loans from Partners/Members
+LLP BORROWING PARTNER,Loans from Partners/Members
+UNSECURED LLP LOAN,Loans from Partners/Members
+LLP PARTNER CREDIT,Loans from Partners/Members
+LLP FUND FROM PARTNER,Loans from Partners/Members
+LLP MEMBER LOAN,Loans from Partners/Members
+LLP PARTNER DEPOSIT,Loans from Partners/Members
+MEMBER CREDIT LLP,Loans from Partners/Members
+LLP LOAN DEBIT,Loans from Partners/Members
+PARTNER LENDING LLP,Loans from Partners/Members
+LLP RELATED PARTY LOAN,Loans from Partners/Members
+RETAINED EARNINGS,Unallocated Profit/Loss
+UNDISTRIBUTED PROFIT,Unallocated Profit/Loss
+PROFIT TRANSFER,Unallocated Profit/Loss
+SURPLUS CARRIED,Unallocated Profit/Loss
+UNALLOCATED SURPLUS,Unallocated Profit/Loss
+P&L TRANSFER,Unallocated Profit/Loss
+PROFIT UNALLOCATED,Unallocated Profit/Loss
+LOSS CARRIED FORWARD,Unallocated Profit/Loss
+YEAR END PROFIT,Unallocated Profit/Loss
+ANNUAL SURPLUS,Unallocated Profit/Loss
+PROFIT CARRYOVER,Unallocated Profit/Loss
+UNDISTRIBUTED SURPLUS,Unallocated Profit/Loss
+ACCUMULATED PROFIT,Unallocated Profit/Loss
+NET PROFIT TRANSFER,Unallocated Profit/Loss
+LLP PROFIT,Unallocated Profit/Loss
+UNAPPROPRIATED PROFIT,Unallocated Profit/Loss
+PROFIT ALLOCATION,Unallocated Profit/Loss
+SURPLUS PROFIT,Unallocated Profit/Loss
+UNASSIGNED EARNINGS,Unallocated Profit/Loss
+RETAINED SURPLUS,Unallocated Profit/Loss
+AUTHORIZED CAPITAL,Authorized Share Capital
+SHARE CAPITAL AUTH,Authorized Share Capital
+MOA CAPITAL,Authorized Share Capital
+NOMINAL CAPITAL,Authorized Share Capital
+REGISTERED CAPITAL,Authorized Share Capital
+MAX SHARE CAPITAL,Authorized Share Capital
+AUTHORISED EQUITY,Authorized Share Capital
+AUTH CAPITAL MOA,Authorized Share Capital
+STATUTORY CAPITAL,Authorized Share Capital
+AUTHORIZED EQUITY CAP,Authorized Share Capital
+MOA AUTHORIZED,Authorized Share Capital
+MAXIMUM CAPITAL,Authorized Share Capital
+CAPITAL CEILING,Authorized Share Capital
+AUTHORIZED PVTLTD CAPITAL,Authorized Share Capital
+COMPANY MAX CAPITAL,Authorized Share Capital
+NOMINAL VALUE,Authorized Share Capital
+AUTH SHARE CAP,Authorized Share Capital
+AUTHORIZED PVTLTD,Authorized Share Capital
+COMPANY AUTHORISED CAPITAL,Authorized Share Capital
+CAPITAL LIMIT,Authorized Share Capital
+ISSUED CAPITAL,Issued and Paid-up Equity Capital
+EQUITY SHARES PAID,Issued and Paid-up Equity Capital
+SHARE ALLOTMENT PAID,Issued and Paid-up Equity Capital
+LISTED EQUITY,Issued and Paid-up Equity Capital
+PUBLIC EQUITY,Issued and Paid-up Equity Capital
+ISSUED EQUITY SHARE,Issued and Paid-up Equity Capital
+SUBSCRIBED CAPITAL,Issued and Paid-up Equity Capital
+ALLOTTED SHARES,Issued and Paid-up Equity Capital
+IPO ALLOTMENT,Issued and Paid-up Equity Capital
+FPO ALLOTMENT,Issued and Paid-up Equity Capital
+PAID UP EQUITY,Issued and Paid-up Equity Capital
+PUBLIC SHARE CAPITAL,Issued and Paid-up Equity Capital
+LISTED SHARE CAPITAL,Issued and Paid-up Equity Capital
+SUBSCRIBED EQUITY,Issued and Paid-up Equity Capital
+SHARE CALLS PAID,Issued and Paid-up Equity Capital
+PARTLY PAID SHARES,Issued and Paid-up Equity Capital
+FULLY PAID SHARES,Issued and Paid-up Equity Capital
+SHARE CAPITAL ISSUED,Issued and Paid-up Equity Capital
+PAID UP STOCK,Issued and Paid-up Equity Capital
+PREFERENCE SHARES,Preference Share Capital
+PREF SHARE CAPITAL,Preference Share Capital
+CUMULATIVE PREFERENCE,Preference Share Capital
+PREF DIVIDEND,Preference Share Capital
+PREFERRED STOCK,Preference Share Capital
+PREFERENTIAL CAPITAL,Preference Share Capital
+REDEEMABLE PREF SHARE,Preference Share Capital
+PREF SHARE ISSUE,Preference Share Capital
+NON CUMULATIVE PREF,Preference Share Capital
+PARTICIPATING PREF,Preference Share Capital
+CONVERTIBLE PREF SHARE,Preference Share Capital
+PREF EQUITY,Preference Share Capital
+PREFERENCE DIVIDEND,Preference Share Capital
+PREF SHARE ALLOTMENT,Preference Share Capital
+PREF STOCK,Preference Share Capital
+SENIOR EQUITY,Preference Share Capital
+HYBRID CAPITAL,Preference Share Capital
+PREF SHARE CREDIT,Preference Share Capital
+PREFERENCE CAPITAL,Preference Share Capital
+MANDATORY CONVERTIBLE,Preference Share Capital
+CAPITAL REDEMPTION,Capital Redemption Reserve
+CRR RESERVE,Capital Redemption Reserve
+BUYBACK RESERVE,Capital Redemption Reserve
+SHARE BUYBACK RESERVE,Capital Redemption Reserve
+REDEMPTION RESERVE,Capital Redemption Reserve
+STATUTORY CRR,Capital Redemption Reserve
+CAPITAL RESERVE,Capital Redemption Reserve
+CRR TRANSFER,Capital Redemption Reserve
+CRR FUND,Capital Redemption Reserve
+BUYBACK COMPLIANCE,Capital Redemption Reserve
+CAPITAL REPURCHASE RESERVE,Capital Redemption Reserve
+CRR ACCOUNT,Capital Redemption Reserve
+SHARE REPURCHASE RESERVE,Capital Redemption Reserve
+STATUTORY REDEMPTION,Capital Redemption Reserve
+CAPITAL RECAPTURE,Capital Redemption Reserve
+CRR BALANCE,Capital Redemption Reserve
+BUYBACK FUND,Capital Redemption Reserve
+MANDATORY RESERVE CRR,Capital Redemption Reserve
+SHARE CANCEL RESERVE,Capital Redemption Reserve
+EQUITY CRR,Capital Redemption Reserve
+DEBENTURE ISSUE,Debentures & Bonds
+BOND ISSUE,Debentures & Bonds
+NCD ISSUE,Debentures & Bonds
+CORPORATE BOND,Debentures & Bonds
+DEBENTURE REDEMPTION,Debentures & Bonds
+BOND PAYMENT,Debentures & Bonds
+BOND INTEREST PAID,Debentures & Bonds
+NCD PAYMENT,Debentures & Bonds
+LISTED BOND,Debentures & Bonds
+DEBENTURE HOLDER,Debentures & Bonds
+BOND MATURITY,Debentures & Bonds
+DEBENTURE TRUSTEE,Debentures & Bonds
+ZERO COUPON BOND,Debentures & Bonds
+CONVERTIBLE DEBENTURE,Debentures & Bonds
+SECURED NCD,Debentures & Bonds
+UNSECURED NCD,Debentures & Bonds
+BOND SUBSCRIPTION,Debentures & Bonds
+DEBENTURE SUBSCRIPTION,Debentures & Bonds
+PUBLIC NCD,Debentures & Bonds
+DEBENTURE CREDIT,Debentures & Bonds
+LONG TERM LOAN,Long-term Bank Loans (Secured)
+TERM LOAN LONG,Long-term Bank Loans (Secured)
+SECURED TERM LOAN,Long-term Bank Loans (Secured)
+PROJECT FINANCE LOAN,Long-term Bank Loans (Secured)
+CAPITAL LOAN LONG,Long-term Bank Loans (Secured)
+LONG TENURE LOAN,Long-term Bank Loans (Secured)
+INFRASTRUCTURE FINANCE,Long-term Bank Loans (Secured)
+POWER PROJECT LOAN,Long-term Bank Loans (Secured)
+ROAD FINANCE LOAN,Long-term Bank Loans (Secured)
+INDUSTRIAL LOAN,Long-term Bank Loans (Secured)
+PLANT MACHINERY LOAN,Long-term Bank Loans (Secured)
+LONG TERM HDFC,Long-term Bank Loans (Secured)
+LONG TERM SBI,Long-term Bank Loans (Secured)
+LONG TERM ICICI,Long-term Bank Loans (Secured)
+CAPEX FINANCE,Long-term Bank Loans (Secured)
+LONG TERM SECURED,Long-term Bank Loans (Secured)
+TERM LOAN 5 YEAR,Long-term Bank Loans (Secured)
+TERM LOAN 10 YEAR,Long-term Bank Loans (Secured)
+LONG TERM CREDIT,Long-term Bank Loans (Secured)
+NSE LISTING FEES,Stock Exchange Listing Fees
+BSE LISTING FEES,Stock Exchange Listing Fees
+SEBI FEES,Stock Exchange Listing Fees
+STOCK EXCHANGE FEE,Stock Exchange Listing Fees
+LISTING CHARGES,Stock Exchange Listing Fees
+ANNUAL LISTING FEE,Stock Exchange Listing Fees
+EXCHANGE COMPLIANCE FEE,Stock Exchange Listing Fees
+NSE ANNUAL,Stock Exchange Listing Fees
+BSE ANNUAL FEES,Stock Exchange Listing Fees
+MARKET FEE,Stock Exchange Listing Fees
+EXCHANGE MEMBERSHIP,Stock Exchange Listing Fees
+LISTING ANNUAL CHARGE,Stock Exchange Listing Fees
+SEBI REGISTRATION,Stock Exchange Listing Fees
+EXCHANGE SUBSCRIPTION,Stock Exchange Listing Fees
+LISTING MAINTENANCE,Stock Exchange Listing Fees
+EXCHANGE DUES,Stock Exchange Listing Fees
+LISTING AGREEMENT FEE,Stock Exchange Listing Fees
+STOCK EXCHANGE DUES,Stock Exchange Listing Fees
+MARKET LISTING CHARGE,Stock Exchange Listing Fees
+SEBI ANNUAL,Stock Exchange Listing Fees
+RTA FEES,Registrar & Transfer Agent (RTA) Fees
+KFINTECH PAYMENT,Registrar & Transfer Agent (RTA) Fees
+CAMS PAYMENT,Registrar & Transfer Agent (RTA) Fees
+LINK INTIME FEES,Registrar & Transfer Agent (RTA) Fees
+REGISTRAR FEES,Registrar & Transfer Agent (RTA) Fees
+TRANSFER AGENT,Registrar & Transfer Agent (RTA) Fees
+MCS REGISTRAR,Registrar & Transfer Agent (RTA) Fees
+BEETAL REGISTRAR,Registrar & Transfer Agent (RTA) Fees
+SHARE REGISTRAR,Registrar & Transfer Agent (RTA) Fees
+INVESTOR SERVICES,Registrar & Transfer Agent (RTA) Fees
+SHARE TRANSFER FEES,Registrar & Transfer Agent (RTA) Fees
+RTA ANNUAL,Registrar & Transfer Agent (RTA) Fees
+REGISTRAR ANNUAL,Registrar & Transfer Agent (RTA) Fees
+TRANSFER AGENT FEES,Registrar & Transfer Agent (RTA) Fees
+SHARE REGISTRY,Registrar & Transfer Agent (RTA) Fees
+INVESTOR REGISTRAR,Registrar & Transfer Agent (RTA) Fees
+RTA QUARTERLY,Registrar & Transfer Agent (RTA) Fees
+SHARE MAINTENANCE,Registrar & Transfer Agent (RTA) Fees
+CAMS RTA,Registrar & Transfer Agent (RTA) Fees
+KFIN RTA,Registrar & Transfer Agent (RTA) Fees
+ANNUAL REPORT COST,Investor Relations & Annual Reports
+INVESTOR MEET,Investor Relations & Annual Reports
+SHAREHOLDER COMMUNICATION,Investor Relations & Annual Reports
+AGM EXPENSES,Investor Relations & Annual Reports
+INVESTOR RELATIONS,Investor Relations & Annual Reports
+SHAREHOLDER MEET,Investor Relations & Annual Reports
+EGM COST,Investor Relations & Annual Reports
+ANNUAL REPORT PRINT,Investor Relations & Annual Reports
+INVESTOR CONFERENCE,Investor Relations & Annual Reports
+ANALYST MEET,Investor Relations & Annual Reports
+ROAD SHOW COST,Investor Relations & Annual Reports
+PROXY COMMUNICATION,Investor Relations & Annual Reports
+DIVIDEND ANNOUNCEMENT,Investor Relations & Annual Reports
+INVESTOR BROCHURE,Investor Relations & Annual Reports
+SHAREHOLDERS LETTER,Investor Relations & Annual Reports
+ANNUAL GENERAL MEET,Investor Relations & Annual Reports
+INVESTOR EVENT,Investor Relations & Annual Reports
+SHAREHOLDER GIFT,Investor Relations & Annual Reports
+COMPANY NEWSLETTER,Investor Relations & Annual Reports
+INVESTOR PORTAL,Investor Relations & Annual Reports
+DIVIDEND PAYMENT,Dividends Payable
+DIVIDEND DECLARED,Dividends Payable
+EQUITY DIVIDEND,Dividends Payable
+SHAREHOLDER DIVIDEND,Dividends Payable
+INTERIM DIVIDEND,Dividends Payable
+FINAL DIVIDEND,Dividends Payable
+DIVIDEND TRANSFER,Dividends Payable
+DIVIDEND PAYOUT,Dividends Payable
+DIVIDEND NEFT,Dividends Payable
+DIVIDEND ECS,Dividends Payable
+NACH DIVIDEND,Dividends Payable
+DIVIDEND DISTRIBUTION,Dividends Payable
+SHAREHOLDER PAYOUT,Dividends Payable
+DIVIDEND CREDIT SHAREHOLDER,Dividends Payable
+DIVIDEND CHEQUE,Dividends Payable
+DECLARED DIVIDEND,Dividends Payable
+DIVIDEND OUTFLOW,Dividends Payable
+DIVIDEND REMITTANCE,Dividends Payable
+QUARTERLY DIVIDEND,Dividends Payable
+ANNUAL DIVIDEND,Dividends Payable
+UNCLAIMED DIVIDEND,Unclaimed Dividends
+IEPF TRANSFER,Unclaimed Dividends
+UNPAID DIVIDEND,Unclaimed Dividends
+DIVIDEND UNPAID,Unclaimed Dividends
+IEPF REMITTANCE,Unclaimed Dividends
+UNCLAIMED SHAREHOLDER,Unclaimed Dividends
+IEPF DEPOSIT,Unclaimed Dividends
+DIVIDEND LAPSE,Unclaimed Dividends
+UNPAID SHAREHOLDER,Unclaimed Dividends
+UNCLAIMED AMOUNT,Unclaimed Dividends
+OLD DIVIDEND,Unclaimed Dividends
+STALE DIVIDEND,Unclaimed Dividends
+IEPF FUND,Unclaimed Dividends
+UNCLAIMED EQUITY,Unclaimed Dividends
+IEPF AUTHORITY,Unclaimed Dividends
+SHAREHOLDER UNCLAIMED,Unclaimed Dividends
+IEPF COMPLIANCE,Unclaimed Dividends
+DIVIDEND ESCHEAT,Unclaimed Dividends
+UNCLAIMED CORP FUND,Unclaimed Dividends
+IEPF ANNUAL,Unclaimed Dividends
+CLIENT PROJECT,Project-Based Fees
+MILESTONE PAYMENT,Project-Based Fees
+UPWORK WITHDRAWAL,Project-Based Fees
+FIVERR PAYMENT,Project-Based Fees
+TOPTAL PAYMENT,Project-Based Fees
+FIXED PRICE PROJECT,Project-Based Fees
+DELIVERABLE CREDIT,Project-Based Fees
+PROJECT INCOME NEFT,Project-Based Fees
+FREELANCE PROJECT,Project-Based Fees
+SCOPE PAYMENT,Project-Based Fees
+CONTRACT PROJECT,Project-Based Fees
+PROJECT FEE INWARD,Project-Based Fees
+ONE TIME PROJECT,Project-Based Fees
+LUMP SUM PROJECT,Project-Based Fees
+PROJECT ADVANCE,Project-Based Fees
+PROJECT FINAL PAYMENT,Project-Based Fees
+FREELANCE MILESTONE,Project-Based Fees
+ENGAGEMENT PAYMENT,Project-Based Fees
+PROJECT RETAINER,Project-Based Fees
+PROJECT NEFT,Project-Based Fees
+PROJECT CREDIT INWARD,Project-Based Fees
+MONTHLY RETAINER INWARD,Retainer Income
+CLIENT RETAINER CREDIT,Retainer Income
+ONGOING FEES CREDIT,Retainer Income
+RECURRING PAYMENT CREDIT,Retainer Income
+FIXED RETAINER,Retainer Income
+WEEKLY RETAINER,Retainer Income
+QUARTERLY RETAINER CREDIT,Retainer Income
+RETAINER INCOME NEFT,Retainer Income
+LONG TERM RETAINER,Retainer Income
+STABLE RETAINER,Retainer Income
+AGENCY RETAINER,Retainer Income
+REGULAR RETAINER,Retainer Income
+CLIENT MONTHLY RETAINER,Retainer Income
+RETAINER BILLING,Retainer Income
+CONTRACTED RETAINER,Retainer Income
+RETAINER FROM CLIENT,Retainer Income
+RETAINER PAYONEER,Retainer Income
+UPWORK PAYMENT,Marketplace Earnings (Upwork/Fiverr)
+FIVERR EARNING,Marketplace Earnings (Upwork/Fiverr)
+PAYONEER CREDIT,Marketplace Earnings (Upwork/Fiverr)
+TOPTAL EARNINGS,Marketplace Earnings (Upwork/Fiverr)
+FREELANCER.COM,Marketplace Earnings (Upwork/Fiverr)
+GURU PAYMENT,Marketplace Earnings (Upwork/Fiverr)
+WORKNHIRE,Marketplace Earnings (Upwork/Fiverr)
+PEOPLE PER HOUR,Marketplace Earnings (Upwork/Fiverr)
+NAUKRI FREELANCE,Marketplace Earnings (Upwork/Fiverr)
+UPWORK INWARD,Marketplace Earnings (Upwork/Fiverr)
+FIVERR INWARD,Marketplace Earnings (Upwork/Fiverr)
+MARKETPLACE CREDIT,Marketplace Earnings (Upwork/Fiverr)
+FREELANCE PLATFORM,Marketplace Earnings (Upwork/Fiverr)
+UPWORK NEFT,Marketplace Earnings (Upwork/Fiverr)
+FIVERR NEFT,Marketplace Earnings (Upwork/Fiverr)
+PLATFORM PAYOUT,Marketplace Earnings (Upwork/Fiverr)
+GIG INCOME,Marketplace Earnings (Upwork/Fiverr)
+GIG PAYMENT,Marketplace Earnings (Upwork/Fiverr)
+ONLINE MARKETPLACE,Marketplace Earnings (Upwork/Fiverr)
+FREELANCE MARKETPLACE,Marketplace Earnings (Upwork/Fiverr)
+CROWDWORK PAYMENT,Marketplace Earnings (Upwork/Fiverr)
+DIGITAL MARKETPLACE,Marketplace Earnings (Upwork/Fiverr)
+VIRTUAL WORK INCOME,Marketplace Earnings (Upwork/Fiverr)
+ONLINE GIG,Marketplace Earnings (Upwork/Fiverr)
+FOREX CREDIT,Forex Gains/Losses
+FOREIGN EXCHANGE,Forex Gains/Losses
+USD CREDIT,Forex Gains/Losses
+WIRE TRANSFER INWARD,Forex Gains/Losses
+SWIFT RECEIPT,Forex Gains/Losses
+FOREX GAIN,Forex Gains/Losses
+FOREIGN INCOME,Forex Gains/Losses
+CURRENCY GAIN,Forex Gains/Losses
+REMITTANCE INWARD,Forex Gains/Losses
+DOLLAR RECEIPT,Forex Gains/Losses
+PAYPAL CREDIT,Forex Gains/Losses
+WISE CREDIT,Forex Gains/Losses
+INTERNATIONAL TRANSFER,Forex Gains/Losses
+GBP RECEIPT,Forex Gains/Losses
+EUR RECEIPT,Forex Gains/Losses
+FOREX INWARD,Forex Gains/Losses
+EXCHANGE GAIN,Forex Gains/Losses
+FOREIGN WIRE,Forex Gains/Losses
+OVERSEAS PAYMENT,Forex Gains/Losses
+CURRENCY CONVERSION,Forex Gains/Losses
+INWARD REMITTANCE,Forex Gains/Losses
+FOREIGN CLIENT PAYMENT,Forex Gains/Losses
+DOLLAR WIRE,Forex Gains/Losses
+SWIFT INCOMING,Forex Gains/Losses
+ADOBE CREATIVE CLOUD,Software & Digital Tools (SaaS)
+CANVA PRO,Software & Digital Tools (SaaS)
+ZAPIER FEES,Software & Digital Tools (SaaS)
+MONDAY FREELANCE,Software & Digital Tools (SaaS)
+LOOM SUBSCRIPTION,Software & Digital Tools (SaaS)
+GRAMMARLY PRO,Software & Digital Tools (SaaS)
+NOTION FREELANCE,Software & Digital Tools (SaaS)
+EVERNOTE PREMIUM,Software & Digital Tools (SaaS)
+FRESHBOOKS,Software & Digital Tools (SaaS)
+WAVE ACCOUNTING,Software & Digital Tools (SaaS)
+HARVEST TIME,Software & Digital Tools (SaaS)
+TOGGL PREMIUM,Software & Digital Tools (SaaS)
+CALENDLY PRO,Software & Digital Tools (SaaS)
+TYPEFORM PRO,Software & Digital Tools (SaaS)
+AIRTABLE SUB,Software & Digital Tools (SaaS)
+CLICKUP PREMIUM,Software & Digital Tools (SaaS)
+DIGITAL TOOLS SUB,Software & Digital Tools (SaaS)
+PRODUCTIVITY APP,Software & Digital Tools (SaaS)
+REMOTE TOOL,Software & Digital Tools (SaaS)
+WORKFLOW TOOL,Software & Digital Tools (SaaS)
+DESIGN TOOL SUB,Software & Digital Tools (SaaS)
+FREELANCE SOFTWARE,Software & Digital Tools (SaaS)
+TOOL SUBSCRIPTION,Software & Digital Tools (SaaS)
+SAAS FREELANCE,Software & Digital Tools (SaaS)
+RAZORPAY FEES,Transaction & Gateway Fees
+PAYTM CHARGES,Transaction & Gateway Fees
+PAYMENT GATEWAY FEE,Transaction & Gateway Fees
+STRIPE FEES,Transaction & Gateway Fees
+CASHFREE CHARGES,Transaction & Gateway Fees
+PAYUMONEY FEES,Transaction & Gateway Fees
+GATEWAY COMMISSION,Transaction & Gateway Fees
+MDR CHARGES,Transaction & Gateway Fees
+TRANSACTION FEE,Transaction & Gateway Fees
+PAYMENT FEES,Transaction & Gateway Fees
+PLATFORM COMMISSION,Transaction & Gateway Fees
+MARKETPLACE FEE,Transaction & Gateway Fees
+UPWORK SERVICE FEE,Transaction & Gateway Fees
+FIVERR COMMISSION,Transaction & Gateway Fees
+PAYPAL FEES,Transaction & Gateway Fees
+WISE FEES,Transaction & Gateway Fees
+INTERNATIONAL TRANSFER FEE,Transaction & Gateway Fees
+FX CONVERSION FEE,Transaction & Gateway Fees
+BANK TRANSFER FEE,Transaction & Gateway Fees
+SWIFT CHARGES,Transaction & Gateway Fees
+INTERMEDIARY FEE,Transaction & Gateway Fees
+ACQUIRING FEE,Transaction & Gateway Fees
+INTERCHANGE FEE,Transaction & Gateway Fees
+GATEWAY DEDUCTION,Transaction & Gateway Fees
+HOME INTERNET,Home Office (Internet/Power)
+BROADBAND BILL HOME,Home Office (Internet/Power)
+WFH INTERNET,Home Office (Internet/Power)
+JIO FIBER HOME,Home Office (Internet/Power)
+AIRTEL FIBER HOME,Home Office (Internet/Power)
+HOME OFFICE POWER,Home Office (Internet/Power)
+WORK INTERNET,Home Office (Internet/Power)
+HOME ELECTRICITY WFH,Home Office (Internet/Power)
+WORK FROM HOME BILLS,Home Office (Internet/Power)
+HOME BROADBAND,Home Office (Internet/Power)
+WIFI HOME OFFICE,Home Office (Internet/Power)
+HOME OFFICE BILLS,Home Office (Internet/Power)
+WFH ELECTRICITY,Home Office (Internet/Power)
+AIRTEL HOME,Home Office (Internet/Power)
+JIO HOME PLAN,Home Office (Internet/Power)
+BSNL HOME BROADBAND,Home Office (Internet/Power)
+HOME OFFICE UTILITY,Home Office (Internet/Power)
+WORK INTERNET BILL,Home Office (Internet/Power)
+REMOTE OFFICE BILLS,Home Office (Internet/Power)
+HOME POWER WFH,Home Office (Internet/Power)
+HOME OFFICE INTERNET,Home Office (Internet/Power)
+WFH BILLS,Home Office (Internet/Power)
+REMOTE WORK INTERNET,Home Office (Internet/Power)
+FREELANCE HOME BILLS,Home Office (Internet/Power)
+OUTSOURCING PAYMENT,Sub-contractor/Outsourcing
+CONTRACTOR PAY,Sub-contractor/Outsourcing
+FREELANCER PAYMENT,Sub-contractor/Outsourcing
+VENDOR OUTSOURCE,Sub-contractor/Outsourcing
+SUBCONTRACT FEES,Sub-contractor/Outsourcing
+THIRD PARTY WORK,Sub-contractor/Outsourcing
+AGENCY PAYMENT,Sub-contractor/Outsourcing
+CONTRACT STAFF,Sub-contractor/Outsourcing
+DESIGN OUTSOURCE,Sub-contractor/Outsourcing
+DEV OUTSOURCE,Sub-contractor/Outsourcing
+WRITING OUTSOURCE,Sub-contractor/Outsourcing
+CONTENT OUTSOURCE,Sub-contractor/Outsourcing
+VIRTUAL ASSISTANT,Sub-contractor/Outsourcing
+VA PAYMENT,Sub-contractor/Outsourcing
+HIRED HELP,Sub-contractor/Outsourcing
+TASK OUTSOURCE,Sub-contractor/Outsourcing
+FIVERR OUTSOURCE,Sub-contractor/Outsourcing
+UPWORK HIRE,Sub-contractor/Outsourcing
+CONTRACTOR NEFT,Sub-contractor/Outsourcing
+SUBCONTRACTOR NEFT,Sub-contractor/Outsourcing
+PART TIME HIRE,Sub-contractor/Outsourcing
+REMOTE CONTRACTOR,Sub-contractor/Outsourcing
+TASK FORCE PAYMENT,Sub-contractor/Outsourcing
+GIG HIRE,Sub-contractor/Outsourcing
+WIP TRANSFER,Unbilled Work-in-Progress
+UNBILLED WORK,Unbilled Work-in-Progress
+WORK IN PROGRESS,Unbilled Work-in-Progress
+ACCRUED REVENUE,Unbilled Work-in-Progress
+PARTIAL BILLING,Unbilled Work-in-Progress
+UNBILLED HOURS,Unbilled Work-in-Progress
+ACCRUED INCOME,Unbilled Work-in-Progress
+UNBILLED MILESTONE,Unbilled Work-in-Progress
+WORK STARTED UNBILLED,Unbilled Work-in-Progress
+PARTIALLY COMPLETE,Unbilled Work-in-Progress
+ACCRUED SERVICES,Unbilled Work-in-Progress
+WIP ACCRUAL,Unbilled Work-in-Progress
+REVENUE WIP,Unbilled Work-in-Progress
+INCOMPLETE PROJECT,Unbilled Work-in-Progress
+ONGOING WORK WIP,Unbilled Work-in-Progress
+EARNED NOT BILLED,Unbilled Work-in-Progress
+ACCRUED CONSULTING,Unbilled Work-in-Progress
+UNBILLED DELIVERABLE,Unbilled Work-in-Progress
+WIP ACCOUNT,Unbilled Work-in-Progress
+ONGOING REVENUE,Unbilled Work-in-Progress
+CLIENT REIMBURSEMENT,Client Reimbursements
+EXPENSE RECOVERY,Client Reimbursements
+TRAVEL REIMBURSEMENT CLIENT,Client Reimbursements
+COST RECOVERY,Client Reimbursements
+REIMBURSEMENT CREDIT,Client Reimbursements
+EXPENSE CLAIM CREDIT,Client Reimbursements
+RECHARGE EXPENSE,Client Reimbursements
+BILLABLE EXPENSE,Client Reimbursements
+PASS THROUGH COST,Client Reimbursements
+CLIENT EXPENSE REFUND,Client Reimbursements
+CLIENT COST RECOVERY,Client Reimbursements
+REIMBURSEMENT INWARD,Client Reimbursements
+NEFT REIMBURSEMENT,Client Reimbursements
+EXPENSE REFUND,Client Reimbursements
+REIMBURSABLE COST,Client Reimbursements
+EXPENSE BACK CREDIT,Client Reimbursements
+VENDOR REIMBURSEMENT,Client Reimbursements
+ADVANCE ADJUSTMENT,Client Reimbursements
+CLIENT ADVANCE ADJUSTMENT,Client Reimbursements
+REIMBURSEMENT PAYMENT,Client Reimbursements
+DISBURSEMENT RECOVERY,Client Reimbursements
+COST PASS THROUGH,Client Reimbursements

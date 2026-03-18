@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '../supabase';
+import { supabase, supabaseConfigError } from '../supabase';
 
 /**
  * Custom hook to manage Supabase Authentication state.
@@ -9,11 +9,31 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!supabase) {
+      if (supabaseConfigError) {
+        console.error('Supabase configuration error:', supabaseConfigError);
+      }
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+
     // 1. Get the current user session immediately
     const fetchSession = async () => {
-      const { data } = await supabase.auth.getSession();
-      setUser(data.session?.user ?? null);
-      setLoading(false);
+      try {
+        const { data, error } = await supabase.auth.getSession();
+        if (error) {
+          console.error('Failed to get auth session:', error);
+          setUser(null);
+          return;
+        }
+        setUser(data.session?.user ?? null);
+      } catch (err) {
+        console.error('Unexpected error while initializing auth session:', err);
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
     };
     
     fetchSession();

@@ -1,122 +1,169 @@
-module_id,account_name,account_type,balance_nature,is_system_generated,parent_template_id
-1,Cash on Hand,Assets,Debit,true,
-1,Bank Accounts,Assets,Debit,true,
-1,Digital Wallets,Assets,Debit,true,
-1,Investments,Assets,Debit,true,
-1,Mutu,Assets,Debit,true,
-1,Real Estate / Property,Assets,Debit,true,
-1,Vehicles,Assets,Debit,true,
-1,Electronics & Equipment,Assets,Debit,true,
-1,Credit Cards,Liabilities,Credit,true,
-1,Utility Bills Payable,Liabilities,Credit,true,
-1,Loans Payable,Liabilities,Credit,true,
-1,Opening Balance Equity,Equity,Credit,true,
-1,Retained Earnings,Equity,Credit,true,
-1,Interest Income,Income,Credit,true,
-1,Dividend Income,Income,Credit,true,
-1,Rental Income,Income,Credit,true,
-1,Cashbacks & Refunds,Income,Credit,true,
-1,Rent / Housing Maintenance,Expense,Debit,true,
-1,Electricity & Water,Expense,Debit,true,
-1,Internet & Phone,Expense,Debit,true,
-1,Groceries,Expense,Debit,true,
-1,Restaurants & Food Delivery,Expense,Debit,true,
-1,Fuel,Expense,Debit,true,
-1,Public Transport / Cabs,Expense,Debit,true,
-1,Vehicle Maintenance & Tolls,Expense,Debit,true,
-1,Clothing & Personal Care,Expense,Debit,true,
-1,Entertainment & Media,Expense,Debit,true,
-1,Subscriptions,Expense,Debit,true,
-1,Healthcare & Medical,Expense,Debit,true,
-1,Insurance Premiums,Expense,Debit,true,
-1,Travel & Holidays,Expense,Debit,true,
-1,Gifts & Donations,Expense,Debit,true,
-1,Bank Charges & Fees,Expense,Debit,true,
-2,Employee Provident Fund,Assets,Debit,true,1
-2,Company Stock / ESOPs,Assets,Debit,true,1
-2,Salary,Income,Credit,true,1
-2,Allowances,Income,Credit,true,1
-2,Bonuses & Incentives,Income,Credit,true,1
-2,Reimbursements,Income,Credit,true,1
-2,Professional Development,Expense,Debit,true,1
-2,Work Equipment & Home Office,Expense,Debit,true,1
-3,Trade Receivables,Assets,Debit,true,1
-3,Inventory / Stock,Assets,Debit,true,1
-3,Business Equipment,Assets,Debit,true,1
-3,GST Input Credit,Assets,Debit,true,1
-3,Trade Payables,Liabilities,Credit,true,1
-3,Business Loans,Liabilities,Credit,true,1
-3,Statutory Dues Payable,Liabilities,Credit,true,1
-3,Product Sales,Income,Credit,true,1
-3,Service Revenue,Income,Credit,true,1
-3,Shipping / Delivery Income,Income,Credit,true,1
-3,Supplier Discounts,Income,Credit,true,1
-3,Purchases,Expense,Debit,true,1
-3,Freight / Logistics,Expense,Debit,true,1
-3,Direct Labor,Expense,Debit,true,1
-3,Employee Salaries,Expense,Debit,true,1
-3,Office Rent,Expense,Debit,true,1
-3,Marketing & Advertising,Expense,Debit,true,1
-3,Software & Digital Tools,Expense,Debit,true,1
-3,Legal & Professional Services,Expense,Debit,true,1
-3,Business Travel,Expense,Debit,true,1
-4,Accounts Receivable,Assets,Debit,true,1
-4,Professional Equipment,Assets,Debit,true,1
-4,TDS Receivable,Assets,Debit,true,1
-4,Client Advances,Liabilities,Credit,true,1
-4,Consulting Fees,Income,Credit,true,1
-4,Project Revenue,Income,Credit,true,1
-4,Royalties & Licensing,Income,Credit,true,1
-4,Commission Income,Income,Credit,true,1
-4,Software & Digital Tools,Expense,Debit,true,1
-4,Co-working Space,Expense,Debit,true,1
-4,Client Meetings & Travel,Expense,Debit,true,1
-4,Marketing & Advertising,Expense,Debit,true,1
-4,Professional Memberships,Expense,Debit,true,1
-5,Agricultural Land,Assets,Debit,true,1
-5,Farm Machinery,Assets,Debit,true,1
-5,Livestock,Assets,Debit,true,1
-5,Harvested Inventory,Assets,Debit,true,1
-5,Crop Loans,Liabilities,Credit,true,1
-5,Equipment Loans,Liabilities,Credit,true,1
-5,Crop Sales,Income,Credit,true,1
-5,Dairy Income,Income,Credit,true,1
-5,Government Subsidies,Income,Credit,true,1
-5,Equipment Rental Income,Income,Credit,true,1
-5,Seeds & Fertilizers,Expense,Debit,true,1
-5,Farm Labor,Expense,Debit,true,1
-5,Irrigation & Electricity,Expense,Debit,true,1
-5,Machinery Fuel & Maintenance,Expense,Debit,true,1
-5,Livestock Feed & Veterinary Care,Expense,Debit,true,1
-6,Allowances / Pocket Money,Income,Credit,true,1
-6,Scholarships & Grants,Income,Credit,true,1
-6,Internship Stipend,Income,Credit,true,1
-6,Competition Prizes,Income,Credit,true,1
-6,Tuition & Academic Fees,Expense,Debit,true,1
-6,Books & Study Materials,Expense,Debit,true,1
-6,Exam & Application Fees,Expense,Debit,true,1
-6,Hostel & Mess Charges,Expense,Debit,true,1
-6,Student Activities & Clubs,Expense,Debit,true,1
-6,Learning & Professional Development,Expense,Debit,true,1
-7,Retirement Funds,Assets,Debit,true,1
-7,Annuities,Assets,Debit,true,1
-7,Senior Citizen Savings Schemes,Assets,Debit,true,1
-7,Pension Income,Income,Credit,true,1
-7,Annuity Payouts,Income,Credit,true,1
-7,Family Support,Income,Credit,true,1
-7,Senior Healthcare,Expense,Debit,true,1
-7,Caregiver Services,Expense,Debit,true,1
-7,Senior Insurance Premiums,Expense,Debit,true,1
-7,Estate Planning & Legal Fees,Expense,Debit,true,1
-7,Pilgrimage Travel,Expense,Debit,true,1
-12,Accounts Receivable,Assets,Debit,true,1
-12,Freelance Equipment,Assets,Debit,true,1
-12,Client Advances,Liabilities,Credit,true,1
-12,Freelance Project Income,Income,Credit,true,1
-12,Retainer Income,Income,Credit,true,1
-12,Platform Commission Income,Income,Credit,true,1
-12,Software & Digital Tools,Expense,Debit,true,1
-12,Subcontractor Payments,Expense,Debit,true,1
-12,Marketing & Advertising,Expense,Debit,true,1
-12,Payment Gateway Fees,Expense,Debit,true,1
-12,Co-working Space,Expense,Debit,true,1
+id,module_id,account_name,account_type,balance_nature,is_system_generated,parent_template_id
+1,1,Current Assets,ASSET,Debit,TRUE,
+2,1,Cash and equivalents,ASSET,Debit,TRUE,1
+3,1,Bank Accounts,ASSET,Debit,TRUE,2
+4,1,Current Liabilities,LIABILITY,Credit,TRUE,
+5,1,Credit Cards,LIABILITY,Credit,TRUE,4
+6,1,Opening Balance Equity,EQUITY,Credit,TRUE,
+7,1,General Income,INCOME,Credit,TRUE,
+8,1,Living Expenses,EXPENSE,Debit,TRUE,
+9,1,Food & Dining,EXPENSE,Debit,FALSE,8
+10,1,Travel & Transport,EXPENSE,Debit,FALSE,8
+11,1,Housing & Rent,EXPENSE,Debit,FALSE,8
+12,1,Utilities,EXPENSE,Debit,FALSE,8
+13,1,Personal Care,EXPENSE,Debit,FALSE,8
+14,2,Employment Income,INCOME,Credit,TRUE,
+15,2,Base Salary,INCOME,Credit,FALSE,14
+16,2,Bonus & Incentives,INCOME,Credit,FALSE,14
+17,2,Overtime Pay,INCOME,Credit,FALSE,14
+18,2,Taxes & Statutory Deductions,EXPENSE,Debit,TRUE,
+19,2,Income Tax (TDS),EXPENSE,Debit,FALSE,18
+20,2,Professional Tax,EXPENSE,Debit,FALSE,18
+21,2,Retirement Accounts,ASSET,Debit,TRUE,1
+22,2,Employee Provident Fund (EPF),ASSET,Debit,FALSE,21
+23,2,Voluntary Provident Fund (VPF),ASSET,Debit,FALSE,21
+24,2,Professional Development,EXPENSE,Debit,FALSE,8
+25,2,Work-related Subscriptions,EXPENSE,Debit,FALSE,24
+26,3,Business Revenue,INCOME,Credit,TRUE,
+27,3,Service Income,INCOME,Credit,FALSE,26
+28,3,Product Sales,INCOME,Credit,FALSE,26
+29,3,Cost of Goods Sold (COGS),EXPENSE,Debit,TRUE,
+30,3,Direct Material Costs,EXPENSE,Debit,FALSE,29
+31,3,Shipping & Freight,EXPENSE,Debit,FALSE,29
+32,3,Business Operating Expenses,EXPENSE,Debit,TRUE,
+33,3,Marketing & Advertising,EXPENSE,Debit,FALSE,32
+34,3,Software & SaaS Subscriptions,EXPENSE,Debit,FALSE,32
+35,3,Business Travel & Meals,EXPENSE,Debit,FALSE,32
+36,3,Office Rent & Utilities,EXPENSE,Debit,FALSE,32
+37,3,Business Liabilities,LIABILITY,Credit,TRUE,
+38,3,GST/VAT Payable,LIABILITY,Credit,FALSE,37
+39,3,Business Loan/Credit Line,LIABILITY,Credit,FALSE,37
+40,3,Trade Payables (Vendors),LIABILITY,Credit,FALSE,37
+41,3,Inventory,ASSET,Debit,FALSE,1
+42,4,Professional Fees & Income,INCOME,Credit,TRUE,
+43,4,Consultation Fees,INCOME,Credit,FALSE,42
+44,4,Teaching & Speaking Fees,INCOME,Credit,FALSE,42
+45,4,Retainers/Project Income,INCOME,Credit,FALSE,42
+46,4,Professional Operating Expenses,EXPENSE,Debit,TRUE,
+47,4,Licensing & Certifications,EXPENSE,Debit,FALSE,46
+48,4,Professional Indemnity Insurance,EXPENSE,Debit,FALSE,46
+49,4,Continuing Education & Research,EXPENSE,Debit,FALSE,46
+50,4,Memberships & Subscriptions,EXPENSE,Debit,FALSE,46
+51,4,Practice/Office Supplies,EXPENSE,Debit,FALSE,46
+52,4,Professional Equipment,ASSET,Debit,FALSE,1
+53,5,Farm Revenue,INCOME,Credit,TRUE,
+54,5,Crop Sales,INCOME,Credit,FALSE,53
+55,5,Livestock Sales,INCOME,Credit,FALSE,53
+56,5,Government Subsidies & Grants,INCOME,Credit,FALSE,53
+57,5,Direct Farming Costs (Inputs),EXPENSE,Debit,TRUE,
+58,5,Seeds & Saplings,EXPENSE,Debit,FALSE,57
+59,5,Fertilizers & Pesticides,EXPENSE,Debit,FALSE,57
+60,5,Livestock Feed & Veterinary,EXPENSE,Debit,FALSE,57
+61,5,Irrigation & Water Charges,EXPENSE,Debit,FALSE,57
+62,5,Farm Operating Expenses,EXPENSE,Debit,TRUE,
+63,5,Farm Labor Wages,EXPENSE,Debit,FALSE,62
+64,5,Fuel & Machinery Maintenance,EXPENSE,Debit,FALSE,62
+65,5,Land Lease & Rent,EXPENSE,Debit,FALSE,62
+66,5,Agricultural Assets,ASSET,Debit,TRUE,1
+67,5,Livestock (Biological Assets),ASSET,Debit,FALSE,66
+68,5,Farm Machinery & Equipment,ASSET,Debit,FALSE,66
+69,5,Stored Harvest (Inventory),ASSET,Debit,FALSE,66
+70,5,Agricultural Loans (KCC),LIABILITY,Credit,FALSE,4
+71,6,Education & Training Income,INCOME,Credit,TRUE,
+72,6,Internship Stipend,INCOME,Credit,FALSE,71
+73,6,Scholarships & Grants,INCOME,Credit,FALSE,71
+74,6,Parental Support/Allowance,INCOME,Credit,FALSE,71
+75,6,Academic Expenses,EXPENSE,Debit,TRUE,8
+76,6,Tuition & College Fees,EXPENSE,Debit,FALSE,75
+77,6,Books & Digital Learning,EXPENSE,Debit,FALSE,75
+78,6,Exam & Certification Fees,EXPENSE,Debit,FALSE,75
+79,6,Project & Lab Supplies,EXPENSE,Debit,FALSE,75
+80,6,Hostel & Student Housing,EXPENSE,Debit,FALSE,11
+81,6,Education Debt,LIABILITY,Credit,TRUE,4
+82,6,Student Loan (Education),LIABILITY,Credit,FALSE,81
+83,6,Laptop & Educational Tech,ASSET,Debit,FALSE,1
+84,7,Retirement Income,INCOME,Credit,TRUE,7
+85,7,Pension & Social Security,INCOME,Credit,FALSE,84
+86,7,Annuity Payouts,INCOME,Credit,FALSE,84
+87,7,Interest & Dividend Income,INCOME,Credit,FALSE,84
+88,7,Medical & Healthcare,EXPENSE,Debit,TRUE,8
+89,7,Medications & Pharmacy,EXPENSE,Debit,FALSE,88
+90,7,Doctor Consultations & Tests,EXPENSE,Debit,FALSE,88
+91,7,Health Insurance Premiums,EXPENSE,Debit,FALSE,88
+92,7,Gifts & Philanthropy,EXPENSE,Debit,FALSE,8
+93,7,Retirement Assets,ASSET,Debit,TRUE,1
+94,7,Senior Citizen Savings Scheme (SCSS),ASSET,Debit,FALSE,93
+95,7,Post Office Savings/MIS,ASSET,Debit,FALSE,93
+96,7,Reverse Mortgage,LIABILITY,Credit,FALSE,4
+97,8,Partners' Capital Accounts,EQUITY,Credit,TRUE,6
+98,8,Partner A - Capital,EQUITY,Credit,FALSE,97
+99,8,Partner B - Capital,EQUITY,Credit,FALSE,97
+100,8,Partners' Current Accounts,EQUITY,Credit,TRUE,6
+101,8,Partner A - Current Account,EQUITY,Credit,FALSE,100
+102,8,Partner B - Current Account,EQUITY,Credit,FALSE,100
+103,8,Partner Drawings,EQUITY,Debit,TRUE,6
+104,8,Partner A - Drawings,EQUITY,Debit,FALSE,103
+105,8,Partner B - Drawings,EQUITY,Debit,FALSE,103
+106,8,Partner Remuneration,EXPENSE,Debit,TRUE,8
+107,8,Partner Salaries/Bonus,EXPENSE,Debit,FALSE,106
+108,8,Interest on Partner Capital,EXPENSE,Debit,FALSE,106
+109,8,Loans from Partners,LIABILITY,Credit,FALSE,4
+110,8,Firm Registration & Legal,EXPENSE,Debit,FALSE,32
+111,9,Shareholders' Funds,EQUITY,Credit,TRUE,6
+112,9,Paid-up Equity Share Capital,EQUITY,Credit,FALSE,111
+113,9,Securities Premium Account,EQUITY,Credit,FALSE,111
+114,9,Reserves and Surplus,EQUITY,Credit,TRUE,6
+115,9,General Reserve,EQUITY,Credit,FALSE,114
+116,9,Corporate Borrowings,LIABILITY,Credit,TRUE,
+117,9,Secured Loans (Bank/Term Loans),LIABILITY,Credit,FALSE,116
+118,9,Unsecured Loans (From Directors/Members),LIABILITY,Credit,FALSE,116
+119,9,Director & Compliance Expenses,EXPENSE,Debit,TRUE,32
+120,9,Directors' Remuneration,EXPENSE,Debit,FALSE,119
+121,9,Statutory Audit Fees,EXPENSE,Debit,FALSE,119
+122,9,ROC Filing & Legal Compliance,EXPENSE,Debit,FALSE,119
+123,9,CSR Expenses,EXPENSE,Debit,FALSE,32
+124,9,Preliminary/Incorporation Expenses,ASSET,Debit,FALSE,1
+125,10,Partners' Capital Contribution,EQUITY,Credit,TRUE,6
+126,10,Designated Partner A - Contribution,EQUITY,Credit,FALSE,125
+127,10,Designated Partner B - Contribution,EQUITY,Credit,FALSE,125
+128,10,Partners' Current Accounts,EQUITY,Credit,TRUE,6
+129,10,Partner A - Current Account,EQUITY,Credit,FALSE,128
+130,10,Partner B - Current Account,EQUITY,Credit,FALSE,128
+131,10,Partner Remuneration & Interest,EXPENSE,Debit,TRUE,32
+132,10,Remuneration to Designated Partners,EXPENSE,Debit,FALSE,131
+133,10,Interest on Partners' Contribution,EXPENSE,Debit,FALSE,131
+134,10,LLP Statutory Compliance,EXPENSE,Debit,TRUE,32
+135,10,ROC Filing Fees (Form 8/11),EXPENSE,Debit,FALSE,134
+136,10,Statutory Audit & Tax Fees,EXPENSE,Debit,FALSE,134
+137,10,Loans from Partners/Members,LIABILITY,Credit,FALSE,4
+138,10,Unallocated Profit/Loss,EQUITY,Credit,TRUE,6
+139,11,Share Capital,EQUITY,Credit,TRUE,6
+140,11,Authorized Share Capital,EQUITY,Credit,FALSE,139
+141,11,Issued and Paid-up Equity Capital,EQUITY,Credit,FALSE,139
+142,11,Preference Share Capital,EQUITY,Credit,FALSE,139
+143,11,Statutory Reserves & Surplus,EQUITY,Credit,TRUE,6
+144,11,Securities Premium Account,EQUITY,Credit,FALSE,143
+145,11,General Reserve,EQUITY,Credit,FALSE,143
+146,11,Capital Redemption Reserve,EQUITY,Credit,FALSE,143
+147,11,Non-Current Liabilities (Long-term),LIABILITY,Credit,TRUE,4
+148,11,Debentures & Bonds,LIABILITY,Credit,FALSE,147
+149,11,Long-term Bank Loans (Secured),LIABILITY,Credit,FALSE,147
+150,11,Public & Regulatory Expenses,EXPENSE,Debit,TRUE,32
+151,11,Stock Exchange Listing Fees,EXPENSE,Debit,FALSE,150
+152,11,Registrar & Transfer Agent (RTA) Fees,EXPENSE,Debit,FALSE,150
+153,11,Investor Relations & Annual Reports,EXPENSE,Debit,FALSE,150
+154,11,Dividends Payable,LIABILITY,Credit,FALSE,4
+155,11,Unclaimed Dividends,LIABILITY,Credit,FALSE,154
+156,12,Freelance Service Revenue,INCOME,Credit,TRUE,7
+157,12,Project-Based Fees,INCOME,Credit,FALSE,156
+158,12,Retainer Income,INCOME,Credit,FALSE,156
+159,12,Marketplace Earnings (Upwork/Fiverr),INCOME,Credit,FALSE,156
+160,12,Forex Gains/Losses,INCOME,Credit,FALSE,156
+161,12,Freelance Operating Expenses,EXPENSE,Debit,TRUE,32
+162,12,Software & Digital Tools (SaaS),EXPENSE,Debit,FALSE,161
+163,12,Transaction & Gateway Fees,EXPENSE,Debit,FALSE,161
+164,12,Home Office (Internet/Power),EXPENSE,Debit,FALSE,161
+165,12,Sub-contractor/Outsourcing,EXPENSE,Debit,FALSE,161
+166,12,TDS Receivable,ASSET,Debit,TRUE,1
+167,12,Unbilled Work-in-Progress,ASSET,Debit,FALSE,1
+168,12,Client Reimbursements,INCOME,Credit,FALSE,156
