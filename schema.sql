@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict kC07Pr25Zbhc9tgRvJaCPfBtrdOFqA9a3TtCXFGM5ig3zUb7QdpiBMn5UH7qYIv
+\restrict hgukVA1bhyyZkixhUd8n39vry3RG2sY8fU844BfcDsCLUHwlGDX4CPvvSDt4KSF
 
 -- Dumped from database version 17.6
 -- Dumped by pg_dump version 18.1
@@ -3472,7 +3472,8 @@ CREATE TABLE public.transactions (
     attention_level public.attention_level DEFAULT 'LOW'::public.attention_level NOT NULL,
     review_status public.review_status DEFAULT 'PENDING'::public.review_status NOT NULL,
     uncategorized_transaction_id bigint,
-    created_at timestamp with time zone DEFAULT now()
+    created_at timestamp with time zone DEFAULT now(),
+    is_contra boolean DEFAULT false NOT NULL
 );
 
 
@@ -4604,6 +4605,27 @@ CREATE INDEX users_is_anonymous_idx ON auth.users USING btree (is_anonymous);
 
 
 --
+-- Name: idx_contra_lookup; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contra_lookup ON public.transactions USING btree (user_id, amount, transaction_type, transaction_date, is_contra);
+
+
+--
+-- Name: idx_global_vector_hnsw; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_global_vector_hnsw ON public.global_vector_cache USING hnsw (embedding public.vector_cosine_ops);
+
+
+--
+-- Name: idx_personal_vector_hnsw; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_personal_vector_hnsw ON public.personal_vector_cache USING hnsw (embedding public.vector_cosine_ops);
+
+
+--
 -- Name: idx_txn_date; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -5294,6 +5316,20 @@ CREATE POLICY "Allow authenticated read access to rules" ON public.routing_rules
 --
 
 CREATE POLICY "Anyone can view COA modules" ON public.coa_modules FOR SELECT TO authenticated USING (true);
+
+
+--
+-- Name: accounts Enable read access for all users; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "Enable read access for all users" ON public.accounts FOR SELECT USING (true);
+
+
+--
+-- Name: transactions Enable read access for all users; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "Enable read access for all users" ON public.transactions FOR SELECT USING (true);
 
 
 --
@@ -8399,5 +8435,5 @@ CREATE EVENT TRIGGER pgrst_drop_watch ON sql_drop
 -- PostgreSQL database dump complete
 --
 
-\unrestrict kC07Pr25Zbhc9tgRvJaCPfBtrdOFqA9a3TtCXFGM5ig3zUb7QdpiBMn5UH7qYIv
+\unrestrict hgukVA1bhyyZkixhUd8n39vry3RG2sY8fU844BfcDsCLUHwlGDX4CPvvSDt4KSF
 
