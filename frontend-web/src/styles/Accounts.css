@@ -1,0 +1,120 @@
+.accounts-container {
+  padding: 40px;
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.loading-state {
+  margin: auto;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.accounts-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 8px; /* buffer for scrollbar */
+}
+
+.account-type-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: fit-content;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.type-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  padding-bottom: 12px;
+}
+
+.type-icon {
+  font-size: 24px;
+}
+
+.type-card-header h2 {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.type-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.no-accounts {
+  color: var(--text-secondary);
+  font-size: 13px;
+  margin: 0;
+  padding: 8px 0;
+}
+
+/* Recursive Node Styles */
+.account-node {
+  display: flex;
+  flex-direction: column;
+}
+
+.node-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.account-node.has-kids > .node-header {
+  color: var(--text-primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.account-node.has-kids > .node-header:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.account-node.leaf > .node-header {
+  color: var(--text-secondary);
+  padding-left: 32px; /* Matches aligns with toggle icon width */
+}
+
+.toggle-icon {
+  font-size: 10px;
+  color: var(--text-secondary);
+  width: 14px;
+  display: flex;
+  justify-content: center;
+}
+
+.node-identifier {
+  font-size: 12px;
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+.node-children {
+  padding-left: 12px;
+  border-left: 1px dashed rgba(255, 255, 255, 0.05);
+  margin-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 2px;
+}

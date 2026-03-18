@@ -1,0 +1,122 @@
+module_id,account_name,account_type,balance_nature,is_system_generated,parent_template_id
+1,Cash on Hand,Assets,Debit,true,
+1,Bank Accounts,Assets,Debit,true,
+1,Digital Wallets,Assets,Debit,true,
+1,Investments,Assets,Debit,true,
+1,Mutu,Assets,Debit,true,
+1,Real Estate / Property,Assets,Debit,true,
+1,Vehicles,Assets,Debit,true,
+1,Electronics & Equipment,Assets,Debit,true,
+1,Credit Cards,Liabilities,Credit,true,
+1,Utility Bills Payable,Liabilities,Credit,true,
+1,Loans Payable,Liabilities,Credit,true,
+1,Opening Balance Equity,Equity,Credit,true,
+1,Retained Earnings,Equity,Credit,true,
+1,Interest Income,Income,Credit,true,
+1,Dividend Income,Income,Credit,true,
+1,Rental Income,Income,Credit,true,
+1,Cashbacks & Refunds,Income,Credit,true,
+1,Rent / Housing Maintenance,Expense,Debit,true,
+1,Electricity & Water,Expense,Debit,true,
+1,Internet & Phone,Expense,Debit,true,
+1,Groceries,Expense,Debit,true,
+1,Restaurants & Food Delivery,Expense,Debit,true,
+1,Fuel,Expense,Debit,true,
+1,Public Transport / Cabs,Expense,Debit,true,
+1,Vehicle Maintenance & Tolls,Expense,Debit,true,
+1,Clothing & Personal Care,Expense,Debit,true,
+1,Entertainment & Media,Expense,Debit,true,
+1,Subscriptions,Expense,Debit,true,
+1,Healthcare & Medical,Expense,Debit,true,
+1,Insurance Premiums,Expense,Debit,true,
+1,Travel & Holidays,Expense,Debit,true,
+1,Gifts & Donations,Expense,Debit,true,
+1,Bank Charges & Fees,Expense,Debit,true,
+2,Employee Provident Fund,Assets,Debit,true,1
+2,Company Stock / ESOPs,Assets,Debit,true,1
+2,Salary,Income,Credit,true,1
+2,Allowances,Income,Credit,true,1
+2,Bonuses & Incentives,Income,Credit,true,1
+2,Reimbursements,Income,Credit,true,1
+2,Professional Development,Expense,Debit,true,1
+2,Work Equipment & Home Office,Expense,Debit,true,1
+3,Trade Receivables,Assets,Debit,true,1
+3,Inventory / Stock,Assets,Debit,true,1
+3,Business Equipment,Assets,Debit,true,1
+3,GST Input Credit,Assets,Debit,true,1
+3,Trade Payables,Liabilities,Credit,true,1
+3,Business Loans,Liabilities,Credit,true,1
+3,Statutory Dues Payable,Liabilities,Credit,true,1
+3,Product Sales,Income,Credit,true,1
+3,Service Revenue,Income,Credit,true,1
+3,Shipping / Delivery Income,Income,Credit,true,1
+3,Supplier Discounts,Income,Credit,true,1
+3,Purchases,Expense,Debit,true,1
+3,Freight / Logistics,Expense,Debit,true,1
+3,Direct Labor,Expense,Debit,true,1
+3,Employee Salaries,Expense,Debit,true,1
+3,Office Rent,Expense,Debit,true,1
+3,Marketing & Advertising,Expense,Debit,true,1
+3,Software & Digital Tools,Expense,Debit,true,1
+3,Legal & Professional Services,Expense,Debit,true,1
+3,Business Travel,Expense,Debit,true,1
+4,Accounts Receivable,Assets,Debit,true,1
+4,Professional Equipment,Assets,Debit,true,1
+4,TDS Receivable,Assets,Debit,true,1
+4,Client Advances,Liabilities,Credit,true,1
+4,Consulting Fees,Income,Credit,true,1
+4,Project Revenue,Income,Credit,true,1
+4,Royalties & Licensing,Income,Credit,true,1
+4,Commission Income,Income,Credit,true,1
+4,Software & Digital Tools,Expense,Debit,true,1
+4,Co-working Space,Expense,Debit,true,1
+4,Client Meetings & Travel,Expense,Debit,true,1
+4,Marketing & Advertising,Expense,Debit,true,1
+4,Professional Memberships,Expense,Debit,true,1
+5,Agricultural Land,Assets,Debit,true,1
+5,Farm Machinery,Assets,Debit,true,1
+5,Livestock,Assets,Debit,true,1
+5,Harvested Inventory,Assets,Debit,true,1
+5,Crop Loans,Liabilities,Credit,true,1
+5,Equipment Loans,Liabilities,Credit,true,1
+5,Crop Sales,Income,Credit,true,1
+5,Dairy Income,Income,Credit,true,1
+5,Government Subsidies,Income,Credit,true,1
+5,Equipment Rental Income,Income,Credit,true,1
+5,Seeds & Fertilizers,Expense,Debit,true,1
+5,Farm Labor,Expense,Debit,true,1
+5,Irrigation & Electricity,Expense,Debit,true,1
+5,Machinery Fuel & Maintenance,Expense,Debit,true,1
+5,Livestock Feed & Veterinary Care,Expense,Debit,true,1
+6,Allowances / Pocket Money,Income,Credit,true,1
+6,Scholarships & Grants,Income,Credit,true,1
+6,Internship Stipend,Income,Credit,true,1
+6,Competition Prizes,Income,Credit,true,1
+6,Tuition & Academic Fees,Expense,Debit,true,1
+6,Books & Study Materials,Expense,Debit,true,1
+6,Exam & Application Fees,Expense,Debit,true,1
+6,Hostel & Mess Charges,Expense,Debit,true,1
+6,Student Activities & Clubs,Expense,Debit,true,1
+6,Learning & Professional Development,Expense,Debit,true,1
+7,Retirement Funds,Assets,Debit,true,1
+7,Annuities,Assets,Debit,true,1
+7,Senior Citizen Savings Schemes,Assets,Debit,true,1
+7,Pension Income,Income,Credit,true,1
+7,Annuity Payouts,Income,Credit,true,1
+7,Family Support,Income,Credit,true,1
+7,Senior Healthcare,Expense,Debit,true,1
+7,Caregiver Services,Expense,Debit,true,1
+7,Senior Insurance Premiums,Expense,Debit,true,1
+7,Estate Planning & Legal Fees,Expense,Debit,true,1
+7,Pilgrimage Travel,Expense,Debit,true,1
+12,Accounts Receivable,Assets,Debit,true,1
+12,Freelance Equipment,Assets,Debit,true,1
+12,Client Advances,Liabilities,Credit,true,1
+12,Freelance Project Income,Income,Credit,true,1
+12,Retainer Income,Income,Credit,true,1
+12,Platform Commission Income,Income,Credit,true,1
+12,Software & Digital Tools,Expense,Debit,true,1
+12,Subcontractor Payments,Expense,Debit,true,1
+12,Marketing & Advertising,Expense,Debit,true,1
+12,Payment Gateway Fees,Expense,Debit,true,1
+12,Co-working Space,Expense,Debit,true,1

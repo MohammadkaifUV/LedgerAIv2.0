@@ -1,0 +1,29 @@
+Palette: Ink & Sage
+
+Modern, calm, confident
+Feels: Precision + quiet intelligence
+
+Core Idea
+
+Deep ink base (authority) + sage green (growth & balance). This is modern accounting, not Excel nostalgia.
+
+🎨 Light Mode
+Role	Color	Hex
+Background	Warm Off-White	#FAFAF9
+Surface	White	#FFFFFF
+Primary Text	Ink Black	#111827
+Secondary Text	Neutral Gray	#4B5563
+Primary Action	Ink Blue	#1F3A5F
+Accent	Sage Green	#6B8F71
+Borders	Light Ash	#E5E7EB
+Success	Sage Dark	#557A5E
+Error	Muted Crimson	#A63D40
+🌙 Dark Mode
+Role	Color	Hex
+Background	Ink Black	#0B1220
+Surface	Ink Gray	#121A2B
+Primary Text	Soft White	#E6E8EC
+Secondary Text	Ash Gray	#9AA3AF
+Primary Action	Steel Blue	#2A4F7A
+Accent	Desaturated Sage	#7FAF8A
+Borders	Dark Ash	#1E293B
