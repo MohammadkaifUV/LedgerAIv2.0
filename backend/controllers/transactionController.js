@@ -1,6 +1,55 @@
 const supabase = require('../config/supabaseClient');
 
 /**
+ * Creates double-entry ledger entries for an approved transaction.
+ * Every transaction produces exactly 2 ledger entries.
+ * 
+ * For a DEBIT (money out from base account):
+ *   - DEBIT  the offset account (expense goes up)
+ *   - CREDIT the base account   (asset goes down)
+ *
+ * For a CREDIT (money in to base account):
+ *   - DEBIT  the base account   (asset goes up)
+ *   - CREDIT the offset account (income goes up)
+ */
+async function createLedgerEntries(transactionId, baseAccountId, offsetAccountId, amount, transactionType, transactionDate, isContra) {
+  if (isContra) {
+    console.log(`⏭️  Skipping ledger entries for contra txn ${transactionId}`);
+    return;
+  }
+
+  if (!transactionId || !baseAccountId || !offsetAccountId || !amount) {
+    console.warn(`⚠️ Skipping ledger entries for txn ${transactionId}: missing required fields`);
+    return;
+  }
+
+  const entries = transactionType === 'DEBIT'
+    ? [
+        { account_id: offsetAccountId, debit_amount: amount,  credit_amount: 0 },
+        { account_id: baseAccountId,   debit_amount: 0,        credit_amount: amount }
+      ]
+    : [
+        { account_id: baseAccountId,   debit_amount: amount,  credit_amount: 0 },
+        { account_id: offsetAccountId, debit_amount: 0,        credit_amount: amount }
+      ];
+
+  const rows = entries.map(e => ({
+    transaction_id: transactionId,
+    account_id: e.account_id,
+    debit_amount: e.debit_amount,
+    credit_amount: e.credit_amount,
+    entry_date: transactionDate
+  }));
+
+  const { error } = await supabase.from('ledger_entries').insert(rows);
+  if (error) {
+    console.error(`❌ Failed to create ledger entries for txn ${transactionId}:`, error);
+  } else {
+    console.log(`✅ Ledger entries created for txn ${transactionId}`);
+  }
+}
+
+/**
  * recategorizeTransaction(req, res)
  * Updates a transaction with a new offset_account_id and marks as USER_OVERRIDE.
  * Resets review_status to PENDING since the category changed.
@@ -77,6 +126,26 @@ async function approveTransaction(req, res) {
       return res.status(500).json({ error: 'Failed to approve transaction.' });
     }
 
+    // Fetch the transaction to get fields needed for ledger entries
+    const { data: txnData } = await supabase
+      .from('transactions')
+      .select('transaction_id, base_account_id, offset_account_id, amount, transaction_type, transaction_date, is_contra')
+      .eq('transaction_id', transactionId)
+      .eq('user_id', userId)
+      .single();
+
+    if (txnData) {
+      await createLedgerEntries(
+        txnData.transaction_id,
+        txnData.base_account_id,
+        txnData.offset_account_id,
+        txnData.amount,
+        txnData.transaction_type,
+        txnData.transaction_date,
+        txnData.is_contra || false
+      );
+    }
+
     return res.status(200).json({ success: true });
   } catch (err) {
     console.error('Unexpected error in approveTransaction:', err);
@@ -117,6 +186,29 @@ async function bulkApproveTransactions(req, res) {
     if (error) {
       console.error('Bulk approve transactions error:', error);
       return res.status(500).json({ error: 'Failed to approve transactions.' });
+    }
+
+    // Fetch all approved transactions to create ledger entries
+    if (data && data.length > 0) {
+      const approvedIds = data.map(t => t.transaction_id);
+      const { data: txnRows } = await supabase
+        .from('transactions')
+        .select('transaction_id, base_account_id, offset_account_id, amount, transaction_type, transaction_date')
+        .in('transaction_id', approvedIds)
+        .eq('user_id', userId);
+
+      if (txnRows) {
+        for (const txn of txnRows) {
+          await createLedgerEntries(
+            txn.transaction_id,
+            txn.base_account_id,
+            txn.offset_account_id,
+            txn.amount,
+            txn.transaction_type,
+            txn.transaction_date
+          );
+        }
+      }
     }
 
     const approvedCount = data ? data.length : 0;
@@ -183,6 +275,25 @@ async function manualCategorizeTransaction(req, res) {
     if (insertError) {
       console.error('Failed to create transaction:', insertError);
       return res.status(500).json({ error: 'Failed to save categorization.' });
+    }
+
+    // Fetch the newly created transaction to get its generated ID
+    const { data: newTxn } = await supabase
+      .from('transactions')
+      .select('transaction_id, base_account_id, offset_account_id, amount, transaction_type, transaction_date')
+      .eq('uncategorized_transaction_id', uncategorized_transaction_id)
+      .eq('user_id', userId)
+      .single();
+
+    if (newTxn) {
+      await createLedgerEntries(
+        newTxn.transaction_id,
+        newTxn.base_account_id,
+        newTxn.offset_account_id,
+        newTxn.amount,
+        newTxn.transaction_type,
+        newTxn.transaction_date
+      );
     }
 
     return res.status(200).json({ success: true });
