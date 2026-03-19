@@ -1,6 +1,6 @@
 const supabase = require('../config/supabaseClient');
 
-const PYTHON_PORT = process.env.PYTHON_PORT || 5000;
+const ML_SERVICE_URL = process.env.ML_SERVICE_URL || `http://127.0.0.1:${process.env.PYTHON_PORT || 5000}`;
 
 /**
  * Helper function to identify garbage/noise in raw details
@@ -121,7 +121,7 @@ async function upsertVectorCache(userId, cleanName, accountId) {
     }
 
     // Generate embedding via Python service
-    const response = await fetch(`http://127.0.0.1:${PYTHON_PORT}/embed`, {
+    const response = await fetch(`${ML_SERVICE_URL}/embed`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text: uppercaseName })

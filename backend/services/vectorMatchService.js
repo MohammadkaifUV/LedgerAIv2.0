@@ -1,7 +1,7 @@
 const supabase = require('../config/supabaseClient');
 require('dotenv').config();
 
-const EMBEDDING_SERVICE_PORT = process.env.PYTHON_PORT || 5000;
+const ML_SERVICE_URL = process.env.ML_SERVICE_URL || `http://127.0.0.1:${process.env.PYTHON_PORT || 5000}`;
 
 /**
  * Handles the AI similarity matching for cleaned merchant strings 
@@ -18,7 +18,7 @@ async function findVectorMatch(cleanString, userId) {
     const uppercaseString = cleanString.toUpperCase();
 
     // 1. Embedding Generation (Python ML Microservice)
-    const response = await fetch(`http://127.0.0.1:${EMBEDDING_SERVICE_PORT}/embed`, {
+    const response = await fetch(`${ML_SERVICE_URL}/embed`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text: uppercaseString })

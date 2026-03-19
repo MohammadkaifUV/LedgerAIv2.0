@@ -5,7 +5,7 @@ const personalCacheService = require('../services/personalCacheService');
 const supabase = require('../config/supabaseClient');
 const llmBatchFallback = require('../services/llmBatchFallback');
 
-const PYTHON_PORT = process.env.PYTHON_PORT || 5000;
+const ML_SERVICE_URL = process.env.ML_SERVICE_URL || `http://127.0.0.1:${process.env.PYTHON_PORT || 5000}`;
 
 /**
  * ACCOUNT FIELD CONVENTION:
@@ -113,7 +113,7 @@ async function processUpload(req, res) {
       if (!rulesResult.hasRuleMatch) {
         try {
           const sanitizedString = txn.details.replace(/[^a-zA-Z0-9\s]/g, ' ');
-          const nerResponse = await fetch(`http://127.0.0.1:${PYTHON_PORT}/ner`, {
+          const nerResponse = await fetch(`${ML_SERVICE_URL}/ner`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ text: sanitizedString })
