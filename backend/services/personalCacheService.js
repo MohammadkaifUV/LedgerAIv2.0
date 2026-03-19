@@ -1,5 +1,22 @@
 const supabase = require('../config/supabaseClient');
 
+const PYTHON_PORT = process.env.PYTHON_PORT || 5000;
+
+/**
+ * Helper function to identify garbage/noise in raw details
+ * Returns true if the string looks like UPI, random hex, or system data
+ */
+function isGarbage(rawDetails) {
+  if (!rawDetails) return false;
+  const garbagePatterns = [
+    /UPI\//i,
+    /^\d+$/,
+    /^[A-Z0-9]{10,}$/,
+    /(@upi|@okaxis|@ybl|@paytm|@oksbi|@okicici|@okhdfcbank)/i
+  ];
+  return garbagePatterns.some(p => p.test(rawDetails.trim()));
+}
+
 /**
  * Stage 1.5: Personal Exact Cache Lookup
  * Checks if a user has manually categorized a specific, messy string (like a VPA or QR code) in the past.
@@ -43,6 +60,100 @@ async function checkExactMatch(userId, rawString) {
   }
 }
 
+/**
+ * Upsert a personal exact cache entry (exact VPA → account_id mapping)
+ * Increments hit_count if the entry already exists, otherwise creates it.
+ */
+async function upsertExactCache(userId, rawVpa, accountId) {
+  try {
+    if (!userId || !rawVpa || !accountId) return;
+    
+    const { data: existing } = await supabase
+      .from('personal_exact_cache')
+      .select('hit_count')
+      .eq('user_id', userId)
+      .eq('raw_vpa', rawVpa)
+      .maybeSingle();
+
+    if (existing) {
+      await supabase
+        .from('personal_exact_cache')
+        .update({ hit_count: existing.hit_count + 1 })
+        .eq('user_id', userId)
+        .eq('raw_vpa', rawVpa);
+    } else {
+      await supabase
+        .from('personal_exact_cache')
+        .insert({ user_id: userId, raw_vpa: rawVpa, account_id: accountId, hit_count: 1 });
+    }
+    console.log(`✅ personal_exact_cache upserted: ${rawVpa}`);
+  } catch (err) {
+    console.error('❌ upsertExactCache error:', err.message);
+  }
+}
+
+/**
+ * Upsert a personal vector cache entry (semantic merchant name → account_id mapping + embedding)
+ * Calls the Python embedding service to generate the embedding vector.
+ * Increments hit_count if the entry already exists.
+ */
+async function upsertVectorCache(userId, cleanName, accountId) {
+  try {
+    if (!userId || !cleanName || !accountId) return;
+
+    const uppercaseName = cleanName.toUpperCase();
+
+    // Check for existing entry
+    const { data: existing } = await supabase
+      .from('personal_vector_cache')
+      .select('cache_id, hit_count')
+      .eq('user_id', userId)
+      .eq('clean_name', uppercaseName)
+      .maybeSingle();
+
+    if (existing) {
+      await supabase
+        .from('personal_vector_cache')
+        .update({ hit_count: existing.hit_count + 1 })
+        .eq('cache_id', existing.cache_id);
+      console.log(`✅ personal_vector_cache hit_count updated: ${uppercaseName}`);
+      return;
+    }
+
+    // Generate embedding via Python service
+    const response = await fetch(`http://127.0.0.1:${PYTHON_PORT}/embed`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: uppercaseName })
+    });
+
+    if (!response.ok) {
+      console.error(`❌ Embed call failed for ${uppercaseName}`);
+      return;
+    }
+
+    const { embedding } = await response.json();
+    if (!embedding || !Array.isArray(embedding)) return;
+
+    await supabase
+      .from('personal_vector_cache')
+      .insert({
+        user_id: userId,
+        clean_name: uppercaseName,
+        account_id: accountId,
+        embedding,
+        hit_count: 1
+      });
+
+    console.log(`✅ personal_vector_cache seeded: ${uppercaseName}`);
+  } catch (err) {
+    console.error('❌ upsertVectorCache error:', err.message);
+  }
+}
+
 module.exports = {
-  checkExactMatch
+  checkExactMatch,
+  upsertExactCache,
+  upsertVectorCache,
+  isGarbage
 };

@@ -64,6 +64,28 @@
   flex-shrink: 0;
 }
 
+.add-account-trigger-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+  background: transparent;
+  color: var(--accent-color);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  margin-right: 8px;
+}
+
+.add-account-trigger-btn:hover {
+  background: rgba(127, 175, 138, 0.08);
+  border-color: var(--accent-color);
+}
+
 .account-search-input {
   margin: 16px 16px 0;
   padding: 12px 14px;

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../../../shared/supabase';
+import AddAccountModal from './AddAccountModal';
 import '../styles/AccountPickerModal.css';
+import '../styles/AddAccountModal.css';
 
 const ACCOUNT_TYPE_ORDER = ['INCOME', 'EXPENSE', 'ASSET', 'LIABILITY', 'EQUITY'];
 
@@ -8,6 +10,7 @@ const AccountPickerModal = ({ onSelect, onClose, currentAccountId, mode = 'all' 
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showAddAccount, setShowAddAccount] = useState(false);
   const searchInputRef = useRef(null);
 
   // Determine visible account types based on mode
@@ -93,11 +96,26 @@ const AccountPickerModal = ({ onSelect, onClose, currentAccountId, mode = 'all' 
 
   const groups = groupedAccounts();
 
+  const handleAccountCreated = (newAccount) => {
+    setAccounts((prev) => [...prev, newAccount]);
+  };
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="account-picker-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>Select Account</h2>
+          <button
+            className="add-account-trigger-btn"
+            onClick={() => setShowAddAccount(true)}
+            type="button"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" 
+                 stroke="currentColor" strokeWidth="2.5">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+            Add Account
+          </button>
           <button
             className="modal-close-btn"
             onClick={onClose}
@@ -160,6 +178,12 @@ const AccountPickerModal = ({ onSelect, onClose, currentAccountId, mode = 'all' 
             ))
           )}
         </div>
+        {showAddAccount && (
+          <AddAccountModal
+            onClose={() => setShowAddAccount(false)}
+            onCreated={handleAccountCreated}
+          />
+        )}
       </div>
     </div>
   );

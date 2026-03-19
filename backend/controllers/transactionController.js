@@ -1,4 +1,5 @@
 const supabase = require('../config/supabaseClient');
+const { upsertExactCache, upsertVectorCache, isGarbage } = require('../services/personalCacheService');
 
 /**
  * Creates double-entry ledger entries for an approved transaction.
@@ -43,6 +44,11 @@ async function createLedgerEntries(transactionId, baseAccountId, offsetAccountId
 
   const { error } = await supabase.from('ledger_entries').insert(rows);
   if (error) {
+    if (error.code === '23505') {
+      // Unique constraint violation — already processed, safe to ignore
+      console.warn(`⚠️ Duplicate skipped for txn ${transactionId}: ledger entries already created`);
+      return;
+    }
     console.error(`❌ Failed to create ledger entries for txn ${transactionId}:`, error);
   } else {
     console.log(`✅ Ledger entries created for txn ${transactionId}`);
@@ -122,6 +128,11 @@ async function approveTransaction(req, res) {
       .eq('user_id', userId);
 
     if (error) {
+      if (error.code === '23505') {
+        // Unique constraint violation — already processed, safe to ignore
+        console.warn(`⚠️ Duplicate skipped for txn ${transactionId}: already approved`);
+        return res.status(200).json({ success: true, note: 'already_approved' });
+      }
       console.error('Approve transaction error:', error);
       return res.status(500).json({ error: 'Failed to approve transaction.' });
     }
@@ -144,6 +155,10 @@ async function approveTransaction(req, res) {
         txnData.transaction_date,
         txnData.is_contra || false
       );
+
+      if (txnData && !txnData.is_contra) {
+        await upsertVectorCache(userId, txnData.details, txnData.offset_account_id);
+      }
     }
 
     return res.status(200).json({ success: true });
@@ -184,6 +199,11 @@ async function bulkApproveTransactions(req, res) {
       .select('transaction_id'); // To verify the count
 
     if (error) {
+      if (error.code === '23505') {
+        // Unique constraint violation — already processed, safe to ignore
+        console.warn(`⚠️ Duplicate skipped for bulk txns: already approved`);
+        return res.status(200).json({ success: true, note: 'already_approved' });
+      }
       console.error('Bulk approve transactions error:', error);
       return res.status(500).json({ error: 'Failed to approve transactions.' });
     }
@@ -193,7 +213,7 @@ async function bulkApproveTransactions(req, res) {
       const approvedIds = data.map(t => t.transaction_id);
       const { data: txnRows } = await supabase
         .from('transactions')
-        .select('transaction_id, base_account_id, offset_account_id, amount, transaction_type, transaction_date')
+        .select('transaction_id, base_account_id, offset_account_id, amount, transaction_type, transaction_date, details, is_contra')
         .in('transaction_id', approvedIds)
         .eq('user_id', userId);
 
@@ -207,6 +227,10 @@ async function bulkApproveTransactions(req, res) {
             txn.transaction_type,
             txn.transaction_date
           );
+
+          if (!txn.is_contra) {
+            await upsertVectorCache(userId, txn.details, txn.offset_account_id);
+          }
         }
       }
     }
@@ -273,6 +297,11 @@ async function manualCategorizeTransaction(req, res) {
       }]);
 
     if (insertError) {
+      if (insertError.code === '23505') {
+        // Unique constraint violation — already processed, safe to ignore
+        console.warn(`⚠️ Duplicate skipped for uncategorized txn ${uncategorized_transaction_id}: already categorized`);
+        return res.status(200).json({ success: true, note: 'already_approved' });
+      }
       console.error('Failed to create transaction:', insertError);
       return res.status(500).json({ error: 'Failed to save categorization.' });
     }
@@ -294,6 +323,14 @@ async function manualCategorizeTransaction(req, res) {
         newTxn.transaction_type,
         newTxn.transaction_date
       );
+
+      // Seed personal cache based on whether the raw details is garbage
+      const rawDetails = uncatData.details || '';
+      if (isGarbage(rawDetails)) {
+        await upsertExactCache(userId, rawDetails.trim(), newTxn.offset_account_id);
+      } else {
+        await upsertVectorCache(userId, rawDetails, newTxn.offset_account_id);
+      }
     }
 
     return res.status(200).json({ success: true });
