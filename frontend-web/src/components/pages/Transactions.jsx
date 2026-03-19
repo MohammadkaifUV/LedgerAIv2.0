@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import UploadModal from '../UploadModal';
 import AccountPickerModal from '../AccountPickerModal';
 import { Toast, useToast } from '../Toast';
-import { supabase } from './shared/supabase';
+import { supabase } from '../../shared/supabase';
 import { ICONS } from '../Icons';
 import '../../styles/Transactions.css';
 
