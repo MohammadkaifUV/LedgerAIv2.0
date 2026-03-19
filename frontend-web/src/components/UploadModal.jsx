@@ -42,6 +42,8 @@ const UploadModal = ({ onClose, onUploadSuccess }) => {
   };
 
   const handleUpload = async () => {
+    console.log('📡 API_BASE_URL:', API_BASE_URL);
+
     if (!file) {
       setError('Please select a file first.');
       return;
@@ -51,6 +53,12 @@ const UploadModal = ({ onClose, onUploadSuccess }) => {
     setError('');
 
     try {
+      if (!supabase) {
+        setError('Supabase is not configured. Check VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
+        setLoading(false);
+        return;
+      }
+
       const { data: { session } } = await supabase.auth.getSession();
       if (!session?.access_token) {
         throw new Error('Authentication required. Please sign in again.');
@@ -80,6 +88,8 @@ const UploadModal = ({ onClose, onUploadSuccess }) => {
           identifiers: jsonData.identifiers
         })
       });
+
+      console.log('📬 Upload response status:', response.status, response.statusText);
 
       if (!response.ok) {
         const errorPayload = await response.json().catch(() => ({}));

@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 3000;
 // � SECURITY: CORS Restriction
 // ==========================================
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'http://localhost:5173').split(',');
+console.log('🔒 CORS allowed origins:', ALLOWED_ORIGINS);
 app.use(cors({
   origin: (origin, cb) => {
     if (!origin || ALLOWED_ORIGINS.includes(origin)) cb(null, true);
@@ -22,6 +23,7 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json()); // Essential for parsing JSON batches
+app.set('trust proxy', 1);
 
 // ==========================================
 // 🔒 SECURITY: Rate Limiting
