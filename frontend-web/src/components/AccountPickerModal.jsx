@@ -14,8 +14,8 @@ const AccountPickerModal = ({ onSelect, onClose, currentAccountId, transactionTy
   const [showAll, setShowAll] = useState(false);
   const searchInputRef = useRef(null);
 
-  // Determine visible account types based on mode
-  const visibleTypes = mode === 'income-expense' ? ['INCOME', 'EXPENSE'] : ACCOUNT_TYPE_ORDER;
+  // Determine visible account types based on transactionType
+  const visibleTypes = transactionType === 'income-expense' ? ['INCOME', 'EXPENSE'] : ACCOUNT_TYPE_ORDER;
 
   useEffect(() => {
     const fetchAccounts = async () => {
@@ -59,7 +59,7 @@ const AccountPickerModal = ({ onSelect, onClose, currentAccountId, transactionTy
         searchInputRef.current.focus();
       }
     }, 0);
-  }, [mode]);
+  }, [transactionType]);
 
   // Handle escape key
   useEffect(() => {
