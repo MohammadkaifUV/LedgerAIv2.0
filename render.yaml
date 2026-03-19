@@ -1,20 +1,7 @@
 services:
   # ─────────────────────────────────────────
-  # 1. ML Service (Python FastAPI + Docker)
-  # ─────────────────────────────────────────
-  - type: web
-    name: ledgerai-ml
-    runtime: docker
-    rootDir: ml-service
-    dockerfilePath: ./Dockerfile
-    branch: main
-    healthCheckPath: /health
-    envVars:
-      - key: PORT
-        value: 5000
-
-  # ─────────────────────────────────────────
-  # 2. Backend (Node.js Express)
+  # Backend (Node.js Express)
+  # ML Service hosted on Hugging Face Spaces
   # ─────────────────────────────────────────
   - type: web
     name: ledgerai-backend
@@ -38,15 +25,12 @@ services:
       - key: LLM_MODEL
         value: google/gemini-2.5-flash
       - key: ML_SERVICE_URL
-        fromService:
-          name: ledgerai-ml
-          type: web
-          property: host
+        value: https://mohammadkaifuv-ledgerai-ml.hf.space
       - key: ALLOWED_ORIGINS
         sync: false
 
   # ─────────────────────────────────────────
-  # 3. Frontend (React + Vite → Static Site)
+  # Frontend (React + Vite → Static Site)
   # ─────────────────────────────────────────
   - type: web
     name: ledgerai-frontend
