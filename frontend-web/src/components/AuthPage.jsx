@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { signUp, signIn } from '../../../shared/authService';
+import { signUp, signIn } from '../shared/authService';
 import '../styles/AuthPage.css';
 
 const AuthPage = ({ toggleTheme, isDarkMode }) => {

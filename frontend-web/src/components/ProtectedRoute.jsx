@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../../../shared/hooks/useAuth';
+import { useAuth } from '../shared/hooks/useAuth';
 import { useRole } from '../context/RoleContext';
 
 const ProtectedRoute = ({ allowedRoles, children }) => {

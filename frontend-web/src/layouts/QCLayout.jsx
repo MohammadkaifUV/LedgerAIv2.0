@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/Sidebar'; 
-import { signOut } from '../../../shared/authService';
+import { signOut } from '../shared/authService';
 import '../styles/Dashboard.css';
 
 const QCLayout = ({ user, toggleTheme, isDarkMode }) => {

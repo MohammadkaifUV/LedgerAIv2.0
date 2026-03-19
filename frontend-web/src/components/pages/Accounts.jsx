@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../../../shared/supabase';
+import { supabase } from './shared/supabase';
 import '../../styles/Accounts.css';
 
 // ─────────────────────────────────────────────────────────────────────────────

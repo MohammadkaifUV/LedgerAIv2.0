@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { supabase } from '../../../shared/supabase';
+import { supabase } from '../shared/supabase';
 import '../styles/UploadModal.css';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';

@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { supabase } from '../../../shared/supabase';
-import { useAuth } from '../../../shared/hooks/useAuth';
+import { supabase } from '../shared/supabase';
+import { useAuth } from '../shared/hooks/useAuth';
 
 const RoleContext = createContext(null);
 

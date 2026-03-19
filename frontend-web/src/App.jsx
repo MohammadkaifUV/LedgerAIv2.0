@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from '../../shared/hooks/useAuth';
+import { useAuth } from './shared/hooks/useAuth';
 import { useRole } from './context/RoleContext';
-import { supabase, supabaseConfigError } from '../../shared/supabase';
+import { supabase, supabaseConfigError } from './shared/supabase';
 
 // Pages & Components
 import AuthPage from './components/AuthPage';

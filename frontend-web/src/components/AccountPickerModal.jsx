@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { supabase } from '../../../shared/supabase';
+import { supabase } from '../shared/supabase';
 import AddAccountModal from './AddAccountModal';
 import '../styles/AccountPickerModal.css';
 import '../styles/AddAccountModal.css';

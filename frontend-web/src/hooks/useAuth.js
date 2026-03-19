@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '../../../shared/supabase';
+import { supabase } from '../shared/supabase';
 
 export function useAuth() {
   const [user, setUser] = useState(null);
