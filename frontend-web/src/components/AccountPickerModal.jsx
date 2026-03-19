@@ -6,11 +6,12 @@ import '../styles/AddAccountModal.css';
 
 const ACCOUNT_TYPE_ORDER = ['INCOME', 'EXPENSE', 'ASSET', 'LIABILITY', 'EQUITY'];
 
-const AccountPickerModal = ({ onSelect, onClose, currentAccountId, mode = 'all' }) => {
+const AccountPickerModal = ({ onSelect, onClose, currentAccountId, transactionType = null }) => {
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddAccount, setShowAddAccount] = useState(false);
+  const [showAll, setShowAll] = useState(false);
   const searchInputRef = useRef(null);
 
   // Determine visible account types based on mode
@@ -28,11 +29,6 @@ const AccountPickerModal = ({ onSelect, onClose, currentAccountId, mode = 'all' 
           .select('account_id, account_name, account_type, parent_account_id, is_active')
           .eq('user_id', user.id)
           .eq('is_active', true);
-
-        // If mode is 'income-expense', filter to only those types
-        if (mode === 'income-expense') {
-          query = query.in('account_type', ['INCOME', 'EXPENSE']);
-        }
 
         const { data, error } = await query
           .order('account_type', { ascending: true })
