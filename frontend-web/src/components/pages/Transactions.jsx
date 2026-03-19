@@ -22,7 +22,7 @@ const Transactions = () => {
   const [approvingIds, setApprovingIds] = useState(new Set());
   const [selectedIds, setSelectedIds] = useState(new Set());
 
-  const fetchTransactions = async () => {
+  const fetchTransactions = async (currentFilter = activeFilter) => {
     setLoading(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
@@ -56,7 +56,7 @@ const Transactions = () => {
       setTransactions(data || []);
 
       // Auto-select LOW attention when filtering to PENDING_APP
-      if (activeFilter === 'PENDING_APP') {
+      if (currentFilter === 'PENDING_APP') {
         const lowAttentionIds = new Set();
         (data || []).forEach((txn) => {
           const isCategorised = txn.transactions && txn.transactions.length > 0;
@@ -76,7 +76,7 @@ const Transactions = () => {
   };
 
   useEffect(() => {
-    fetchTransactions();
+    fetchTransactions('ALL');
   }, []);
 
   const handleCategorize = async () => {
@@ -98,7 +98,7 @@ const Transactions = () => {
       });
       if (response.ok) {
         showToast('✅ Bulk categorize success!', 'success');
-        fetchTransactions();
+        fetchTransactions(activeFilter);
       } else {
         showToast('Bulk categorization failed', 'error');
       }
@@ -123,7 +123,7 @@ const Transactions = () => {
       });
       if (response.ok) {
         showToast('Transaction approved', 'success');
-        fetchTransactions();
+        fetchTransactions(activeFilter);
       } else {
         showToast('Failed to approve', 'error');
       }
@@ -156,7 +156,7 @@ const Transactions = () => {
         const data = await response.json();
         showToast(`${data.approved_count} transactions approved`, 'success');
         setSelectedIds(new Set());
-        fetchTransactions();
+        fetchTransactions(activeFilter);
       } else {
         showToast('Bulk approval failed', 'error');
       }
@@ -185,7 +185,7 @@ const Transactions = () => {
       if (response.ok) {
         showToast('Category updated', 'success');
         setRecatTarget(null);
-        fetchTransactions();
+        fetchTransactions(activeFilter);
       } else {
         showToast('Failed to update category', 'error');
       }
@@ -212,7 +212,7 @@ const Transactions = () => {
       if (response.ok) {
         showToast('Transaction categorised and approved', 'success');
         setManualTarget(null);
-        fetchTransactions();
+        fetchTransactions(activeFilter);
       } else {
         showToast('Failed to save categorization', 'error');
       }
@@ -231,6 +231,7 @@ const Transactions = () => {
 
   const handleFilterChange = (newFilter) => {
     setActiveFilter(newFilter);
+    fetchTransactions(newFilter);
     // Clear selections when changing filters away from PENDING_APP
     if (newFilter !== 'PENDING_APP') {
       setSelectedIds(new Set());
@@ -562,7 +563,7 @@ const Transactions = () => {
       {isUploadOpen && (
         <UploadModal
           onClose={() => setIsUploadOpen(false)}
-          onUploadSuccess={fetchTransactions}
+          onUploadSuccess={() => fetchTransactions(activeFilter)}
         />
       )}
       {recatTarget && (

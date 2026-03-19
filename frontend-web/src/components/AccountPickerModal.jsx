@@ -20,6 +20,7 @@ const AccountPickerModal = ({ onSelect, onClose, currentAccountId, mode = 'all' 
     const fetchAccounts = async () => {
       try {
         const { data: { user } } = await supabase.auth.getUser();
+        console.log('🔍 Fetching accounts for user:', user?.id);
         if (!user) return;
 
         let query = supabase
@@ -36,6 +37,9 @@ const AccountPickerModal = ({ onSelect, onClose, currentAccountId, mode = 'all' 
         const { data, error } = await query
           .order('account_type', { ascending: true })
           .order('account_name', { ascending: true });
+
+        console.log('📦 Raw accounts data:', data, 'Error:', error);  // ADD THIS
+        console.log('🔢 Count:', data?.length, 'is_active values:', data?.map(a => a.is_active)); 
 
         if (error) throw error;
         setAccounts(data || []);

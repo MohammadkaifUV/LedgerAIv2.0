@@ -1,18 +1,34 @@
 const express = require('express');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
 const transactionRoutes = require('./routes/transactionRoutes');
 const qcRoutes = require('./routes/qcRoutes');
+const rulesEngineService = require('./services/rulesEngineService');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // ==========================================
-// 🛡️ MIDDLEWARE
+// � SECURITY: CORS Restriction
 // ==========================================
-app.use(cors());
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'http://localhost:5173').split(',');
+app.use(cors({
+  origin: (origin, cb) => {
+    if (!origin || ALLOWED_ORIGINS.includes(origin)) cb(null, true);
+    else cb(new Error('Not allowed by CORS'));
+  },
+  credentials: true
+}));
 app.use(express.json()); // Essential for parsing JSON batches
+
+// ==========================================
+// 🔒 SECURITY: Rate Limiting
+// ==========================================
+const limiter = rateLimit({ windowMs: 60_000, max: 30 });
+app.use('/api/transactions/categorize-bulk', limiter);
+app.use('/api/transactions/upload-bulk', limiter);
 
 // ==========================================
 // 🛣️ ROUTES MOUNTING
@@ -31,6 +47,25 @@ app.get('/qc', (req, res) => {
   res.status(200).send('<!DOCTYPE html><html><head><title>QC</title></head><body></body></html>');
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 LedgerAI Backend running on port ${PORT}`);
+// ==========================================
+// 🔒 SECURITY: Global Error Handler
+// ==========================================
+app.use((err, req, res, next) => {
+  console.error('❌ Unhandled error:', err);
+  if (res.headersSent) return next(err);
+  res.status(err.status || 500).json({
+    error: process.env.NODE_ENV === 'production'
+      ? 'Internal server error'
+      : err.message
+  });
+});
+
+// Load rules at startup
+rulesEngineService.loadRules().then(() => {
+  app.listen(PORT, () => {
+    console.log(`🚀 LedgerAI Backend running on port ${PORT}`);
+  });
+}).catch((err) => {
+  console.error('Failed to load rules at startup:', err);
+  process.exit(1);
 });

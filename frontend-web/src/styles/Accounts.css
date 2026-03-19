@@ -188,6 +188,11 @@
   cursor: not-allowed;
 }
 
+.node-action-btn.identifier:hover {
+  border-color: #6366F1;
+  color: #6366F1;
+}
+
 .node-action-btn.edit:hover {
   border-color: var(--accent-color);
   color: var(--accent-color);

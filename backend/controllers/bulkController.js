@@ -30,8 +30,6 @@ async function processUpload(req, res) {
       return res.status(401).json({ error: 'User authenticated reference missing.' });
     }
 
-    await rulesEngineService.loadRules();
-
     // ==========================================
     // STAGE 0: BATCH CONTRA RADAR (Pre-Loop)
     // ==========================================
@@ -132,7 +130,13 @@ async function processUpload(req, res) {
       // ==========================================
       // STAGE 3: VECTOR SIMILARITY
       // ==========================================
-      const vectorMatch = await vectorMatchService.findVectorMatch(cleanMerchantName, userId);
+      let vectorMatch = null;
+      try {
+        vectorMatch = await vectorMatchService.findVectorMatch(cleanMerchantName, userId);
+      } catch (err) {
+        console.error('❌ Vector match failed for transaction:', err.message);
+        // vectorMatch remains null, proceed to fallback
+      }
 
       if (vectorMatch) {
         finalResults.push({
@@ -211,19 +215,19 @@ async function processUpload(req, res) {
     // STAGE 5: BATCH WRITE TO TRANSACTIONS
     // ==========================================
     const transactionsBatch = finalResults
-      .filter(item => item.base_account_id && item.offset_account_id)
+      .filter(item => item.base_account_id)  // only need source account
       .map(item => ({
         user_id: userId,
         base_account_id: item.base_account_id,
-        offset_account_id: item.offset_account_id || null,
+        offset_account_id: item.offset_account_id || null,   // allow null
         document_id: item.document_id,
         transaction_date: item.txn_date,
         details: item.details,
         clean_merchant_name: item.clean_merchant_name || null,
         amount: item.debit || item.credit || 0,
         transaction_type: item.debit ? 'DEBIT' : 'CREDIT',
-        categorised_by: item.categorised_by || 'LLM_PREDICTION',
-        confidence_score: item.confidence_score || 0.50,
+        categorised_by: item.categorised_by || null,
+        confidence_score: item.confidence_score || null,
         is_contra: item.is_contra || false,
         posting_status: 'DRAFT',
         attention_level: item.offset_account_id ? 'LOW' : 'HIGH',

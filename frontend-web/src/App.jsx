@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../../shared/hooks/useAuth';
+import { useRole } from './context/RoleContext';
 import { supabase, supabaseConfigError } from '../../shared/supabase';
 
 // Pages & Components
 import AuthPage from './components/AuthPage';
-import Dashboard from './components/Dashboard';
+import Overview from './components/pages/Overview';
+import Transactions from './components/pages/Transactions';
+import Accounts from './components/pages/Accounts';
+import Analytics from './components/pages/Analytics';
 import WelcomeScreen from './components/WelcomeScreen';
 import SetupAccounts from './components/SetupAccounts';
 import QCPanel from './components/QCPanel';
@@ -18,10 +22,10 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   const { user, loading: authLoading } = useAuth();
+  const { role } = useRole();
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [hasModules, setHasModules] = useState(null);
   const [hasIdentifiers, setHasIdentifiers] = useState(null);
-  const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
@@ -36,7 +40,6 @@ function App() {
 
   const checkSetupStatus = async () => {
     if (!supabase) {
-      setRole('USER');
       setHasModules(false);
       setHasIdentifiers(false);
       setLoading(false);
@@ -51,17 +54,8 @@ function App() {
     }
 
     try {
-      const { data: profile, error: profErr } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', user.id)
-        .maybeSingle();
-      
-      if (profErr) throw profErr;
-      const userRole = profile?.role || 'USER';
-      setRole(userRole);
-
-      if (userRole === 'QC' || userRole === 'ADMIN') {
+      // Skip role check here since it's now handled by RoleContext
+      if (role === 'QC' || role === 'ADMIN') {
          setLoading(false);
          return;
       }
@@ -91,7 +85,6 @@ function App() {
     } catch (err) {
       console.error('Error checking setup status:', err);
       // Fallback
-      setRole('USER');
       setHasModules(false);
       setHasIdentifiers(false);
     } finally {
@@ -100,9 +93,9 @@ function App() {
   };
 
   useEffect(() => {
-    if (user) checkSetupStatus();
-    else setLoading(false);
-  }, [user]);
+    if (user && role) checkSetupStatus();
+    else if (!user) setLoading(false);
+  }, [user, role]);
 
   if (supabaseConfigError) {
     return (
@@ -175,7 +168,10 @@ function App() {
                  )}
               </ProtectedRoute>
           }>
-               <Route index element={<Dashboard user={user} toggleTheme={toggleTheme} isDarkMode={isDarkMode} />} />
+               <Route index element={<Overview />} />
+               <Route path="transactions" element={<Transactions />} />
+               <Route path="accounts" element={<Accounts />} />
+               <Route path="analytics" element={<Analytics />} />
           </Route>
 
           {/* Catch-All / Redirect */}

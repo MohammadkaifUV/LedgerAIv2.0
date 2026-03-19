@@ -1,41 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../../../shared/hooks/useAuth';
-import { supabase } from '../../../shared/supabase';
+import { useRole } from '../context/RoleContext';
 
 const ProtectedRoute = ({ allowedRoles, children }) => {
   const { user, loading: authLoading } = useAuth();
-  const [role, setRole] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { role, roleLoading } = useRole();
 
-  useEffect(() => {
-    if (!user) {
-      setLoading(false);
-      return;
-    }
-
-    const fetchRole = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', user.id)
-          .single();
-
-        if (error) throw error;
-        setRole(data?.role || 'USER');
-      } catch (err) {
-        console.error('Error fetching role in ProtectedRoute:', err);
-        setRole('USER');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRole();
-  }, [user]);
-
-  if (authLoading || loading) {
+  if (authLoading || roleLoading) {
     return <div style={{ height: '100vh', backgroundColor: '#0B1220' }} />;
   }
 

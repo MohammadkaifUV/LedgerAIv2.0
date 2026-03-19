@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../../shared/supabase';
 import '../styles/SetupAccounts.css';
 
+const PARENT_CODES = {
+  BANK: 'BANK_ACCOUNTS',      // code value in coa_templates
+  CREDIT_CARD: 'CREDIT_CARDS',
+  CASH_WALLET: 'CASH_WALLETS'
+};
+
 const SetupAccounts = ({ onSetupAccountsComplete }) => {
   const [accounts, setAccounts] = useState([]); // Array of forms currently active
   const [loading, setLoading] = useState(false);
@@ -76,21 +82,25 @@ const SetupAccounts = ({ onSetupAccountsComplete }) => {
         const fallbackName = isBank ? 'Bank Account' : isCredit ? 'Credit Card' : 'Cash/Wallet';
         const accName = account.account_name || account.institution_name || fallbackName;
 
-        // Fetch parent_account_id from existing COA mapping
-        let parentTemplateId = null;
-        if (isBank) parentTemplateId = 3;
-        if (isCredit) parentTemplateId = 10;
-        if (account.type === 'CASH_WALLET') parentTemplateId = 4;
-
+        // Fetch parent_account_id from existing COA mapping via code lookup
         let parentAccountId = null;
-        if (parentTemplateId) {
-          const { data: parentAcc } = await supabase
-            .from('accounts')
-            .select('account_id')
-            .eq('user_id', user.id)
-            .eq('template_id', parentTemplateId)
+        const typeCode = PARENT_CODES[account.type];
+        if (typeCode) {
+          const { data: tmpl } = await supabase
+            .from('coa_templates')
+            .select('template_id')
+            .eq('code', typeCode)
             .single();
-          if (parentAcc) parentAccountId = parentAcc.account_id;
+          
+          if (tmpl?.template_id) {
+            const { data: parentAcc } = await supabase
+              .from('accounts')
+              .select('account_id')
+              .eq('user_id', user.id)
+              .eq('template_id', tmpl.template_id)
+              .single();
+            if (parentAcc) parentAccountId = parentAcc.account_id;
+          }
         }
 
         // 2. Create Accounts table entry

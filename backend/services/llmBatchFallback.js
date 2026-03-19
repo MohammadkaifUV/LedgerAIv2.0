@@ -83,10 +83,23 @@ ${JSON.stringify(uncategorizedArray.map(t => ({
       return [];
     }
 
-    // 3. Parse and Safety Check
-    const parsedPredictions = JSON.parse(contentString);
+    // 3. Strip markdown code fences if the LLM disobeyed instructions
+    const cleanContent = contentString
+      .replace(/^```json\s*/i, '')
+      .replace(/```\s*$/i, '')
+      .trim();
+
+    let parsedPredictions;
+    try {
+      parsedPredictions = JSON.parse(cleanContent);
+    } catch (parseErr) {
+      console.error('❌ LLM response was not valid JSON:', cleanContent.slice(0, 200));
+      return [];
+    }
+
     if (!Array.isArray(parsedPredictions)) {
-      throw new Error('LLM did not return a valid JSON array of predictions.');
+      console.error('❌ LLM returned non-array JSON:', typeof parsedPredictions);
+      return [];
     }
 
     // Map IDs to lookup table for O(1) existence checks set benchmark frameworks forwards onwards

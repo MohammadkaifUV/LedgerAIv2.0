@@ -1,8 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';  // ← ADD
 import '../styles/Sidebar.css';
 import { ICONS } from './Icons';
 
-const Sidebar = ({ activePage, onPageChange, isExpanded, onToggleExpand, user, toggleTheme, isDarkMode, onLogout, onOpenSettings }) => {
+const Sidebar = ({
+  isExpanded, onToggleExpand,
+  user, toggleTheme, isDarkMode, onLogout, onOpenSettings
+  // ↑ activePage and onPageChange REMOVED — location drives active state now
+}) => {
+  const navigate = useNavigate();       // ← ADD
+  const location = useLocation();       // ← ADD
   const [showPopup, setShowPopup] = useState(false);
   const popupRef = useRef(null);
 
@@ -21,7 +28,7 @@ const Sidebar = ({ activePage, onPageChange, isExpanded, onToggleExpand, user, t
     const name = user.user_metadata?.full_name;
     if (name) {
       const parts = name.split(' ');
-      return parts.length > 1 
+      return parts.length > 1
         ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
         : parts[0][0].toUpperCase();
     }
@@ -30,16 +37,16 @@ const Sidebar = ({ activePage, onPageChange, isExpanded, onToggleExpand, user, t
 
   const getFullName = () => user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User';
 
+  // ← path replaces id; isActive uses location.pathname
   const menuItems = [
-    { id: 'dashboard', label: 'Overview', icon: <ICONS.Dashboard /> },
-    { id: 'transactions', label: 'Transactions', icon: <ICONS.Transactions /> },
-    { id: 'accounts', label: 'Accounts', icon: <ICONS.Accounts /> },
-    { id: 'analytics', label: 'Analytics', icon: <ICONS.Analytics /> },
+    { path: '/',             label: 'Overview',      icon: <ICONS.Dashboard /> },
+    { path: '/transactions', label: 'Transactions',  icon: <ICONS.Transactions /> },
+    { path: '/accounts',     label: 'Accounts',      icon: <ICONS.Accounts /> },
+    { path: '/analytics',    label: 'Analytics',     icon: <ICONS.Analytics /> },
   ];
 
-  const handlePageClick = (id) => {
-    if (onPageChange) onPageChange(id);
-  };
+  const isActive = (path) =>
+    path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
 
   return (
     <div className={`sidebar-container ${isExpanded ? 'expanded' : 'collapsed'}`}>
@@ -58,10 +65,10 @@ const Sidebar = ({ activePage, onPageChange, isExpanded, onToggleExpand, user, t
 
       <nav className="sidebar-nav">
         {menuItems.map(item => (
-          <button 
-            key={item.id} 
-            className={`nav-item ${activePage === item.id ? 'active' : ''}`}
-            onClick={() => handlePageClick(item.id)}
+          <button
+            key={item.path}
+            className={`nav-item ${isActive(item.path) ? 'active' : ''}`}
+            onClick={() => navigate(item.path)}   // ← navigate() replaces onPageChange
           >
             <span className="nav-icon">{item.icon}</span>
             {isExpanded && <span className="nav-label">{item.label}</span>}
@@ -76,7 +83,7 @@ const Sidebar = ({ activePage, onPageChange, isExpanded, onToggleExpand, user, t
               {isDarkMode ? <ICONS.Sun /> : <ICONS.Moon />}
               <span>{isDarkMode ? 'Light' : 'Dark'} Mode</span>
             </button>
-            <button className="popup-item" onClick={() => { onOpenSettings(); setShowPopup(false); }} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <button className="popup-item" onClick={() => { onOpenSettings?.(); setShowPopup(false); }} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <ICONS.Settings />
               <span>Settings</span>
             </button>
@@ -87,8 +94,8 @@ const Sidebar = ({ activePage, onPageChange, isExpanded, onToggleExpand, user, t
           </div>
         )}
 
-        <button 
-          className={`nav-item footer-item profile-item ${activePage === 'profile' ? 'active' : ''}`}
+        <button
+          className="nav-item footer-item profile-item"   // ← removed activePage check (profile is never a route)
           onClick={() => setShowPopup(!showPopup)}
         >
           <div className="profile-icon">{getInitials()}</div>

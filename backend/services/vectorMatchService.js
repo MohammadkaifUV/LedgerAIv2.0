@@ -98,8 +98,8 @@ async function findVectorMatch(cleanString, userId) {
     return null;
 
   } catch (err) {
-    console.error('❌ findVectorMatch encountered an error:', err);
-    throw err;
+    console.error('❌ findVectorMatch encountered an error:', err.message);
+    return null;
   }
 }
 

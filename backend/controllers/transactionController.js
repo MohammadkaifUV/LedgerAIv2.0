@@ -140,8 +140,7 @@ async function approveTransaction(req, res) {
     // Fetch the transaction to get fields needed for ledger entries
     const { data: txnData } = await supabase
       .from('transactions')
-      .select('transaction_id, base_account_id, offset_account_id, amount, transaction_type, transaction_date, is_contra')
-      .eq('transaction_id', transactionId)
+      .select('transaction_id, base_account_id, offset_account_id,amount, transaction_type, transaction_date, is_contra,details').eq('transaction_id', transactionId)
       .eq('user_id', userId)
       .single();
 
@@ -321,7 +320,8 @@ async function manualCategorizeTransaction(req, res) {
         newTxn.offset_account_id,
         newTxn.amount,
         newTxn.transaction_type,
-        newTxn.transaction_date
+        newTxn.transaction_date,
+        false
       );
 
       // Seed personal cache based on whether the raw details is garbage

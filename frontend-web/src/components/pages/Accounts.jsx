@@ -2,63 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../../../shared/supabase';
 import '../../styles/Accounts.css';
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Add Account Modal
+// ─────────────────────────────────────────────────────────────────────────────
 const AddAccountModal = ({ isOpen, onClose, accounts, onSuccess }) => {
-  const [form, setForm] = useState({
-    account_name: '',
-    account_type: 'EXPENSE',
-    parent_account_id: null,
-    balance_nature: 'DEBIT'
-  });
+  const [form, setForm] = useState({ account_name: '', account_type: 'EXPENSE', parent_account_id: null, balance_nature: 'DEBIT' });
   const [loading, setLoading] = useState(false);
 
-  // Auto-set balance_nature based on account_type
   useEffect(() => {
-    const nature = {
-      ASSET: 'DEBIT',
-      EXPENSE: 'DEBIT',
-      LIABILITY: 'CREDIT',
-      EQUITY: 'CREDIT',
-      INCOME: 'CREDIT'
-    }[form.account_type] || 'DEBIT';
+    const nature = { ASSET: 'DEBIT', EXPENSE: 'DEBIT', LIABILITY: 'CREDIT', EQUITY: 'CREDIT', INCOME: 'CREDIT' }[form.account_type] || 'DEBIT';
     setForm(prev => ({ ...prev, balance_nature: nature }));
   }, [form.account_type]);
 
   if (!isOpen) return null;
 
-  const handleReset = () => {
-    setForm({
-      account_name: '',
-      account_type: 'EXPENSE',
-      parent_account_id: null,
-      balance_nature: 'DEBIT'
-    });
-  };
-
-  const handleClose = () => {
-    handleReset();
-    onClose();
-  };
+  const handleReset = () => setForm({ account_name: '', account_type: 'EXPENSE', parent_account_id: null, balance_nature: 'DEBIT' });
+  const handleClose = () => { handleReset(); onClose(); };
 
   const handleSubmit = async () => {
     if (!form.account_name.trim()) return;
-
     setLoading(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
-
-      const { error } = await supabase
-        .from('accounts')
-        .insert([{
-          user_id: user.id,
-          account_name: form.account_name.trim(),
-          account_type: form.account_type,
-          balance_nature: form.balance_nature,
-          parent_account_id: form.parent_account_id || null,
-          is_active: true,
-          is_system_generated: false
-        }]);
-
+      const { error } = await supabase.from('accounts').insert([{
+        user_id: user.id,
+        account_name: form.account_name.trim(),
+        account_type: form.account_type,
+        balance_nature: form.balance_nature,
+        parent_account_id: form.parent_account_id || null,
+        is_active: true,
+        is_system_generated: false
+      }]);
       if (error) throw error;
       handleReset();
       onSuccess();
@@ -71,42 +46,24 @@ const AddAccountModal = ({ isOpen, onClose, accounts, onSuccess }) => {
     }
   };
 
-  // Filter accounts by type for parent selector
-  const sameTypeAccounts = accounts.filter(
-    a => a.account_type === form.account_type && a.is_active
-  );
+  const sameTypeAccounts = accounts.filter(a => a.account_type === form.account_type && a.is_active);
 
   return (
     <div className="modal-overlay" onClick={handleClose}>
-      <div className="add-account-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="add-account-modal" onClick={e => e.stopPropagation()}>
         <div className="modal-header">
           <h2>Add Account</h2>
           <button className="close-modal-btn" onClick={handleClose}>✕</button>
         </div>
-
         <div className="modal-body">
-          {/* Account Name */}
           <div className="form-group">
             <label className="form-label">Account Name *</label>
-            <input
-              type="text"
-              className="form-input"
-              placeholder="e.g., Operating Expenses"
-              value={form.account_name}
-              onChange={(e) => setForm(prev => ({ ...prev, account_name: e.target.value }))}
-              disabled={loading}
-            />
+            <input type="text" className="form-input" placeholder="e.g., Operating Expenses"
+              value={form.account_name} onChange={e => setForm(p => ({ ...p, account_name: e.target.value }))} disabled={loading} />
           </div>
-
-          {/* Account Type */}
           <div className="form-group">
             <label className="form-label">Account Type *</label>
-            <select
-              className="form-select"
-              value={form.account_type}
-              onChange={(e) => setForm(prev => ({ ...prev, account_type: e.target.value }))}
-              disabled={loading}
-            >
+            <select className="form-select" value={form.account_type} onChange={e => setForm(p => ({ ...p, account_type: e.target.value }))} disabled={loading}>
               <option value="ASSET">Asset</option>
               <option value="LIABILITY">Liability</option>
               <option value="EQUITY">Equity</option>
@@ -114,49 +71,24 @@ const AddAccountModal = ({ isOpen, onClose, accounts, onSuccess }) => {
               <option value="EXPENSE">Expense</option>
             </select>
           </div>
-
-          {/* Parent Account */}
           <div className="form-group">
             <label className="form-label">Parent Account</label>
-            <select
-              className="form-select"
-              value={form.parent_account_id || ''}
-              onChange={(e) => setForm(prev => ({ ...prev, parent_account_id: e.target.value || null }))}
-              disabled={loading}
-            >
+            <select className="form-select" value={form.parent_account_id || ''} onChange={e => setForm(p => ({ ...p, parent_account_id: e.target.value || null }))} disabled={loading}>
               <option value="">None (top level)</option>
-              {sameTypeAccounts.map(acc => (
-                <option key={acc.account_id} value={acc.account_id}>
-                  {acc.account_name}
-                </option>
-              ))}
+              {sameTypeAccounts.map(acc => (<option key={acc.account_id} value={acc.account_id}>{acc.account_name}</option>))}
             </select>
           </div>
-
-          {/* Balance Nature */}
           <div className="form-group">
             <label className="form-label">Balance Nature *</label>
-            <select
-              className="form-select"
-              value={form.balance_nature}
-              onChange={(e) => setForm(prev => ({ ...prev, balance_nature: e.target.value }))}
-              disabled={loading}
-            >
+            <select className="form-select" value={form.balance_nature} onChange={e => setForm(p => ({ ...p, balance_nature: e.target.value }))} disabled={loading}>
               <option value="DEBIT">Debit</option>
               <option value="CREDIT">Credit</option>
             </select>
           </div>
         </div>
-
         <div className="modal-footer">
-          <button className="cancel-btn" onClick={handleClose} disabled={loading}>
-            Cancel
-          </button>
-          <button
-            className="submit-btn"
-            onClick={handleSubmit}
-            disabled={!form.account_name.trim() || loading}
-          >
+          <button className="cancel-btn" onClick={handleClose} disabled={loading}>Cancel</button>
+          <button className="submit-btn" onClick={handleSubmit} disabled={!form.account_name.trim() || loading}>
             {loading ? <span className="spinner"></span> : 'Add Account'}
           </button>
         </div>
@@ -165,90 +97,241 @@ const AddAccountModal = ({ isOpen, onClose, accounts, onSuccess }) => {
   );
 };
 
-const AccountNode = ({
-  node,
-  onRename,
-  onDeactivate,
-  renamingId,
-  setRenamingId,
-  renameValue,
-  setRenameValue,
-  savingId
-}) => {
+// ─────────────────────────────────────────────────────────────────────────────
+// Edit Identifier Modal
+// ─────────────────────────────────────────────────────────────────────────────
+function identifierMode(identifier) {
+  if (!identifier) return 'BANK';
+  if (identifier.card_last4 != null) return 'CREDIT_CARD';
+  if (identifier.wallet_id != null) return 'CASH_WALLET';
+  return 'BANK';
+}
+
+const EditIdentifierModal = ({ account, onClose, onSuccess }) => {
+  const [identifier, setIdentifier] = useState(null);
+  const [form, setForm] = useState({ institution_name: '', account_number_last4: '', ifsc_code: '', card_last4: '', card_network: 'VISA', wallet_id: '' });
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        const { data, error } = await supabase
+          .from('account_identifiers')
+          .select('*')
+          .eq('account_id', account.account_id)
+          .eq('user_id', user.id)
+          .maybeSingle();
+        if (error) throw error;
+        setIdentifier(data);
+        if (data) {
+          setForm({
+            institution_name: data.institution_name || '',
+            account_number_last4: data.account_number_last4 || '',
+            ifsc_code: data.ifsc_code || '',
+            card_last4: data.card_last4 || '',
+            card_network: data.card_network || 'VISA',
+            wallet_id: data.wallet_id || '',
+          });
+        }
+      } catch (err) {
+        setError('Failed to load identifier data.');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, [account.account_id]);
+
+  const mode = identifierMode(identifier);
+
+  const handleSave = async () => {
+    setError('');
+    setSaving(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      const last4 = mode === 'CREDIT_CARD' ? form.card_last4 : form.account_number_last4;
+      if ((mode === 'BANK' || mode === 'CREDIT_CARD') && last4 && last4.length !== 4) {
+        setError('Last 4 digits must be exactly 4 characters.');
+        setSaving(false);
+        return;
+      }
+
+      const payload = {
+        institution_name: form.institution_name.trim() || null,
+        ...(mode === 'BANK' ? { account_number_last4: form.account_number_last4 || null, ifsc_code: form.ifsc_code.trim() || null } : {}),
+        ...(mode === 'CREDIT_CARD' ? { card_last4: form.card_last4 || null, card_network: form.card_network || null } : {}),
+        ...(mode === 'CASH_WALLET' ? { wallet_id: form.wallet_id.trim() || null } : {}),
+      };
+
+      if (identifier) {
+        const { error } = await supabase.from('account_identifiers').update(payload)
+          .eq('identifier_id', identifier.identifier_id).eq('user_id', user.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from('account_identifiers')
+          .insert([{ ...payload, account_id: account.account_id, user_id: user.id }]);
+        if (error) throw error;
+      }
+
+      onSuccess();
+      onClose();
+    } catch (err) {
+      console.error('Save identifier failed:', err);
+      setError('Failed to save. Please try again.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="add-account-modal" onClick={e => e.stopPropagation()}>
+        <div className="modal-header">
+          <div>
+            <h2>Edit Identifier</h2>
+            <p style={{ margin: '2px 0 0', fontSize: 13, color: 'var(--text-secondary)' }}>{account.account_name}</p>
+          </div>
+          <button className="close-modal-btn" onClick={onClose}>✕</button>
+        </div>
+        <div className="modal-body">
+          {loading ? (
+            <div style={{ textAlign: 'center', padding: '20px 0' }}><span className="spinner" style={{ display: 'inline-block' }}></span></div>
+          ) : (
+            <>
+              {error && <div style={{ background: 'rgba(220,38,38,0.1)', border: '1px solid rgba(220,38,38,0.3)', borderRadius: 8, padding: '10px 14px', color: '#F87171', fontSize: 13 }}>{error}</div>}
+
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '4px 12px', borderRadius: 20, background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.25)', fontSize: 13, color: 'var(--text-secondary)', marginBottom: 4 }}>
+                {mode === 'CREDIT_CARD' && '💳 Credit Card'}
+                {mode === 'CASH_WALLET' && '👛 Cash / Wallet'}
+                {mode === 'BANK' && '🏦 Bank Account'}
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Institution / Bank Name</label>
+                <input type="text" className="form-input"
+                  placeholder={mode === 'CREDIT_CARD' ? 'e.g. HDFC, Amex' : mode === 'CASH_WALLET' ? 'e.g. PayTM, GPay' : 'e.g. HDFC, SBI'}
+                  value={form.institution_name} onChange={e => setForm(p => ({ ...p, institution_name: e.target.value }))} disabled={saving} />
+              </div>
+
+              {mode === 'BANK' && (<>
+                <div className="form-group">
+                  <label className="form-label">Last 4 Digits of Account No.</label>
+                  <input type="text" className="form-input" placeholder="e.g. 4321" maxLength={4}
+                    value={form.account_number_last4}
+                    onChange={e => setForm(p => ({ ...p, account_number_last4: e.target.value.replace(/\D/g, '') }))} disabled={saving} />
+                  <span style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 2 }}>Used to match uploaded bank statements to this account</span>
+                </div>
+                <div className="form-group">
+                  <label className="form-label">IFSC Code</label>
+                  <input type="text" className="form-input" placeholder="e.g. HDFC0001234"
+                    value={form.ifsc_code} onChange={e => setForm(p => ({ ...p, ifsc_code: e.target.value.toUpperCase() }))} disabled={saving} />
+                </div>
+              </>)}
+
+              {mode === 'CREDIT_CARD' && (<>
+                <div className="form-group">
+                  <label className="form-label">Last 4 Digits of Card</label>
+                  <input type="text" className="form-input" placeholder="e.g. 9876" maxLength={4}
+                    value={form.card_last4}
+                    onChange={e => setForm(p => ({ ...p, card_last4: e.target.value.replace(/\D/g, '') }))} disabled={saving} />
+                  <span style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 2 }}>Used to match uploaded card statements to this account</span>
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Card Network</label>
+                  <select className="form-select" value={form.card_network} onChange={e => setForm(p => ({ ...p, card_network: e.target.value }))} disabled={saving}>
+                    <option value="VISA">VISA</option>
+                    <option value="MASTERCARD">Mastercard</option>
+                    <option value="AMEX">Amex</option>
+                    <option value="RUPAY">RuPay</option>
+                    <option value="OTHER">Other</option>
+                  </select>
+                </div>
+              </>)}
+
+              {mode === 'CASH_WALLET' && (
+                <div className="form-group">
+                  <label className="form-label">Wallet ID / Phone</label>
+                  <input type="text" className="form-input" placeholder="e.g. 9876543210@paytm"
+                    value={form.wallet_id} onChange={e => setForm(p => ({ ...p, wallet_id: e.target.value }))} disabled={saving} />
+                </div>
+              )}
+            </>
+          )}
+        </div>
+        <div className="modal-footer">
+          <button className="cancel-btn" onClick={onClose} disabled={saving}>Cancel</button>
+          <button className="submit-btn" onClick={handleSave} disabled={loading || saving}>
+            {saving ? <span className="spinner"></span> : 'Save'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Account Node
+// ─────────────────────────────────────────────────────────────────────────────
+const AccountNode = ({ node, onRename, onDeactivate, onEditIdentifier, renamingId, setRenamingId, renameValue, setRenameValue, savingId }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
   const hasChildren = node.children && node.children.length > 0;
   const isRenaming = renamingId === node.account_id;
 
-  const handleRenameSubmit = () => {
-    onRename(node.account_id, renameValue);
-  };
+  const identifierLabel = node.identifier
+    ? (node.identifier.account_number_last4 ? `····${node.identifier.account_number_last4}`
+      : node.identifier.card_last4 ? `····${node.identifier.card_last4}`
+      : node.identifier.institution_name || null)
+    : null;
 
   return (
-    <div
-      className={`account-node ${hasChildren ? 'has-kids' : 'leaf'}`}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
+    <div className={`account-node ${hasChildren ? 'has-kids' : 'leaf'}`}
+      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <div className="node-header" onClick={() => hasChildren && !isRenaming && setIsOpen(!isOpen)}>
-        {hasChildren && (
-          <span className="toggle-icon">
-            {isOpen ? '▼' : '▶'}
-          </span>
-        )}
+        {hasChildren && <span className="toggle-icon">{isOpen ? '▼' : '▶'}</span>}
 
-        {/* Rename mode */}
         {isRenaming ? (
-          <input
-            className="rename-input"
-            value={renameValue}
-            onChange={(e) => setRenameValue(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') handleRenameSubmit();
-              if (e.key === 'Escape') {
-                setRenamingId(null);
-                setRenameValue('');
-              }
+          <input className="rename-input" value={renameValue}
+            onChange={e => setRenameValue(e.target.value)}
+            onKeyDown={e => {
+              if (e.key === 'Enter') onRename(node.account_id, renameValue);
+              if (e.key === 'Escape') { setRenamingId(null); setRenameValue(''); }
             }}
-            onClick={(e) => e.stopPropagation()}
-            autoFocus
-          />
+            onClick={e => e.stopPropagation()} autoFocus />
         ) : (
           <span className="node-name">{node.account_name}</span>
         )}
 
-        {node.account_number_last4 && (
-          <span className="node-identifier">({node.account_number_last4})</span>
+        {!isRenaming && identifierLabel && (
+          <span className="node-identifier">{identifierLabel}</span>
         )}
 
-        {/* Inline action buttons — visible on hover (only if not system-generated) */}
         {hovered && !isRenaming && !node.is_system_generated && (
           <div className="node-actions">
-            <button
-              className="node-action-btn edit"
-              onClick={(e) => {
-                e.stopPropagation();
-                setRenamingId(node.account_id);
-                setRenameValue(node.account_name);
-              }}
-              title="Rename"
-            >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            {node.identifier && (
+              <button className="node-action-btn identifier"
+                onClick={e => { e.stopPropagation(); onEditIdentifier(node); }}
+                title="Edit bank/card details">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+                </svg>
+              </button>
+            )}
+            <button className="node-action-btn edit"
+              onClick={e => { e.stopPropagation(); setRenamingId(node.account_id); setRenameValue(node.account_name); }}
+              title="Rename">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
               </svg>
             </button>
-            <button
-              className="node-action-btn deactivate"
-              onClick={(e) => {
-                e.stopPropagation();
-                onDeactivate(node);
-              }}
-              title="Deactivate"
-            >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <button className="node-action-btn deactivate"
+              onClick={e => { e.stopPropagation(); onDeactivate(node); }} title="Deactivate">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="3 6 5 6 21 6"/>
                 <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
                 <path d="M10 11v6M14 11v6"/>
@@ -257,38 +340,19 @@ const AccountNode = ({
           </div>
         )}
 
-        {/* Lock icon for system-generated accounts on hover */}
         {hovered && !isRenaming && node.is_system_generated && (
-          <div className="node-actions">
-            <span className="system-lock" title="System account (read-only)">🔒</span>
-          </div>
+          <div className="node-actions"><span className="system-lock" title="System account (read-only)">🔒</span></div>
         )}
 
-        {/* Save/Cancel buttons during rename */}
         {isRenaming && (
           <div className="node-actions">
-            <button
-              className="node-action-btn save"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleRenameSubmit();
-              }}
-              disabled={savingId === node.account_id}
-              title="Save"
-            >
+            <button className="node-action-btn save"
+              onClick={e => { e.stopPropagation(); onRename(node.account_id, renameValue); }}
+              disabled={savingId === node.account_id} title="Save">
               {savingId === node.account_id ? <span className="spinner-xs" /> : '✓'}
             </button>
-            <button
-              className="node-action-btn cancel"
-              onClick={(e) => {
-                e.stopPropagation();
-                setRenamingId(null);
-                setRenameValue('');
-              }}
-              title="Cancel"
-            >
-              ✕
-            </button>
+            <button className="node-action-btn cancel"
+              onClick={e => { e.stopPropagation(); setRenamingId(null); setRenameValue(''); }} title="Cancel">✕</button>
           </div>
         )}
       </div>
@@ -296,17 +360,10 @@ const AccountNode = ({
       {isOpen && hasChildren && (
         <div className="node-children">
           {node.children.map(child => (
-            <AccountNode
-              key={child.account_id}
-              node={child}
-              onRename={onRename}
-              onDeactivate={onDeactivate}
-              renamingId={renamingId}
-              setRenamingId={setRenamingId}
-              renameValue={renameValue}
-              setRenameValue={setRenameValue}
-              savingId={savingId}
-            />
+            <AccountNode key={child.account_id} node={child}
+              onRename={onRename} onDeactivate={onDeactivate} onEditIdentifier={onEditIdentifier}
+              renamingId={renamingId} setRenamingId={setRenamingId}
+              renameValue={renameValue} setRenameValue={setRenameValue} savingId={savingId} />
           ))}
         </div>
       )}
@@ -314,20 +371,25 @@ const AccountNode = ({
   );
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Accounts Page
+// ─────────────────────────────────────────────────────────────────────────────
 const Accounts = () => {
   const [accounts, setAccounts] = useState([]);
+  const [identifiers, setIdentifiers] = useState({});
   const [loading, setLoading] = useState(true);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [renamingId, setRenamingId] = useState(null);
   const [renameValue, setRenameValue] = useState('');
   const [savingId, setSavingId] = useState(null);
+  const [identifierTarget, setIdentifierTarget] = useState(null);
 
   const types = [
-    { key: 'ASSET', label: 'Assets', icon: '💰' },
+    { key: 'ASSET',     label: 'Assets',      icon: '💰' },
     { key: 'LIABILITY', label: 'Liabilities', icon: '💳' },
-    { key: 'EQUITY', label: 'Equity', icon: '⚖️' },
-    { key: 'INCOME', label: 'Income', icon: '📈' },
-    { key: 'EXPENSE', label: 'Expenses', icon: '📉' }
+    { key: 'EQUITY',    label: 'Equity',       icon: '⚖️' },
+    { key: 'INCOME',    label: 'Income',       icon: '📈' },
+    { key: 'EXPENSE',   label: 'Expenses',     icon: '📉' },
   ];
 
   const fetchAccounts = async () => {
@@ -336,13 +398,23 @@ const Accounts = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      const { data, error } = await supabase
+      const { data: accsData, error: accsErr } = await supabase
         .from('accounts')
-        .select('account_id, account_name, account_type, balance_nature, parent_account_id, account_number_last4, is_active, is_system_generated')
+        .select('account_id, account_name, account_type, balance_nature, parent_account_id, is_active, is_system_generated')
         .eq('user_id', user.id);
+      if (accsErr) throw accsErr;
 
-      if (error) throw error;
-      setAccounts(data || []);
+      const { data: identData, error: identErr } = await supabase
+        .from('account_identifiers')
+        .select('*')
+        .eq('user_id', user.id);
+      if (identErr) throw identErr;
+
+      const identMap = {};
+      (identData || []).forEach(ident => { identMap[ident.account_id] = ident; });
+
+      setAccounts(accsData || []);
+      setIdentifiers(identMap);
     } catch (err) {
       console.error('Fetch accounts failed:', err);
     } finally {
@@ -350,31 +422,15 @@ const Accounts = () => {
     }
   };
 
-  useEffect(() => {
-    fetchAccounts();
-  }, []);
+  useEffect(() => { fetchAccounts(); }, []);
 
   const buildTree = (allAccounts, type) => {
-    // Filter by type AND is_active = true
-    const typedAccounts = allAccounts.filter(
-      acc => acc.account_type === type && acc.is_active
-    );
-
-    // Find Root Nodes
-    const roots = typedAccounts.filter(acc =>
-      !acc.parent_account_id || !typedAccounts.some(p => p.account_id === acc.parent_account_id)
-    );
-
-    const mapChildren = (nodes) => {
-      return nodes.map(node => {
-        const children = typedAccounts.filter(child => child.parent_account_id === node.account_id);
-        return {
-          ...node,
-          children: children.length > 0 ? mapChildren(children) : []
-        };
-      });
-    };
-
+    const typed = allAccounts.filter(acc => acc.account_type === type && acc.is_active);
+    const roots = typed.filter(acc => !acc.parent_account_id || !typed.some(p => p.account_id === acc.parent_account_id));
+    const mapChildren = (nodes) => nodes.map(node => {
+      const children = typed.filter(c => c.parent_account_id === node.account_id);
+      return { ...node, identifier: identifiers[node.account_id] || null, children: children.length > 0 ? mapChildren(children) : [] };
+    });
     return mapChildren(roots);
   };
 
@@ -383,26 +439,9 @@ const Accounts = () => {
     setSavingId(accountId);
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      
-      // Server-side guard: check if system-generated
-      const { data: account } = await supabase
-        .from('accounts')
-        .select('is_system_generated')
-        .eq('account_id', accountId)
-        .single();
-
-      if (account?.is_system_generated) {
-        alert('System accounts cannot be renamed.');
-        setSavingId(null);
-        return;
-      }
-
-      const { error } = await supabase
-        .from('accounts')
-        .update({ account_name: newName.trim() })
-        .eq('account_id', accountId)
-        .eq('user_id', user.id);
-
+      const { data: acc } = await supabase.from('accounts').select('is_system_generated').eq('account_id', accountId).single();
+      if (acc?.is_system_generated) { alert('System accounts cannot be renamed.'); setSavingId(null); return; }
+      const { error } = await supabase.from('accounts').update({ account_name: newName.trim() }).eq('account_id', accountId).eq('user_id', user.id);
       if (error) throw error;
       setRenamingId(null);
       setRenameValue('');
@@ -416,55 +455,21 @@ const Accounts = () => {
   };
 
   const handleDeactivate = async (node) => {
-    // Server-side guard: check if system-generated
-    if (node.is_system_generated) {
-      alert('System accounts cannot be deactivated.');
-      return;
-    }
-
+    if (node.is_system_generated) { alert('System accounts cannot be deactivated.'); return; }
     const { data: { user } } = await supabase.auth.getUser();
-
-    // Check for linked transactions
-    const { data: linkedTxns } = await supabase
-      .from('transactions')
-      .select('transaction_id', { count: 'exact', head: true })
+    const { count: txnCount } = await supabase
+      .from('transactions').select('*', { count: 'exact', head: true })
       .or(`base_account_id.eq.${node.account_id},offset_account_id.eq.${node.account_id}`)
       .eq('user_id', user.id);
-
-    const txnCount = linkedTxns?.length || 0;
     const hasChildren = node.children && node.children.length > 0;
-
-    // Build warning message
-    let warningParts = [];
-    if (hasChildren) warningParts.push('all child accounts will also be deactivated');
-    if (txnCount > 0) warningParts.push(`${txnCount} transaction(s) are linked to this account`);
-
-    const warningText = warningParts.length > 0
-      ? `Warning: ${warningParts.join(' and ')}. Proceed?`
-      : `Deactivate "${node.account_name}"?`;
-
-    if (!window.confirm(warningText)) return;
-
-    // Collect all account_ids to deactivate (node + all descendants)
-    const collectIds = (n) => {
-      const ids = [n.account_id];
-      if (n.children) n.children.forEach(child => ids.push(...collectIds(child)));
-      return ids;
-    };
-    const idsToDeactivate = collectIds(node);
-
-    const { error } = await supabase
-      .from('accounts')
-      .update({ is_active: false })
-      .in('account_id', idsToDeactivate)
-      .eq('user_id', user.id);
-
-    if (error) {
-      console.error('Deactivate failed:', error);
-      alert('Failed to deactivate account.');
-      return;
-    }
-
+    const parts = [];
+    if (hasChildren) parts.push('all child accounts will also be deactivated');
+    if (txnCount > 0) parts.push(`${txnCount} transaction(s) are linked to this account`);
+    const msg = parts.length > 0 ? `Warning: ${parts.join(' and ')}. Proceed?` : `Deactivate "${node.account_name}"?`;
+    if (!window.confirm(msg)) return;
+    const collectIds = (n) => { const ids = [n.account_id]; if (n.children) n.children.forEach(c => ids.push(...collectIds(c))); return ids; };
+    const { error } = await supabase.from('accounts').update({ is_active: false }).in('account_id', collectIds(node)).eq('user_id', user.id);
+    if (error) { console.error('Deactivate failed:', error); alert('Failed to deactivate account.'); return; }
     await fetchAccounts();
   };
 
@@ -475,25 +480,25 @@ const Accounts = () => {
           <h1>Chart of Accounts</h1>
           <p>Manage your account hierarchy.</p>
         </div>
-        <button className="action-btn" onClick={() => setAddModalOpen(true)}>
-          + Add Account
-        </button>
+        <button className="action-btn" onClick={() => setAddModalOpen(true)}>+ Add Account</button>
       </div>
 
-      <AddAccountModal
-        isOpen={addModalOpen}
-        onClose={() => setAddModalOpen(false)}
-        accounts={accounts}
-        onSuccess={fetchAccounts}
-      />
+      <AddAccountModal isOpen={addModalOpen} onClose={() => setAddModalOpen(false)} accounts={accounts} onSuccess={fetchAccounts} />
+
+      {identifierTarget && (
+        <EditIdentifierModal
+          account={identifierTarget}
+          onClose={() => setIdentifierTarget(null)}
+          onSuccess={() => { setIdentifierTarget(null); fetchAccounts(); }}
+        />
+      )}
 
       {loading ? (
-        <div className="loading-state">Loading accounts setup...</div>
+        <div className="loading-state">Loading accounts...</div>
       ) : (
         <div className="accounts-grid">
           {types.map(type => {
             const tree = buildTree(accounts, type.key);
-
             return (
               <div key={type.key} className="account-type-card">
                 <div className="type-card-header">
@@ -505,17 +510,12 @@ const Accounts = () => {
                     <p className="no-accounts">No {type.label.toLowerCase()} added yet.</p>
                   ) : (
                     tree.map(node => (
-                      <AccountNode
-                        key={node.account_id}
-                        node={node}
-                        onRename={handleRename}
-                        onDeactivate={handleDeactivate}
-                        renamingId={renamingId}
-                        setRenamingId={setRenamingId}
-                        renameValue={renameValue}
-                        setRenameValue={setRenameValue}
-                        savingId={savingId}
-                      />
+                      <AccountNode key={node.account_id} node={node}
+                        onRename={handleRename} onDeactivate={handleDeactivate}
+                        onEditIdentifier={setIdentifierTarget}
+                        renamingId={renamingId} setRenamingId={setRenamingId}
+                        renameValue={renameValue} setRenameValue={setRenameValue}
+                        savingId={savingId} />
                     ))
                   )}
                 </div>

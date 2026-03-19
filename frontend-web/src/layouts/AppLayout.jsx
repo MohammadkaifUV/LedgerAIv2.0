@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
+// import Settings from '../pages/Settings';               // ← ADD (fixes Issue #4 too)
 import { signOut } from '../../../shared/authService';
 import '../styles/Dashboard.css';
 
 const AppLayout = ({ user, toggleTheme, isDarkMode }) => {
-  const [activePage, setActivePage] = useState('dashboard');
   const [isExpanded, setIsExpanded] = useState(true);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);  // ← moved from Dashboard
+  // ↑ activePage / setActivePage state REMOVED — React Router owns this now
 
   const handleLogout = async () => {
     try {
@@ -19,21 +21,26 @@ const AppLayout = ({ user, toggleTheme, isDarkMode }) => {
 
   return (
     <div className="dashboard-shell">
-      <Sidebar 
-        activePage={activePage} 
-        onPageChange={setActivePage} 
-        isExpanded={isExpanded} 
-        onToggleExpand={() => setIsExpanded(!isExpanded)} 
+      <Sidebar
+        // activePage and onPageChange REMOVED
+        isExpanded={isExpanded}
+        onToggleExpand={() => setIsExpanded(!isExpanded)}
         user={user}
         toggleTheme={toggleTheme}
         isDarkMode={isDarkMode}
         onLogout={handleLogout}
+        onOpenSettings={() => setIsSettingsOpen(true)}   // ← fixes Issue #4
       />
       <div className="dashboard-main">
         <div className="page-content">
-          <Outlet context={{ activePage, setActivePage }} />
+          <Outlet />
+          {/* context prop removed — pages use useNavigate/useLocation directly */}
         </div>
       </div>
+
+      {isSettingsOpen && (
+        <Settings onClose={() => setIsSettingsOpen(false)} />   // ← now reachable
+      )}
     </div>
   );
 };
