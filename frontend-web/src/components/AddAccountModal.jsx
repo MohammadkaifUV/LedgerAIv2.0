@@ -41,6 +41,10 @@ const AddAccountModal = ({ onClose, onCreated, defaultType = '', restrictTypes =
     }
 
     const fetchParents = async () => {
+      if (!supabase) {
+        setError('Supabase not configured. Check environment variables.');
+        return;
+      }
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
@@ -77,6 +81,11 @@ const AddAccountModal = ({ onClose, onCreated, defaultType = '', restrictTypes =
 
     if (!accountName.trim()) { setError('Account name is required.'); return; }
     if (!accountType) { setError('Please select an account type.'); return; }
+
+    if (!supabase) {
+      setError('Supabase not configured. Check environment variables.');
+      return;
+    }
 
     setSaving(true);
     try {

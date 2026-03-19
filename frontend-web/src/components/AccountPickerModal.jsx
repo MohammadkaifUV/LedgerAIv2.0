@@ -19,6 +19,11 @@ const AccountPickerModal = ({ onSelect, onClose, currentAccountId, transactionTy
 
   useEffect(() => {
     const fetchAccounts = async () => {
+      if (!supabase) {
+        console.error('Supabase client is null — check VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY');
+        setLoading(false);
+        return;
+      }
       try {
         const { data: { user } } = await supabase.auth.getUser();
         console.log('🔍 Fetching accounts for user:', user?.id);
@@ -35,7 +40,7 @@ const AccountPickerModal = ({ onSelect, onClose, currentAccountId, transactionTy
           .order('account_name', { ascending: true });
 
         console.log('📦 Raw accounts data:', data, 'Error:', error);  // ADD THIS
-        console.log('🔢 Count:', data?.length, 'is_active values:', data?.map(a => a.is_active)); 
+        console.log('🔢 Count:', data?.length, 'is_active values:', data?.map(a => a.is_active));
 
         if (error) throw error;
         setAccounts(data || []);
