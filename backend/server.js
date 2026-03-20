@@ -16,7 +16,14 @@ const PORT = process.env.PORT || 3000;
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'http://localhost:5173').split(',').map(o => o.trim());
 console.log('🔒 CORS allowed origins:', ALLOWED_ORIGINS);
 app.use(cors({
-  origin: true, // Temporarily allow all origins for debugging
+  origin: (origin, cb) => {
+    if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+      cb(null, true);
+    } else {
+      console.warn(`❌ CORS blocked origin: ${origin}`);
+      cb(null, false);
+    }
+  },
   credentials: true
 }));
 app.use(express.json()); // Essential for parsing JSON batches
