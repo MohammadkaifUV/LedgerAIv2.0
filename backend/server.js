@@ -17,12 +17,25 @@ const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'http://localhost:5173')
 console.log('🔒 CORS allowed origins:', ALLOWED_ORIGINS);
 app.use(cors({
   origin: (origin, cb) => {
-    if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+    if (!origin) {
       cb(null, true);
-    } else {
-      console.warn(`❌ CORS blocked origin: ${origin}`);
-      cb(null, false);
+      return;
     }
+
+    // Check exact matches
+    if (ALLOWED_ORIGINS.includes(origin)) {
+      cb(null, true);
+      return;
+    }
+
+    // Allow all Vercel preview deployments
+    if (origin.endsWith('.vercel.app')) {
+      cb(null, true);
+      return;
+    }
+
+    console.warn(`❌ CORS blocked origin: ${origin}`);
+    cb(null, false);
   },
   credentials: true
 }));
