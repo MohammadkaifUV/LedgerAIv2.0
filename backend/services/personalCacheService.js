@@ -31,12 +31,15 @@ async function checkExactMatch(userId, rawString) {
       return null;
     }
 
+    // Normalize to uppercase for case-insensitive matching
+    const normalizedString = rawString.toUpperCase().trim();
+
     // Query top exact cache matches setup safely triggers forwards benchmarks accurately triggers
     const { data: matches, error } = await supabase
       .from('personal_exact_cache')
       .select('account_id')
       .eq('user_id', userId)
-      .eq('raw_vpa', rawString)
+      .eq('raw_vpa', normalizedString)
       .limit(1);
 
     if (error) {
@@ -67,12 +70,15 @@ async function checkExactMatch(userId, rawString) {
 async function upsertExactCache(userId, rawVpa, accountId) {
   try {
     if (!userId || !rawVpa || !accountId) return;
-    
+
+    // Normalize to uppercase for case-insensitive matching
+    const normalizedVpa = rawVpa.toUpperCase().trim();
+
     const { data: existing } = await supabase
       .from('personal_exact_cache')
       .select('hit_count')
       .eq('user_id', userId)
-      .eq('raw_vpa', rawVpa)
+      .eq('raw_vpa', normalizedVpa)
       .maybeSingle();
 
     if (existing) {
@@ -80,13 +86,13 @@ async function upsertExactCache(userId, rawVpa, accountId) {
         .from('personal_exact_cache')
         .update({ hit_count: existing.hit_count + 1 })
         .eq('user_id', userId)
-        .eq('raw_vpa', rawVpa);
+        .eq('raw_vpa', normalizedVpa);
     } else {
       await supabase
         .from('personal_exact_cache')
-        .insert({ user_id: userId, raw_vpa: rawVpa, account_id: accountId, hit_count: 1 });
+        .insert({ user_id: userId, raw_vpa: normalizedVpa, account_id: accountId, hit_count: 1 });
     }
-    console.log(`✅ personal_exact_cache upserted: ${rawVpa}`);
+    console.log(`✅ personal_exact_cache upserted: ${normalizedVpa}`);
   } catch (err) {
     console.error('❌ upsertExactCache error:', err.message);
   }
