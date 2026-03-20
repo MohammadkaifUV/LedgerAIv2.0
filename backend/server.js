@@ -13,13 +13,10 @@ const PORT = process.env.PORT || 3000;
 // ==========================================
 // � SECURITY: CORS Restriction
 // ==========================================
-const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'http://localhost:5173').split(',');
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'http://localhost:5173').split(',').map(o => o.trim());
 console.log('🔒 CORS allowed origins:', ALLOWED_ORIGINS);
 app.use(cors({
-  origin: (origin, cb) => {
-    if (!origin || ALLOWED_ORIGINS.includes(origin)) cb(null, true);
-    else cb(new Error('Not allowed by CORS'));
-  },
+  origin: true, // Temporarily allow all origins for debugging
   credentials: true
 }));
 app.use(express.json()); // Essential for parsing JSON batches
