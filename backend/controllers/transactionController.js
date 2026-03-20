@@ -13,7 +13,7 @@ const { upsertExactCache, upsertVectorCache, isGarbage } = require('../services/
  *   - DEBIT  the base account   (asset goes up)
  *   - CREDIT the offset account (income goes up)
  */
-async function createLedgerEntries(transactionId, baseAccountId, offsetAccountId, amount, transactionType, transactionDate, isContra) {
+async function createLedgerEntries(transactionId, baseAccountId, offsetAccountId, amount, transactionType, transactionDate, isContra, userId) {
   if (isContra) {
     console.log(`⏭️  Skipping ledger entries for contra txn ${transactionId}`);
     return;
@@ -39,7 +39,8 @@ async function createLedgerEntries(transactionId, baseAccountId, offsetAccountId
     account_id: e.account_id,
     debit_amount: e.debit_amount,
     credit_amount: e.credit_amount,
-    entry_date: transactionDate
+    entry_date: transactionDate,
+    user_id: userId
   }));
 
   const { error } = await supabase.from('ledger_entries').insert(rows);
@@ -140,7 +141,8 @@ async function approveTransaction(req, res) {
     // Fetch the transaction to get fields needed for ledger entries
     const { data: txnData } = await supabase
       .from('transactions')
-      .select('transaction_id, base_account_id, offset_account_id,amount, transaction_type, transaction_date, is_contra,details').eq('transaction_id', transactionId)
+      .select('transaction_id, base_account_id, offset_account_id, amount, transaction_type, transaction_date, is_contra, details, clean_merchant_name')
+      .eq('transaction_id', transactionId)
       .eq('user_id', userId)
       .single();
 
@@ -152,11 +154,13 @@ async function approveTransaction(req, res) {
         txnData.amount,
         txnData.transaction_type,
         txnData.transaction_date,
-        txnData.is_contra || false
+        txnData.is_contra || false,
+        userId
       );
 
       if (txnData && !txnData.is_contra) {
-        await upsertVectorCache(userId, txnData.details, txnData.offset_account_id);
+        const nameToCache = txnData.clean_merchant_name || txnData.details;
+        await upsertVectorCache(userId, nameToCache, txnData.offset_account_id);
       }
     }
 
@@ -212,7 +216,7 @@ async function bulkApproveTransactions(req, res) {
       const approvedIds = data.map(t => t.transaction_id);
       const { data: txnRows } = await supabase
         .from('transactions')
-        .select('transaction_id, base_account_id, offset_account_id, amount, transaction_type, transaction_date, details, is_contra')
+        .select('transaction_id, base_account_id, offset_account_id, amount, transaction_type, transaction_date, details, clean_merchant_name, is_contra')
         .in('transaction_id', approvedIds)
         .eq('user_id', userId);
 
@@ -224,11 +228,14 @@ async function bulkApproveTransactions(req, res) {
             txn.offset_account_id,
             txn.amount,
             txn.transaction_type,
-            txn.transaction_date
+            txn.transaction_date,
+            txn.is_contra || false,
+            userId
           );
 
           if (!txn.is_contra) {
-            await upsertVectorCache(userId, txn.details, txn.offset_account_id);
+            const nameToCache = txn.clean_merchant_name || txn.details;
+            await upsertVectorCache(userId, nameToCache, txn.offset_account_id);
           }
         }
       }
@@ -321,7 +328,8 @@ async function manualCategorizeTransaction(req, res) {
         newTxn.amount,
         newTxn.transaction_type,
         newTxn.transaction_date,
-        false
+        false,
+        userId
       );
 
       // Seed personal cache based on whether the raw details is garbage

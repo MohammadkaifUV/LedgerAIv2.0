@@ -43,6 +43,7 @@ const Transactions = () => {
             review_status,
             attention_level,
             offset_account_id,
+            categorised_by,
             accounts:offset_account_id (
               account_name
             )
@@ -440,13 +441,14 @@ const Transactions = () => {
                 style={{
                   gridTemplateColumns: activeFilter === 'PENDING_CAT'
                     ? '110px 1fr 110px 150px 160px'
-                    : '110px 1fr 110px 150px 160px 120px'
+                    : '110px 1fr 110px 150px 140px 160px 120px'
                 }}
               >
                 <div>Date</div>
                 <div>Details</div>
                 <div>Amount</div>
                 <div>Account</div>
+                {activeFilter !== 'PENDING_CAT' && <div>Categorised By</div>}
                 <div>Status</div>
                 {activeFilter !== 'PENDING_CAT' && <div>Actions</div>}
               </div>
@@ -481,6 +483,7 @@ const Transactions = () => {
                     const accountName = isCategorised && txn.transactions[0].accounts
                       ? txn.transactions[0].accounts.account_name
                       : '-';
+                    const categorisedBy = isCategorised ? txn.transactions[0].categorised_by : '-';
                     const isDebit = txn.debit > 0;
                     const amount = isDebit ? txn.debit : txn.credit;
 
@@ -491,7 +494,7 @@ const Transactions = () => {
                         style={{
                           gridTemplateColumns: activeFilter === 'PENDING_CAT'
                             ? '110px 1fr 110px 150px 160px'
-                            : '110px 1fr 110px 150px 160px 120px'
+                            : '110px 1fr 110px 150px 140px 160px 120px'
                         }}
                       >
                         <div>{new Date(txn.txn_date).toLocaleDateString()}</div>
@@ -525,6 +528,11 @@ const Transactions = () => {
                         >
                           {isCategorised ? accountName : '+ Assign'}
                         </div>
+                        {activeFilter !== 'PENDING_CAT' && (
+                          <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+                            {categorisedBy}
+                          </div>
+                        )}
                         <div>
                           <span className={`status-badge ${status.toLowerCase().replace(' ', '-')}`}>
                             {status === 'PENDING' ? 'Pending Approval' : status}

@@ -139,6 +139,7 @@ const Analytics = () => {
               transaction_id
             )
           `)
+          .eq('user_id', user.id)
           .gte('entry_date', range.from)
           .lte('entry_date', range.to)
           .order('entry_date', { ascending: false })
