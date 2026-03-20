@@ -3,27 +3,38 @@ import { supabase } from '../../shared/supabase';
 import '../../styles/Analytics.css';
 
 /**
- * Compute date range for a given period (month, quarter, year)
+ * Compute date range for a given period (month, quarter, year, all)
  */
 const getPeriodRange = (period) => {
   const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  const day = now.getDate();
+
+  if (period === 'all') {
+    return {
+      from: '2000-01-01',
+      to: `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+    };
+  }
   if (period === 'month') {
     return {
-      from: new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0],
-      to: now.toISOString().split('T')[0]
+      from: `${year}-${String(month + 1).padStart(2, '0')}-01`,
+      to: `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
     };
   }
   if (period === 'quarter') {
-    const q = Math.floor(now.getMonth() / 3);
+    const q = Math.floor(month / 3);
+    const quarterStartMonth = q * 3 + 1;
     return {
-      from: new Date(now.getFullYear(), q * 3, 1).toISOString().split('T')[0],
-      to: now.toISOString().split('T')[0]
+      from: `${year}-${String(quarterStartMonth).padStart(2, '0')}-01`,
+      to: `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
     };
   }
   if (period === 'year') {
     return {
-      from: new Date(now.getFullYear(), 0, 1).toISOString().split('T')[0],
-      to: now.toISOString().split('T')[0]
+      from: `${year}-01-01`,
+      to: `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
     };
   }
 };
@@ -47,7 +58,7 @@ const formatDate = (dateStr) => {
 
 const Analytics = () => {
   const [view, setView] = useState('pl');           // 'pl' | 'ledger'
-  const [period, setPeriod] = useState('month');    // 'month' | 'quarter' | 'year'
+  const [period, setPeriod] = useState('month');    // 'month' | 'quarter' | 'year' | 'all'
   const [loading, setLoading] = useState(true);
   const [plData, setPlData] = useState(null);
   const [ledgerData, setLedgerData] = useState([]);
@@ -88,6 +99,7 @@ const Analytics = () => {
           .gte('transaction_date', range.from)
           .lte('transaction_date', range.to);
 
+        console.log('P&L Query:', { user_id: user.id, range, data, error });
         if (error) throw error;
 
         // Compute P&L from fetched data
@@ -145,6 +157,7 @@ const Analytics = () => {
           .order('entry_date', { ascending: false })
           .order('transaction_id', { ascending: false });
 
+        console.log('Ledger Query:', { user_id: user.id, range, data, error });
         if (error) throw error;
 
         setLedgerData(data || []);
@@ -352,6 +365,12 @@ const Analytics = () => {
           onClick={() => setPeriod('year')}
         >
           This Year
+        </button>
+        <button
+          className={`filter-tab ${period === 'all' ? 'active' : ''}`}
+          onClick={() => setPeriod('all')}
+        >
+          All Time
         </button>
       </div>
 
