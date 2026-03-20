@@ -1,5 +1,6 @@
 const supabase = require('../config/supabaseClient');
 const { upsertExactCache, upsertVectorCache, isGarbage } = require('../services/personalCacheService');
+const rulesEngineService = require('../services/rulesEngineService');
 
 /**
  * Creates double-entry ledger entries for an approved transaction.
@@ -334,9 +335,18 @@ async function manualCategorizeTransaction(req, res) {
 
       // Seed personal cache based on whether the raw details is garbage
       const rawDetails = uncatData.details || '';
-      if (isGarbage(rawDetails)) {
+
+      // Check if there's a rule match to extract the ID
+      const rulesResult = rulesEngineService.evaluateTransaction(rawDetails);
+
+      if (rulesResult.hasRuleMatch && rulesResult.strategy === 'VECTOR_SEARCH' && rulesResult.extractedId) {
+        // Store the extracted ID in exact cache
+        await upsertExactCache(userId, rulesResult.extractedId, newTxn.offset_account_id);
+      } else if (isGarbage(rawDetails)) {
+        // Store raw garbage string in exact cache
         await upsertExactCache(userId, rawDetails.trim(), newTxn.offset_account_id);
       } else {
+        // Store in vector cache for semantic matching
         await upsertVectorCache(userId, rawDetails, newTxn.offset_account_id);
       }
     }
