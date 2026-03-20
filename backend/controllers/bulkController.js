@@ -93,8 +93,10 @@ async function processUpload(req, res) {
       // STAGE 1.5: PERSONAL EXACT CACHE
       // ==========================================
       if (rulesResult.hasRuleMatch && rulesResult.strategy === 'VECTOR_SEARCH' && rulesResult.extractedId) {
+        console.log(`🔍 Checking exact cache for extracted ID: "${rulesResult.extractedId}"`);
         const personalMatch = await personalCacheService.checkExactMatch(userId, rulesResult.extractedId);
         if (personalMatch) {
+          console.log(`✅ Exact cache HIT for: "${rulesResult.extractedId}"`);
           finalResults.push({
             ...txn,
             base_account_id: sourceAccountId,
@@ -104,6 +106,8 @@ async function processUpload(req, res) {
             confidence_score: 1.00
           });
           continue;
+        } else {
+          console.log(`❌ Exact cache MISS for: "${rulesResult.extractedId}"`);
         }
       }
 

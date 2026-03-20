@@ -341,9 +341,11 @@ async function manualCategorizeTransaction(req, res) {
 
       if (rulesResult.hasRuleMatch && rulesResult.strategy === 'VECTOR_SEARCH' && rulesResult.extractedId) {
         // Store the extracted ID in exact cache
+        console.log(`💾 Storing in exact cache: "${rulesResult.extractedId}" for transaction: "${rawDetails}"`);
         await upsertExactCache(userId, rulesResult.extractedId, newTxn.offset_account_id);
       } else if (isGarbage(rawDetails)) {
         // Store raw garbage string in exact cache
+        console.log(`💾 Storing garbage in exact cache: "${rawDetails.trim()}"`);
         await upsertExactCache(userId, rawDetails.trim(), newTxn.offset_account_id);
       } else {
         // For vector cache, try to get cleaned name from NER first
@@ -366,6 +368,7 @@ async function manualCategorizeTransaction(req, res) {
           }
         }
         // Store cleaned name in vector cache for semantic matching
+        console.log(`💾 Storing in vector cache: "${cleanName}" for transaction: "${rawDetails}"`);
         await upsertVectorCache(userId, cleanName, newTxn.offset_account_id);
       }
     }
