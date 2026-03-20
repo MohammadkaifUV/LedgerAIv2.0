@@ -346,8 +346,27 @@ async function manualCategorizeTransaction(req, res) {
         // Store raw garbage string in exact cache
         await upsertExactCache(userId, rawDetails.trim(), newTxn.offset_account_id);
       } else {
-        // Store in vector cache for semantic matching
-        await upsertVectorCache(userId, rawDetails, newTxn.offset_account_id);
+        // For vector cache, try to get cleaned name from NER first
+        let cleanName = rawDetails;
+        if (!rulesResult.hasRuleMatch) {
+          try {
+            const ML_SERVICE_URL = process.env.ML_SERVICE_URL || `http://127.0.0.1:${process.env.PYTHON_PORT || 5000}`;
+            const sanitizedString = rawDetails.replace(/[^a-zA-Z0-9\s]/g, ' ');
+            const nerResponse = await fetch(`${ML_SERVICE_URL}/ner`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ text: sanitizedString })
+            });
+            if (nerResponse.ok) {
+              const nerData = await nerResponse.json();
+              cleanName = nerData.merchant_name || sanitizedString;
+            }
+          } catch (err) {
+            console.error(`NER failure for manual categorize [${rawDetails}]:`, err.message);
+          }
+        }
+        // Store cleaned name in vector cache for semantic matching
+        await upsertVectorCache(userId, cleanName, newTxn.offset_account_id);
       }
     }
 
