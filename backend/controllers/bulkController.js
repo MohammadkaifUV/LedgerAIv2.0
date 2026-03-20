@@ -215,7 +215,7 @@ async function processUpload(req, res) {
     // STAGE 5: BATCH WRITE TO TRANSACTIONS
     // ==========================================
     const transactionsBatch = finalResults
-      .filter(item => item.base_account_id)  // only need source account
+      .filter(item => item.base_account_id && item.categorised_by)  // only insert if categorized
       .map(item => ({
         user_id: userId,
         base_account_id: item.base_account_id,
@@ -226,7 +226,7 @@ async function processUpload(req, res) {
         clean_merchant_name: item.clean_merchant_name || null,
         amount: item.debit || item.credit || 0,
         transaction_type: item.debit ? 'DEBIT' : 'CREDIT',
-        categorised_by: item.categorised_by || null,
+        categorised_by: item.categorised_by,
         confidence_score: item.confidence_score || null,
         is_contra: item.is_contra || false,
         posting_status: 'DRAFT',
