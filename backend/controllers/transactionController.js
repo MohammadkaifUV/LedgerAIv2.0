@@ -142,7 +142,7 @@ async function approveTransaction(req, res) {
     // Fetch the transaction to get fields needed for ledger entries
     const { data: txnData } = await supabase
       .from('transactions')
-      .select('transaction_id, base_account_id, offset_account_id, amount, transaction_type, transaction_date, is_contra, details, clean_merchant_name')
+      .select('transaction_id, base_account_id, offset_account_id, amount, transaction_type, transaction_date, is_contra, details, clean_merchant_name, extracted_id')
       .eq('transaction_id', transactionId)
       .eq('user_id', userId)
       .single();
@@ -160,8 +160,14 @@ async function approveTransaction(req, res) {
       );
 
       if (txnData && !txnData.is_contra) {
-        const nameToCache = txnData.clean_merchant_name || txnData.details;
-        await upsertVectorCache(userId, nameToCache, txnData.offset_account_id);
+        if (txnData.extracted_id) {
+          // Rules engine already extracted a clean VPA/ID — goes to exact cache
+          await upsertExactCache(userId, txnData.extracted_id, txnData.offset_account_id);
+        } else {
+          // No extraction happened — raw details is a real merchant name, vector cache it
+          const nameToCache = txnData.clean_merchant_name || txnData.details;
+          await upsertVectorCache(userId, nameToCache, txnData.offset_account_id);
+        }
       }
     }
 
@@ -217,7 +223,7 @@ async function bulkApproveTransactions(req, res) {
       const approvedIds = data.map(t => t.transaction_id);
       const { data: txnRows } = await supabase
         .from('transactions')
-        .select('transaction_id, base_account_id, offset_account_id, amount, transaction_type, transaction_date, details, clean_merchant_name, is_contra')
+        .select('transaction_id, base_account_id, offset_account_id, amount, transaction_type, transaction_date, details, clean_merchant_name, is_contra, extracted_id')
         .in('transaction_id', approvedIds)
         .eq('user_id', userId);
 
@@ -235,8 +241,14 @@ async function bulkApproveTransactions(req, res) {
           );
 
           if (!txn.is_contra) {
-            const nameToCache = txn.clean_merchant_name || txn.details;
-            await upsertVectorCache(userId, nameToCache, txn.offset_account_id);
+            if (txn.extracted_id) {
+              // Rules engine already extracted a clean VPA/ID — goes to exact cache
+              await upsertExactCache(userId, txn.extracted_id, txn.offset_account_id);
+            } else {
+              // No extraction happened — raw details is a real merchant name, vector cache it
+              const nameToCache = txn.clean_merchant_name || txn.details;
+              await upsertVectorCache(userId, nameToCache, txn.offset_account_id);
+            }
           }
         }
       }

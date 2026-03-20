@@ -103,7 +103,8 @@ async function processUpload(req, res) {
             offset_account_id: personalMatch.account_id,
             clean_merchant_name: rulesResult.extractedId.toUpperCase(),
             categorised_by: 'PERSONAL_EXACT',
-            confidence_score: 1.00
+            confidence_score: 1.00,
+            extracted_id: rulesResult.extractedId || null
           });
           continue;
         } else {
@@ -149,7 +150,8 @@ async function processUpload(req, res) {
           offset_account_id: vectorMatch.account_id,
           clean_merchant_name: cleanMerchantName.toUpperCase(),
           categorised_by: vectorMatch.categorised_by,
-          confidence_score: vectorMatch.confidence_score
+          confidence_score: vectorMatch.confidence_score,
+          extracted_id: rulesResult.extractedId || null
         });
         continue;
       }
@@ -236,7 +238,8 @@ async function processUpload(req, res) {
         posting_status: 'DRAFT',
         attention_level: item.offset_account_id ? 'LOW' : 'HIGH',
         review_status: 'PENDING',
-        uncategorized_transaction_id: item.uncategorized_transaction_id || null
+        uncategorized_transaction_id: item.uncategorized_transaction_id || null,
+        extracted_id: item.extracted_id || null
       }));
 
     if (transactionsBatch.length > 0) {
