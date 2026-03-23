@@ -168,21 +168,20 @@ const Transactions = () => {
       const data = await response.json();
 
       if (response.ok) {
-        showToast(`${selectedIds.size} transactions approved`, 'success');
+        if (data.blocked_count && data.blocked_count > 0) {
+          // Partial success - some approved, some blocked
+          showToast(`${data.approved_count} transactions approved. ${data.blocked_count} transactions require categorisation.`, 'warning');
+        } else {
+          // Full success
+          showToast(`${data.approved_count} transactions approved`, 'success');
+        }
         setSelectedIds(new Set());
         fetchTransactions(activeFilter);
       } else {
-        // Handle partial failure with uncategorised transactions
+        // Handle error response
         if (data.blocked_transaction_ids && data.blocked_transaction_ids.length > 0) {
           const blockedCount = data.blocked_transaction_ids.length;
-          const approvedCount = selectedIds.size - blockedCount;
-          if (approvedCount > 0) {
-            showToast(`Cannot approve: ${blockedCount} transactions are uncategorised. ${approvedCount} transactions approved successfully.`, 'warning');
-          } else {
-            showToast(`Cannot approve: ${blockedCount} transactions are uncategorised.`, 'error');
-          }
-          setSelectedIds(new Set());
-          fetchTransactions(activeFilter);
+          showToast(`Cannot approve: ${blockedCount} transactions are uncategorised.`, 'error');
         } else {
           showToast(data.error || 'Bulk approval failed', 'error');
         }

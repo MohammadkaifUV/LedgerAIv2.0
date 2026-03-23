@@ -224,21 +224,25 @@ async function bulkApproveTransactions(req, res) {
       txn.accounts?.account_name === 'Uncategorised Income'
     ).map(txn => txn.transaction_id) || [];
 
-    if (blockedIds.length > 0) {
+    // Filter out blocked IDs from the approval list
+    const approvableIds = transaction_ids.filter(id => !blockedIds.includes(id));
+
+    if (approvableIds.length === 0) {
       return res.status(400).json({
-        error: 'Cannot approve transactions with uncategorised accounts.',
-        blocked_transaction_ids: blockedIds
+        error: 'Cannot approve: all transactions use uncategorised accounts.',
+        blocked_transaction_ids: blockedIds,
+        approved_count: 0
       });
     }
 
-    // Update all matching rows with user_id constraint
+    // Update only approvable transactions
     const { error, data } = await supabase
       .from('transactions')
       .update({
         review_status: 'APPROVED',
         posting_status: 'POSTED'
       })
-      .in('transaction_id', transaction_ids)
+      .in('transaction_id', approvableIds)
       .eq('user_id', userId)
       .select('transaction_id'); // To verify the count
 
@@ -289,6 +293,18 @@ async function bulkApproveTransactions(req, res) {
     }
 
     const approvedCount = data ? data.length : 0;
+    const blockedCount = blockedIds.length;
+
+    if (blockedCount > 0) {
+      return res.status(200).json({
+        success: true,
+        approved_count: approvedCount,
+        blocked_count: blockedCount,
+        blocked_transaction_ids: blockedIds,
+        message: `${approvedCount} transactions approved. ${blockedCount} transactions require categorisation.`
+      });
+    }
+
     return res.status(200).json({ success: true, approved_count: approvedCount });
   } catch (err) {
     console.error('Unexpected error in bulkApproveTransactions:', err);

@@ -205,7 +205,8 @@ async function processUpload(req, res) {
         .select('account_id, account_name')
         .eq('user_id', userId)
         .eq('is_active', true)
-        .in('account_type', ['INCOME', 'EXPENSE']);
+        .in('account_type', ['INCOME', 'EXPENSE'])
+        .not('account_name', 'in', '("Uncategorised Income","Uncategorised Expense")');
 
       const availableCategories = accounts || [];
 
