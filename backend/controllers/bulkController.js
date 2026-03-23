@@ -147,7 +147,8 @@ async function processUpload(req, res) {
       // ==========================================
       // STAGE 2: PYTHON NER
       // ==========================================
-      if (!rulesResult.hasRuleMatch) {
+      // Run NER if no rule match OR if VECTOR_SEARCH strategy (to get clean merchant name)
+      if (!rulesResult.hasRuleMatch || rulesResult.strategy === 'VECTOR_SEARCH') {
         try {
           const sanitizedString = txn.details.replace(/[^a-zA-Z0-9\s]/g, ' ');
           const nerResponse = await fetch(`${ML_SERVICE_URL}/ner`, {

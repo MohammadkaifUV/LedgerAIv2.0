@@ -6,7 +6,7 @@ const LLM_MODEL = process.env.LLM_MODEL || 'google/gemini-2.5-flash'; // OpenRou
 /**
  * Stage 4: LLM Batch Fallback
  * Asks an LLM to categorize a batch of transactions using a list of available categories.
- * 
+ *
  * @param {Array} uncategorizedArray - List of transactions that failed deterministic checks.
  * @param {Array} availableCategories - List of valid categories [{ id: 123, name: 'Rent' }]
  * @returns {Promise<Array>} List of transaction items categorized with categorised_by='LLM_PREDICTION'
@@ -22,27 +22,75 @@ async function categorizeBatch(uncategorizedArray, availableCategories) {
       return [];
     }
 
-    // 1. Construct Prompt
-    const systemPrompt = `You are an expert accountant. You will be given a list of uncategorized transactions and a list of valid accounts (categories) you are allowed to choose from. 
-Your task is to match each transaction to the most appropriate account.
+    // Split into smaller batches to avoid context overflow
+    const BATCH_SIZE = 20;
+    const allResults = [];
 
-STRICT INSTRUCTION: Your response MUST be EXACTLY a raw JSON array. Do NOT wrap it inside markdown blocks (e.g., no \`\`\`json). Do NOT add conversational text. If you cannot match a transaction with at least 50% confidence, set suggested_account_id to null.
+    for (let i = 0; i < uncategorizedArray.length; i += BATCH_SIZE) {
+      const batch = uncategorizedArray.slice(i, i + BATCH_SIZE);
+      console.log(`🤖 Processing LLM batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(uncategorizedArray.length / BATCH_SIZE)} (${batch.length} transactions)`);
+
+      const batchResults = await processBatch(batch, availableCategories);
+      allResults.push(...batchResults);
+    }
+
+    return allResults;
+
+  } catch (err) {
+    console.error('❌ categorizeBatch encountered an error during processing:', err);
+    return []; // Return empty on failure to proceed with other processes triggers safeguards
+  }
+}
+
+async function processBatch(batch, availableCategories) {
+  try {
+    if (!uncategorizedArray || uncategorizedArray.length === 0) {
+      return [];
+    }
+
+    if (!OPENROUTER_API_KEY) {
+      console.warn('⚠️ OPENROUTER_API_KEY missing in .env. Skipping LLM Batch Fallback evaluation triggers.');
+      return [];
+    }
+
+async function processBatch(batch, availableCategories) {
+  try {
+    // 1. Construct Prompt
+    const systemPrompt = `You are an expert accountant specializing in transaction categorization. You will be given a list of transactions and a list of valid account categories.
+
+Your task is to match each transaction to the MOST APPROPRIATE category from the provided list.
+
+IMPORTANT GUIDELINES:
+- Analyze transaction details carefully (merchant names, keywords like DINNER, BREAKFAST, NETFLIX, etc.)
+- ALWAYS try to assign a category - only use null if the transaction is completely unrecognizable
+- Use context clues: DINNER/BREAKFAST/FOOD → Food & Dining, NETFLIX/ENTERTAINMENT → Living Expenses or Personal Care
+- Be confident - if you're 50% sure or more, assign the category
+- Common patterns:
+  * Food keywords (DINNER, BREAKFAST, RESTAURANT, CAFE) → Food & Dining
+  * Transport (UBER, OLA, TAXI, METRO) → Travel & Transport
+  * Utilities (ELECTRICITY, WATER, GAS) → Utilities
+  * Entertainment (NETFLIX, SPOTIFY, MOVIES) → Living Expenses or Personal Care
+  * Rent/Housing keywords → Housing & Rent
+
+STRICT INSTRUCTION: Your response MUST be EXACTLY a raw JSON array. Do NOT wrap it inside markdown blocks (e.g., no \`\`\`json). Do NOT add conversational text.
 
 Required JSON Structure:
 [
-  { 
-    "transaction_id": "...", 
-    "suggested_account_id": 123, 
-    "confidence": 0.85 
+  {
+    "transaction_id": "...",
+    "suggested_account_id": 123,
+    "confidence": 0.85
   }
-]`;
+]
+
+Only set suggested_account_id to null if you truly cannot determine ANY reasonable category.`;
 
     const userPrompt = `
 === AVAILABLE ACCOUNTS ===
 ${JSON.stringify(availableCategories, null, 2)}
 
 === TRANSACTIONS TO CATEGORIZE ===
-${JSON.stringify(uncategorizedArray.map(t => ({
+${JSON.stringify(batch.map(t => ({
   transaction_id: t.uncategorized_transaction_id || t.transaction_id,
   details: t.clean_merchant_name || t.details,
   amount: t.debit || t.credit || 0,
@@ -55,8 +103,8 @@ ${JSON.stringify(uncategorizedArray.map(t => ({
     console.log('🤖 LLM BATCH FALLBACK DEBUG:');
     console.log(`   Available categories count: ${availableCategories.length}`);
     console.log(`   Categories: ${availableCategories.map(c => c.account_name).join(', ')}`);
-    console.log(`   Transactions to categorize: ${uncategorizedArray.length}`);
-    console.log(`   First transaction sample: ${uncategorizedArray[0]?.details || 'N/A'}`);
+    console.log(`   Transactions to categorize: ${batch.length}`);
+    console.log(`   First transaction sample: ${batch[0]?.clean_merchant_name || batch[0]?.details || 'N/A'}`);
 
     // 2. Call LLM API (Via OpenRouter for standard model triggers)
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -120,7 +168,7 @@ ${JSON.stringify(uncategorizedArray.map(t => ({
       // Safety Verification: Ensure suggested_account_id exists in available filters
       if (suggested_account_id && validAccountIds.has(suggested_account_id)) {
         // Find corresponding transaction from input to match accurate triggers benchmarks forwards
-        const originalTxn = uncategorizedArray.find(t => 
+        const originalTxn = batch.find(t =>
           (t.uncategorized_transaction_id || t.transaction_id) == transaction_id
         );
 
@@ -140,7 +188,7 @@ ${JSON.stringify(uncategorizedArray.map(t => ({
     return safeResults;
 
   } catch (err) {
-    console.error('❌ categorizeBatch encountered an error during processing:', err);
+    console.error('❌ processBatch encountered an error during processing:', err);
     return []; // Return empty on failure to proceed with other processes triggers safeguards
   }
 }
