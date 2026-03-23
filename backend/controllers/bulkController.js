@@ -1,3 +1,4 @@
+const logger = require('../utils/logger');
 const contraRadarService = require('../services/contraRadarService');
 const rulesEngineService = require('../services/rulesEngineService');
 const vectorMatchService = require('../services/vectorMatchService');
@@ -19,14 +20,21 @@ const ML_SERVICE_URL = process.env.ML_SERVICE_URL || `http://127.0.0.1:${process
  */
 async function processUpload(req, res) {
   try {
+    logger.info('Categorization request received', {
+      transactionCount: req.body?.transactions?.length,
+      userId: req.user?.id
+    });
+
     const { transactions } = req.body;
 
     if (!transactions || !Array.isArray(transactions)) {
+      logger.warn('Invalid payload received', { hasTransactions: !!transactions, isArray: Array.isArray(transactions) });
       return res.status(400).json({ error: 'Invalid payload: Expecting an array of transactions.' });
     }
 
     const userId = req.user?.id;
     if (!userId) {
+      logger.error('User authentication missing');
       return res.status(401).json({ error: 'User authenticated reference missing.' });
     }
 
@@ -48,13 +56,20 @@ async function processUpload(req, res) {
     )?.account_id;
 
     if (!uncategorisedExpenseId || !uncategorisedIncomeId) {
-      console.error('❌ Fallback accounts not found for user:', userId);
+      logger.error('Fallback accounts not found', { userId });
       return res.status(500).json({ error: 'System fallback accounts missing. Please contact support.' });
     }
+
+    logger.info('Starting categorization pipeline', {
+      totalTransactions: transactions.length,
+      uncategorisedExpenseId,
+      uncategorisedIncomeId
+    });
 
     // ==========================================
     // STAGE 0: BATCH CONTRA RADAR (Pre-Loop)
     // ==========================================
+    logger.info('Stage 0: Running Contra Radar');
     const resolvedTransactions = await contraRadarService.findAndLinkContras(transactions, userId, supabase);
 
     const finalResults = [];
@@ -124,10 +139,10 @@ async function processUpload(req, res) {
       // STAGE 1.5: PERSONAL EXACT CACHE
       // ==========================================
       if (rulesResult.hasRuleMatch && rulesResult.strategy === 'VECTOR_SEARCH' && rulesResult.extractedId) {
-        console.log(`🔍 Checking exact cache for extracted ID: "${rulesResult.extractedId}"`);
+        logger.debug('Checking exact cache', { extractedId: rulesResult.extractedId });
         const personalMatch = await personalCacheService.checkExactMatch(userId, rulesResult.extractedId);
         if (personalMatch) {
-          console.log(`✅ Exact cache HIT for: "${rulesResult.extractedId}"`);
+          logger.info('Exact cache HIT', { extractedId: rulesResult.extractedId });
           finalResults.push({
             ...txn,
             base_account_id: sourceAccountId,
@@ -140,7 +155,7 @@ async function processUpload(req, res) {
           });
           continue;
         } else {
-          console.log(`❌ Exact cache MISS for: "${rulesResult.extractedId}"`);
+          logger.debug('Exact cache MISS', { extractedId: rulesResult.extractedId });
         }
       }
 
@@ -161,7 +176,7 @@ async function processUpload(req, res) {
             cleanMerchantName = nerData.merchant_name || sanitizedString;
           }
         } catch (err) {
-          console.error(`NER failure on [${txn.details}]:`, err.message);
+          logger.error('NER failure', { details: txn.details, error: err.message });
         }
       }
 
@@ -172,7 +187,7 @@ async function processUpload(req, res) {
       try {
         vectorMatch = await vectorMatchService.findVectorMatch(cleanMerchantName, userId);
       } catch (err) {
-        console.error('❌ Vector match failed for transaction:', err.message);
+        logger.error('Vector match failed', { error: err.message });
         // vectorMatch remains null, proceed to fallback
       }
 
@@ -204,6 +219,8 @@ async function processUpload(req, res) {
     // ==========================================
     const leftovers = finalResults.filter(t => !t.offset_account_id && !t.is_contra);
 
+    logger.info('Stage 4: LLM Batch Fallback', { leftoverCount: leftovers.length });
+
     if (leftovers.length > 0) {
       const { data: accounts } = await supabase
         .from('accounts')
@@ -214,9 +231,11 @@ async function processUpload(req, res) {
         .not('account_name', 'in', '("Uncategorised Income","Uncategorised Expense")');
 
       const availableCategories = accounts || [];
+      logger.info('Available categories for LLM', { count: availableCategories.length });
 
       if (availableCategories.length > 0) {
         const llmResults = await llmBatchFallback.categorizeBatch(leftovers, availableCategories);
+        logger.info('LLM categorization complete', { resultsCount: llmResults.length });
 
         for (const prediction of llmResults) {
           const match = finalResults.find(t =>
@@ -250,15 +269,13 @@ async function processUpload(req, res) {
     }
     const totalCategorised = finalResults.filter(t => t.categorised_by).length;
     const totalUncategorised = finalResults.filter(t => !t.categorised_by).length;
-    console.log(`\n📊 CATEGORIZATION SUMMARY [${new Date().toISOString()}]`);
-    console.log(`   Total Transactions : ${finalResults.length}`);
-    console.log(`   ✅ Categorised     : ${totalCategorised}`);
-    console.log(`   ❌ Uncategorised   : ${totalUncategorised}`);
-    console.log('   ─────────────────────────────');
-    for (const [method, count] of Object.entries(summaryCounts)) {
-      console.log(`   ${method.padEnd(20)}: ${count}`);
-    }
-    console.log('');
+
+    logger.info('Categorization summary', {
+      total: finalResults.length,
+      categorised: totalCategorised,
+      uncategorised: totalUncategorised,
+      breakdown: summaryCounts
+    });
 
     // ==========================================
     // STAGE 5: APPLY FALLBACK & BATCH WRITE
@@ -294,7 +311,7 @@ async function processUpload(req, res) {
           amount: item.debit || item.credit || 0,
           transaction_type: transactionType,
           categorised_by: finalCategorisedBy,
-          confidence_score: item.confidence_score || null,
+          confidence_score: item.confidence_score || 0.5,
           is_contra: item.is_contra || false,
           posting_status: 'DRAFT',
           attention_level: finalAttentionLevel || 'LOW',
@@ -311,11 +328,13 @@ async function processUpload(req, res) {
         .insert(transactionsBatch);
 
       if (insertError) {
-        console.error('❌ Batch insert to transactions failed:', insertError);
+        logger.error('Batch insert failed', { error: insertError.message, count: transactionsBatch.length });
       } else {
-        console.log(`✅ Wrote ${transactionsBatch.length} transactions to DB`);
+        logger.info('Batch insert successful', { count: transactionsBatch.length });
       }
     }
+
+    logger.info('Categorization complete', { totalResults: finalResults.length });
 
     return res.status(200).json({
       success: true,
@@ -323,7 +342,7 @@ async function processUpload(req, res) {
     });
 
   } catch (err) {
-    console.error('❌ Bulk Categorization Controller Exception:', err);
+    logger.error('Bulk categorization exception', { error: err.message, stack: err.stack });
     return res.status(500).json({ error: 'Internal Server Error processing batch categorization.' });
   }
 }

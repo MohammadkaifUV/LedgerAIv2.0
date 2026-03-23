@@ -1,3 +1,5 @@
+const logger = require('../utils/logger');
+
 require('dotenv').config();
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
@@ -18,7 +20,7 @@ async function categorizeBatch(uncategorizedArray, availableCategories) {
     }
 
     if (!OPENROUTER_API_KEY) {
-      console.warn('⚠️ OPENROUTER_API_KEY missing in .env. Skipping LLM Batch Fallback evaluation triggers.');
+      logger.warn('OPENROUTER_API_KEY missing, skipping LLM fallback');
       return [];
     }
 
@@ -28,7 +30,11 @@ async function categorizeBatch(uncategorizedArray, availableCategories) {
 
     for (let i = 0; i < uncategorizedArray.length; i += BATCH_SIZE) {
       const batch = uncategorizedArray.slice(i, i + BATCH_SIZE);
-      console.log(`🤖 Processing LLM batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(uncategorizedArray.length / BATCH_SIZE)} (${batch.length} transactions)`);
+      logger.info('Processing LLM batch', {
+        batchNum: Math.floor(i / BATCH_SIZE) + 1,
+        totalBatches: Math.ceil(uncategorizedArray.length / BATCH_SIZE),
+        batchSize: batch.length
+      });
 
       const batchResults = await processBatch(batch, availableCategories);
       allResults.push(...batchResults);
@@ -41,17 +47,6 @@ async function categorizeBatch(uncategorizedArray, availableCategories) {
     return []; // Return empty on failure to proceed with other processes triggers safeguards
   }
 }
-
-async function processBatch(batch, availableCategories) {
-  try {
-    if (!uncategorizedArray || uncategorizedArray.length === 0) {
-      return [];
-    }
-
-    if (!OPENROUTER_API_KEY) {
-      console.warn('⚠️ OPENROUTER_API_KEY missing in .env. Skipping LLM Batch Fallback evaluation triggers.');
-      return [];
-    }
 
 async function processBatch(batch, availableCategories) {
   try {

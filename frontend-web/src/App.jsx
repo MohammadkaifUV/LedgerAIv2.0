@@ -23,7 +23,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 function App() {
   const { user, loading: authLoading } = useAuth();
   const { role } = useRole();
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [hasModules, setHasModules] = useState(null);
   const [hasIdentifiers, setHasIdentifiers] = useState(null);
   const [loading, setLoading] = useState(true);

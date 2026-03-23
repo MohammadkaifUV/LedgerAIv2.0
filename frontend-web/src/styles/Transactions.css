@@ -135,7 +135,7 @@
   grid-template-columns: 110px 1fr 110px 150px 160px 120px;
   gap: 16px;
   padding: 14px 24px;
-  align-items: center;
+  align-items: start;
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
   font-size: 14px;
   color: var(--text-primary);
@@ -147,9 +147,10 @@
 }
 
 .details-cell {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.4;
+  max-width: 100%;
 }
 
 .account-cell-clickable {

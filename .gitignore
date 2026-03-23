@@ -25,4 +25,10 @@ build/
 .vscode/
 .ledgerai_pids
 
+# Local documentation
+LOCAL_SETUP.md
+LOGGING.md
+LOGGING_SETUP.md
+overview.md
+
 /extraStuff/testJson

@@ -3,6 +3,7 @@ const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
+const logger = require('./utils/logger');
 const transactionRoutes = require('./routes/transactionRoutes');
 const qcRoutes = require('./routes/qcRoutes');
 const rulesEngineService = require('./services/rulesEngineService');
@@ -14,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 // � SECURITY: CORS Restriction
 // ==========================================
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'http://localhost:5173').split(',').map(o => o.trim());
-console.log('🔒 CORS allowed origins:', ALLOWED_ORIGINS);
+logger.info('CORS allowed origins', { origins: ALLOWED_ORIGINS });
 app.use(cors({
   origin: (origin, cb) => {
     if (!origin) {
@@ -34,7 +35,7 @@ app.use(cors({
       return;
     }
 
-    console.warn(`❌ CORS blocked origin: ${origin}`);
+    logger.warn('CORS blocked origin', { origin });
     cb(null, false);
   },
   credentials: true
@@ -70,7 +71,12 @@ app.get('/qc', (req, res) => {
 // 🔒 SECURITY: Global Error Handler
 // ==========================================
 app.use((err, req, res, next) => {
-  console.error('❌ Unhandled error:', err);
+  logger.error('Unhandled error', {
+    error: err.message,
+    stack: err.stack,
+    path: req.path,
+    method: req.method
+  });
   if (res.headersSent) return next(err);
   res.status(err.status || 500).json({
     error: process.env.NODE_ENV === 'production'
@@ -82,9 +88,9 @@ app.use((err, req, res, next) => {
 // Load rules at startup
 rulesEngineService.loadRules().then(() => {
   app.listen(PORT, () => {
-    console.log(`🚀 LedgerAI Backend running on port ${PORT}`);
+    logger.info(`LedgerAI Backend running on port ${PORT}`, { port: PORT, env: process.env.NODE_ENV || 'development' });
   });
 }).catch((err) => {
-  console.error('Failed to load rules at startup:', err);
+  logger.error('Failed to load rules at startup', { error: err.message, stack: err.stack });
   process.exit(1);
 });
