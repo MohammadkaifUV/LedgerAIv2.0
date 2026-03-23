@@ -86,17 +86,24 @@ async function processUpload(req, res) {
       if (rulesResult.hasRuleMatch) {
         if (rulesResult.strategy === 'FAST_PATH') {
           const categoryAccountId = await getAccountIdFromTemplate(rulesResult.targetTemplateId, userId, supabase);
-          finalResults.push({
-            ...txn,
-            base_account_id: sourceAccountId,
-            offset_account_id: categoryAccountId,
-            categorised_by: 'GLOBAL_RULE',
-            confidence_score: 1.00
-          });
-          continue;
+
+          // Only mark as categorised if we got a valid account ID
+          if (categoryAccountId) {
+            finalResults.push({
+              ...txn,
+              base_account_id: sourceAccountId,
+              offset_account_id: categoryAccountId,
+              categorised_by: 'GLOBAL_RULE',
+              confidence_score: 1.00
+            });
+            continue;
+          }
+          // If template lookup failed, fall through to next stages
         }
         else if (rulesResult.strategy === 'EXACT_THEN_DUMP') {
           const categoryAccountId = await getAccountIdFromTemplate(rulesResult.targetTemplateId, userId, supabase);
+
+          // EXACT_THEN_DUMP allows null (for garbage transactions)
           finalResults.push({
             ...txn,
             base_account_id: sourceAccountId,
