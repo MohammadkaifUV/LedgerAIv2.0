@@ -94,7 +94,8 @@ async function processUpload(req, res) {
               base_account_id: sourceAccountId,
               offset_account_id: categoryAccountId,
               categorised_by: 'GLOBAL_RULE',
-              confidence_score: 1.00
+              confidence_score: 1.00,
+              attention_level: 'LOW'
             });
             continue;
           }
@@ -109,7 +110,8 @@ async function processUpload(req, res) {
             base_account_id: sourceAccountId,
             offset_account_id: categoryAccountId || null,
             categorised_by: 'TRAPDOOR_FILTER',
-            confidence_score: 1.00
+            confidence_score: 1.00,
+            attention_level: 'LOW'
           });
           continue;
         }
@@ -133,7 +135,8 @@ async function processUpload(req, res) {
             clean_merchant_name: rulesResult.extractedId.toUpperCase(),
             categorised_by: 'PERSONAL_EXACT',
             confidence_score: 1.00,
-            extracted_id: rulesResult.extractedId || null
+            extracted_id: rulesResult.extractedId || null,
+            attention_level: 'LOW'
           });
           continue;
         } else {
@@ -180,7 +183,8 @@ async function processUpload(req, res) {
           clean_merchant_name: cleanMerchantName.toUpperCase(),
           categorised_by: vectorMatch.categorised_by,
           confidence_score: vectorMatch.confidence_score,
-          extracted_id: rulesResult.extractedId || null
+          extracted_id: rulesResult.extractedId || null,
+          attention_level: 'LOW'
         });
         continue;
       }
@@ -222,6 +226,14 @@ async function processUpload(req, res) {
             match.offset_account_id = prediction.offset_account_id;
             match.categorised_by = prediction.categorised_by || 'LLM_PREDICTION';
             match.confidence_score = prediction.confidence_score;
+            // Set attention level based on confidence
+            if (prediction.confidence_score >= 0.8) {
+              match.attention_level = 'LOW';
+            } else if (prediction.confidence_score >= 0.5) {
+              match.attention_level = 'MEDIUM';
+            } else {
+              match.attention_level = 'HIGH';
+            }
           }
         }
       }
