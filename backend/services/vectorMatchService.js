@@ -48,7 +48,7 @@ async function findVectorMatch(cleanString, userId) {
     } else if (pData && pData.length > 0) {
       const match = pData[0];
       return {
-        account_id: match.account_id,
+        offset_account_id: match.account_id,
         confidence_score: 1.00,
         categorised_by: 'PERSONAL_VECTOR'
       };
@@ -88,7 +88,7 @@ async function findVectorMatch(cleanString, userId) {
 
       if (accData && accData.length > 0) {
         return {
-          account_id: accData[0].account_id,
+          offset_account_id: accData[0].account_id,
           confidence_score: 0.85,
           categorised_by: 'GLOBAL_VECTOR'
         };

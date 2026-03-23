@@ -49,7 +49,7 @@ async function checkExactMatch(userId, rawString) {
 
     if (matches && matches.length > 0) {
       return {
-        account_id: matches[0].account_id,
+        offset_account_id: matches[0].account_id,
         confidence_score: 1.00, // Strict Requirement
         categorised_by: 'PERSONAL_EXACT' // Strict Requirement
       };

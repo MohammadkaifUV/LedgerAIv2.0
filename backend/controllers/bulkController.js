@@ -122,7 +122,7 @@ async function processUpload(req, res) {
           finalResults.push({
             ...txn,
             base_account_id: sourceAccountId,
-            offset_account_id: personalMatch.account_id,
+            offset_account_id: personalMatch.offset_account_id,
             clean_merchant_name: rulesResult.extractedId.toUpperCase(),
             categorised_by: 'PERSONAL_EXACT',
             confidence_score: 1.00,
@@ -169,7 +169,7 @@ async function processUpload(req, res) {
         finalResults.push({
           ...txn,
           base_account_id: sourceAccountId,
-          offset_account_id: vectorMatch.account_id,
+          offset_account_id: vectorMatch.offset_account_id,
           clean_merchant_name: cleanMerchantName.toUpperCase(),
           categorised_by: vectorMatch.categorised_by,
           confidence_score: vectorMatch.confidence_score,
@@ -211,7 +211,7 @@ async function processUpload(req, res) {
             (prediction.uncategorized_transaction_id || prediction.transaction_id)
           );
           if (match) {
-            match.offset_account_id = prediction.account_id;
+            match.offset_account_id = prediction.offset_account_id;
             match.categorised_by = prediction.categorised_by || 'LLM_PREDICTION';
             match.confidence_score = prediction.confidence_score;
           }
