@@ -121,7 +121,7 @@ ${JSON.stringify(uncategorizedArray.map(t => ({
           safeResults.push({
             ...originalTxn,
             categorised_by: 'LLM_PREDICTION',
-            account_id: suggested_account_id,
+            offset_account_id: suggested_account_id,
             confidence_score: parseFloat(confidence) || 0.50
           });
         }
