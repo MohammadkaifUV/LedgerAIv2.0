@@ -31,6 +31,28 @@ async function processUpload(req, res) {
     }
 
     // ==========================================
+    // FETCH FALLBACK ACCOUNTS
+    // ==========================================
+    const { data: fallbackAccounts } = await supabase
+      .from('accounts')
+      .select('account_id, account_name, account_type')
+      .eq('user_id', userId)
+      .eq('is_system_generated', true)
+      .in('account_name', ['Uncategorised Expense', 'Uncategorised Income']);
+
+    const uncategorisedExpenseId = fallbackAccounts?.find(
+      acc => acc.account_name === 'Uncategorised Expense'
+    )?.account_id;
+    const uncategorisedIncomeId = fallbackAccounts?.find(
+      acc => acc.account_name === 'Uncategorised Income'
+    )?.account_id;
+
+    if (!uncategorisedExpenseId || !uncategorisedIncomeId) {
+      console.error('❌ Fallback accounts not found for user:', userId);
+      return res.status(500).json({ error: 'System fallback accounts missing. Please contact support.' });
+    }
+
+    // ==========================================
     // STAGE 0: BATCH CONTRA RADAR (Pre-Loop)
     // ==========================================
     const resolvedTransactions = await contraRadarService.findAndLinkContras(transactions, userId, supabase);
@@ -218,29 +240,49 @@ async function processUpload(req, res) {
     console.log('');
 
     // ==========================================
-    // STAGE 5: BATCH WRITE TO TRANSACTIONS
+    // STAGE 5: APPLY FALLBACK & BATCH WRITE
     // ==========================================
     const transactionsBatch = finalResults
-      .filter(item => item.base_account_id && item.categorised_by)  // only insert if categorized
-      .map(item => ({
-        user_id: userId,
-        base_account_id: item.base_account_id,
-        offset_account_id: item.offset_account_id || null,   // allow null
-        document_id: item.document_id,
-        transaction_date: item.txn_date,
-        details: item.details,
-        clean_merchant_name: item.clean_merchant_name || null,
-        amount: item.debit || item.credit || 0,
-        transaction_type: item.debit ? 'DEBIT' : 'CREDIT',
-        categorised_by: item.categorised_by,
-        confidence_score: item.confidence_score || null,
-        is_contra: item.is_contra || false,
-        posting_status: 'DRAFT',
-        attention_level: item.offset_account_id ? 'LOW' : 'HIGH',
-        review_status: 'PENDING',
-        uncategorized_transaction_id: item.uncategorized_transaction_id || null,
-        extracted_id: item.extracted_id || null
-      }));
+      .filter(item => item.base_account_id)  // only require base_account_id
+      .map(item => {
+        const transactionType = item.debit ? 'DEBIT' : 'CREDIT';
+
+        // Apply fallback if offset_account_id is still NULL
+        let finalOffsetAccountId = item.offset_account_id;
+        let finalCategorisedBy = item.categorised_by;
+        let finalAttentionLevel = item.attention_level;
+        let isUncategorised = false;
+
+        if (!finalOffsetAccountId) {
+          finalOffsetAccountId = transactionType === 'DEBIT'
+            ? uncategorisedExpenseId
+            : uncategorisedIncomeId;
+          finalCategorisedBy = 'UNCATEGORISED_FALLBACK';
+          finalAttentionLevel = 'HIGH';
+          isUncategorised = true;
+        }
+
+        return {
+          user_id: userId,
+          base_account_id: item.base_account_id,
+          offset_account_id: finalOffsetAccountId,
+          document_id: item.document_id,
+          transaction_date: item.txn_date,
+          details: item.details,
+          clean_merchant_name: item.clean_merchant_name || null,
+          amount: item.debit || item.credit || 0,
+          transaction_type: transactionType,
+          categorised_by: finalCategorisedBy,
+          confidence_score: item.confidence_score || null,
+          is_contra: item.is_contra || false,
+          posting_status: 'DRAFT',
+          attention_level: finalAttentionLevel || 'LOW',
+          review_status: 'PENDING',
+          uncategorized_transaction_id: item.uncategorized_transaction_id || null,
+          extracted_id: item.extracted_id || null,
+          is_uncategorised: isUncategorised
+        };
+      });
 
     if (transactionsBatch.length > 0) {
       const { error: insertError } = await supabase

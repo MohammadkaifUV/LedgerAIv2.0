@@ -44,6 +44,7 @@ const Transactions = () => {
             attention_level,
             offset_account_id,
             categorised_by,
+            is_uncategorised,
             accounts:offset_account_id (
               account_name
             )
@@ -62,7 +63,10 @@ const Transactions = () => {
         (data || []).forEach((txn) => {
           const isCategorised = txn.transactions && txn.transactions.length > 0;
           if (isCategorised && txn.transactions[0].review_status === 'PENDING') {
-            if (txn.transactions[0].attention_level === 'LOW') {
+            const isUncategorised = txn.transactions[0].is_uncategorised;
+
+            // Only auto-select LOW attention that are NOT uncategorised
+            if (txn.transactions[0].attention_level === 'LOW' && !isUncategorised) {
               lowAttentionIds.add(txn.transactions[0].transaction_id);
             }
           }
@@ -111,7 +115,13 @@ const Transactions = () => {
     }
   };
 
-  const handleApprove = async (transactionId) => {
+  const handleApprove = async (transactionId, isUncategorised) => {
+    // Client-side check for uncategorised accounts
+    if (isUncategorised) {
+      showToast('Cannot approve: transaction uses uncategorised account. Please assign a category first.', 'error');
+      return;
+    }
+
     setApprovingIds((prev) => new Set(prev).add(transactionId));
     try {
       const { data: { session } } = await supabase.auth.getSession();
@@ -126,7 +136,8 @@ const Transactions = () => {
         showToast('Transaction approved', 'success');
         fetchTransactions(activeFilter);
       } else {
-        showToast('Failed to approve', 'error');
+        const errorData = await response.json();
+        showToast(errorData.error || 'Failed to approve', 'error');
       }
     } catch (err) {
       console.error('Approve failed:', err);
@@ -153,13 +164,28 @@ const Transactions = () => {
         },
         body: JSON.stringify({ transaction_ids: Array.from(selectedIds) })
       });
+
+      const data = await response.json();
+
       if (response.ok) {
-        const data = await response.json();
-        showToast(`${data.approved_count} transactions approved`, 'success');
+        showToast(`${selectedIds.size} transactions approved`, 'success');
         setSelectedIds(new Set());
         fetchTransactions(activeFilter);
       } else {
-        showToast('Bulk approval failed', 'error');
+        // Handle partial failure with uncategorised transactions
+        if (data.blocked_transaction_ids && data.blocked_transaction_ids.length > 0) {
+          const blockedCount = data.blocked_transaction_ids.length;
+          const approvedCount = selectedIds.size - blockedCount;
+          if (approvedCount > 0) {
+            showToast(`Cannot approve: ${blockedCount} transactions are uncategorised. ${approvedCount} transactions approved successfully.`, 'warning');
+          } else {
+            showToast(`Cannot approve: ${blockedCount} transactions are uncategorised.`, 'error');
+          }
+          setSelectedIds(new Set());
+          fetchTransactions(activeFilter);
+        } else {
+          showToast(data.error || 'Bulk approval failed', 'error');
+        }
       }
     } catch (err) {
       console.error('Bulk approve failed:', err);
@@ -265,8 +291,14 @@ const Transactions = () => {
     const txnsInLevel = filteredTransactions.filter(
       (txn) => txn.transactions[0].attention_level === level
     );
-    const idsInLevel = new Set(txnsInLevel.map((txn) => txn.transactions[0].transaction_id));
-    const allSelected = txnsInLevel.every((txn) =>
+
+    // Exclude uncategorised transactions from selection
+    const selectableTxns = txnsInLevel.filter((txn) => {
+      return !txn.transactions[0].is_uncategorised;
+    });
+
+    const idsInLevel = new Set(selectableTxns.map((txn) => txn.transactions[0].transaction_id));
+    const allSelected = selectableTxns.every((txn) =>
       selectedIds.has(txn.transactions[0].transaction_id)
     );
 
@@ -285,7 +317,13 @@ const Transactions = () => {
     const txnsInLevel = filteredTransactions.filter(
       (txn) => txn.transactions[0].attention_level === level
     );
-    return txnsInLevel.length > 0 && txnsInLevel.every((txn) =>
+
+    // Exclude uncategorised transactions
+    const selectableTxns = txnsInLevel.filter((txn) => {
+      return !txn.transactions[0].is_uncategorised;
+    });
+
+    return selectableTxns.length > 0 && selectableTxns.every((txn) =>
       selectedIds.has(txn.transactions[0].transaction_id)
     );
   };
@@ -380,6 +418,7 @@ const Transactions = () => {
                         const accountName = txn.transactions[0].accounts
                           ? txn.transactions[0].accounts.account_name
                           : '-';
+                        const isUncategorised = txn.transactions[0].is_uncategorised;
 
                         return (
                           <div key={txn.uncategorized_transaction_id} className="table-row grouped">
@@ -388,6 +427,7 @@ const Transactions = () => {
                                 type="checkbox"
                                 className="row-checkbox"
                                 checked={isChecked}
+                                disabled={isUncategorised}
                                 onChange={() => {
                                   const newSelected = new Set(selectedIds);
                                   if (isChecked) {
@@ -484,6 +524,7 @@ const Transactions = () => {
                       ? txn.transactions[0].accounts.account_name
                       : '-';
                     const categorisedBy = isCategorised ? txn.transactions[0].categorised_by : '-';
+                    const isUncategorised = isCategorised ? txn.transactions[0].is_uncategorised : false;
                     const isDebit = txn.debit > 0;
                     const amount = isDebit ? txn.debit : txn.credit;
 
@@ -543,7 +584,7 @@ const Transactions = () => {
                             {status === 'PENDING' && isCategorised ? (
                               <button
                                 className="action-icon-btn approve"
-                                onClick={() => handleApprove(transactionId)}
+                                onClick={() => handleApprove(transactionId, isUncategorised)}
                                 title="Approve"
                                 disabled={isApproving}
                               >

@@ -59,7 +59,7 @@ async function createLedgerEntries(transactionId, baseAccountId, offsetAccountId
 
 /**
  * recategorizeTransaction(req, res)
- * Updates a transaction with a new offset_account_id and marks as USER_OVERRIDE.
+ * Updates a transaction with a new offset_account_id and marks as USER_MANUAL.
  * Resets review_status to PENDING since the category changed.
  * Enforces user ownership.
  */
@@ -82,7 +82,7 @@ async function recategorizeTransaction(req, res) {
       .from('transactions')
       .update({
         offset_account_id: offset_account_id,
-        categorised_by: 'USER_OVERRIDE',
+        categorised_by: 'USER_MANUAL',
         review_status: 'PENDING'
       })
       .eq('transaction_id', transactionId)
@@ -117,6 +117,21 @@ async function approveTransaction(req, res) {
 
     if (!transactionId) {
       return res.status(400).json({ error: 'Missing transactionId.' });
+    }
+
+    // Check if transaction uses uncategorised fallback account
+    const { data: txnCheck } = await supabase
+      .from('transactions')
+      .select('offset_account_id, accounts!transactions_offset_account_id_fkey(account_name)')
+      .eq('transaction_id', transactionId)
+      .eq('user_id', userId)
+      .single();
+
+    if (txnCheck?.accounts?.account_name === 'Uncategorised Expense' ||
+        txnCheck?.accounts?.account_name === 'Uncategorised Income') {
+      return res.status(400).json({
+        error: 'Cannot approve: transaction uses uncategorised account. Please assign a category first.'
+      });
     }
 
     // Update with user_id constraint to ensure ownership
@@ -195,6 +210,25 @@ async function bulkApproveTransactions(req, res) {
 
     if (!Array.isArray(transaction_ids) || transaction_ids.length === 0) {
       return res.status(400).json({ error: 'transaction_ids must be a non-empty array.' });
+    }
+
+    // Check if any transaction uses uncategorised fallback account
+    const { data: uncategorisedCheck } = await supabase
+      .from('transactions')
+      .select('transaction_id, accounts!transactions_offset_account_id_fkey(account_name)')
+      .in('transaction_id', transaction_ids)
+      .eq('user_id', userId);
+
+    const blockedIds = uncategorisedCheck?.filter(txn =>
+      txn.accounts?.account_name === 'Uncategorised Expense' ||
+      txn.accounts?.account_name === 'Uncategorised Income'
+    ).map(txn => txn.transaction_id) || [];
+
+    if (blockedIds.length > 0) {
+      return res.status(400).json({
+        error: 'Cannot approve transactions with uncategorised accounts.',
+        blocked_transaction_ids: blockedIds
+      });
     }
 
     // Update all matching rows with user_id constraint

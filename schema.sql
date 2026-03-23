@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict hgukVA1bhyyZkixhUd8n39vry3RG2sY8fU844BfcDsCLUHwlGDX4CPvvSDt4KSF
+\restrict SRlNcVYco1EbWHKzDl42OvWRXLU4FQt7o1Jaz4HfBhLvWe8DZIOKRXbeaiMk0qw
 
 -- Dumped from database version 17.6
 -- Dumped by pg_dump version 18.1
@@ -311,7 +311,14 @@ CREATE TYPE public.categorisation_method AS ENUM (
 
 CREATE TYPE public.doc_status AS ENUM (
     'UPLOADED',
-    'PROCESSED',
+    'PASSWORD_REQUIRED',
+    'EXTRACTING_TEXT',
+    'IDENTIFYING_FORMAT',
+    'PARSING_TRANSACTIONS',
+    'AWAITING_REVIEW',
+    'APPROVE',
+    'CATEGORIZING',
+    'POSTED',
     'FAILED'
 );
 
@@ -3118,6 +3125,43 @@ COMMENT ON COLUMN auth.users.is_sso_user IS 'Auth: Set this column to true when 
 
 
 --
+-- Name: webauthn_challenges; Type: TABLE; Schema: auth; Owner: -
+--
+
+CREATE TABLE auth.webauthn_challenges (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    user_id uuid,
+    challenge_type text NOT NULL,
+    session_data jsonb NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    expires_at timestamp with time zone NOT NULL,
+    CONSTRAINT webauthn_challenges_challenge_type_check CHECK ((challenge_type = ANY (ARRAY['signup'::text, 'registration'::text, 'authentication'::text])))
+);
+
+
+--
+-- Name: webauthn_credentials; Type: TABLE; Schema: auth; Owner: -
+--
+
+CREATE TABLE auth.webauthn_credentials (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    user_id uuid NOT NULL,
+    credential_id bytea NOT NULL,
+    public_key bytea NOT NULL,
+    attestation_type text DEFAULT ''::text NOT NULL,
+    aaguid uuid,
+    sign_count bigint DEFAULT 0 NOT NULL,
+    transports jsonb DEFAULT '[]'::jsonb NOT NULL,
+    backup_eligible boolean DEFAULT false NOT NULL,
+    backed_up boolean DEFAULT false NOT NULL,
+    friendly_name text DEFAULT ''::text NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    last_used_at timestamp with time zone
+);
+
+
+--
 -- Name: account_identifiers; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3186,6 +3230,100 @@ ALTER TABLE public.accounts ALTER COLUMN account_id ADD GENERATED ALWAYS AS IDEN
 
 
 --
+-- Name: ai_chat_messages; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.ai_chat_messages (
+    message_id bigint NOT NULL,
+    session_id bigint NOT NULL,
+    sender character varying(10) NOT NULL,
+    message_text text NOT NULL,
+    created_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: ai_chat_messages_message_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.ai_chat_messages_message_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: ai_chat_messages_message_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.ai_chat_messages_message_id_seq OWNED BY public.ai_chat_messages.message_id;
+
+
+--
+-- Name: ai_chat_sessions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.ai_chat_sessions (
+    session_id bigint NOT NULL,
+    user_id uuid NOT NULL,
+    started_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: ai_chat_sessions_session_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.ai_chat_sessions_session_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: ai_chat_sessions_session_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.ai_chat_sessions_session_id_seq OWNED BY public.ai_chat_sessions.session_id;
+
+
+--
+-- Name: ai_monthly_summaries; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.ai_monthly_summaries (
+    summary_id bigint NOT NULL,
+    user_id uuid NOT NULL,
+    summary_month character(7) NOT NULL,
+    summary_text text NOT NULL,
+    generated_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: ai_monthly_summaries_summary_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.ai_monthly_summaries_summary_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: ai_monthly_summaries_summary_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.ai_monthly_summaries_summary_id_seq OWNED BY public.ai_monthly_summaries.summary_id;
+
+
+--
 -- Name: ai_transactions_staging; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3194,7 +3332,9 @@ CREATE TABLE public.ai_transactions_staging (
     document_id bigint NOT NULL,
     user_id uuid NOT NULL,
     transaction_json jsonb NOT NULL,
-    created_at timestamp with time zone DEFAULT now()
+    created_at timestamp with time zone DEFAULT now(),
+    parser_type character varying(50),
+    overall_confidence numeric(5,2)
 );
 
 
@@ -3271,6 +3411,119 @@ ALTER TABLE public.coa_templates ALTER COLUMN template_id ADD GENERATED ALWAYS A
 
 
 --
+-- Name: document_account_match_log; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.document_account_match_log (
+    match_id bigint NOT NULL,
+    document_id bigint NOT NULL,
+    user_id uuid NOT NULL,
+    detected_institution character varying(150),
+    detected_account_last4 character varying(4),
+    matched_account_id bigint,
+    confidence_score numeric(5,2),
+    match_status character varying(50),
+    created_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: document_account_match_log_match_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.document_account_match_log_match_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: document_account_match_log_match_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.document_account_match_log_match_id_seq OWNED BY public.document_account_match_log.match_id;
+
+
+--
+-- Name: document_password; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.document_password (
+    document_id bigint NOT NULL,
+    encrypted_password character varying(255) NOT NULL,
+    created_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: document_text_extractions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.document_text_extractions (
+    text_extraction_id bigint NOT NULL,
+    document_id bigint NOT NULL,
+    extraction_method character varying(50) DEFAULT 'PDF_TEXT'::character varying,
+    extracted_text text NOT NULL,
+    extraction_status character varying(50) DEFAULT 'SUCCESS'::character varying,
+    error_message character varying(500),
+    created_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: document_text_extractions_text_extraction_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.document_text_extractions_text_extraction_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: document_text_extractions_text_extraction_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.document_text_extractions_text_extraction_id_seq OWNED BY public.document_text_extractions.text_extraction_id;
+
+
+--
+-- Name: document_upload_audit; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.document_upload_audit (
+    audit_id bigint NOT NULL,
+    document_id bigint NOT NULL,
+    status text NOT NULL,
+    error_message character varying(500),
+    created_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: document_upload_audit_audit_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.document_upload_audit_audit_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: document_upload_audit_audit_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.document_upload_audit_audit_id_seq OWNED BY public.document_upload_audit.audit_id;
+
+
+--
 -- Name: documents; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3279,7 +3532,18 @@ CREATE TABLE public.documents (
     user_id uuid NOT NULL,
     file_name text NOT NULL,
     status public.doc_status DEFAULT 'UPLOADED'::public.doc_status NOT NULL,
-    created_at timestamp with time zone DEFAULT now()
+    created_at timestamp with time zone DEFAULT now(),
+    statement_id bigint,
+    file_path character varying(500),
+    is_password_protected boolean DEFAULT false,
+    transaction_parsed_type character varying(50),
+    parser_version character varying(50),
+    is_active boolean DEFAULT true,
+    account_id bigint,
+    account_match_confidence numeric(5,2),
+    processing_started_at timestamp with time zone,
+    processing_completed_at timestamp with time zone,
+    updated_at timestamp with time zone DEFAULT now()
 );
 
 
@@ -3338,7 +3602,8 @@ CREATE TABLE public.ledger_entries (
     debit_amount numeric(18,2) DEFAULT 0.00 NOT NULL,
     credit_amount numeric(18,2) DEFAULT 0.00 NOT NULL,
     entry_date date NOT NULL,
-    created_at timestamp with time zone DEFAULT now()
+    created_at timestamp with time zone DEFAULT now(),
+    user_id uuid NOT NULL
 );
 
 
@@ -3418,6 +3683,53 @@ CREATE TABLE public.profiles (
 
 
 --
+-- Name: random_qc_results; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.random_qc_results (
+    qc_id bigint NOT NULL,
+    document_id bigint NOT NULL,
+    statement_id bigint NOT NULL,
+    file_name character varying(255),
+    institution_name character varying(255),
+    code_txn_count integer DEFAULT 0,
+    llm_txn_count integer DEFAULT 0,
+    matched_count integer DEFAULT 0,
+    unmatched_code_count integer DEFAULT 0,
+    unmatched_llm_count integer DEFAULT 0,
+    accuracy numeric(5,2) DEFAULT 0.00,
+    reconciliation_json jsonb,
+    code_txn_json jsonb,
+    llm_txn_json jsonb,
+    qc_status character varying(50) DEFAULT 'PENDING'::character varying,
+    reviewer_notes text,
+    issue_type character varying(100),
+    assigned_to character varying(100),
+    created_at timestamp with time zone DEFAULT now(),
+    reviewed_at timestamp with time zone
+);
+
+
+--
+-- Name: random_qc_results_qc_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.random_qc_results_qc_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: random_qc_results_qc_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.random_qc_results_qc_id_seq OWNED BY public.random_qc_results.qc_id;
+
+
+--
 -- Name: routing_rules; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3451,6 +3763,75 @@ ALTER TABLE public.routing_rules ALTER COLUMN rule_id ADD GENERATED ALWAYS AS ID
 
 
 --
+-- Name: statement_categories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.statement_categories (
+    statement_id bigint NOT NULL,
+    statement_type character varying(50) NOT NULL,
+    format_name character varying(150) NOT NULL,
+    institution_name character varying(100) NOT NULL,
+    ifsc_code character varying(20),
+    statement_identifier jsonb NOT NULL,
+    extraction_logic text NOT NULL,
+    match_threshold numeric(5,2) DEFAULT 65.00,
+    logic_version integer DEFAULT 1,
+    status character varying(50) DEFAULT 'UNDER_REVIEW'::character varying,
+    success_rate numeric(5,2),
+    last_verified_at timestamp with time zone,
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: statement_categories_statement_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.statement_categories_statement_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: statement_categories_statement_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.statement_categories_statement_id_seq OWNED BY public.statement_categories.statement_id;
+
+
+--
+-- Name: transaction_overrides; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.transaction_overrides (
+    override_id bigint NOT NULL,
+    staging_transaction_id bigint NOT NULL,
+    field_name character varying(100) NOT NULL,
+    ai_value text,
+    user_value text,
+    overridden_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+--
+-- Name: transaction_overrides_override_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.transaction_overrides ALTER COLUMN override_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.transaction_overrides_override_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
 -- Name: transactions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3473,7 +3854,8 @@ CREATE TABLE public.transactions (
     review_status public.review_status DEFAULT 'PENDING'::public.review_status NOT NULL,
     uncategorized_transaction_id bigint,
     created_at timestamp with time zone DEFAULT now(),
-    is_contra boolean DEFAULT false NOT NULL
+    is_contra boolean DEFAULT false NOT NULL,
+    extracted_id text
 );
 
 
@@ -3500,13 +3882,15 @@ CREATE TABLE public.uncategorized_transactions (
     user_id uuid NOT NULL,
     account_id bigint,
     document_id bigint NOT NULL,
-    staging_transaction_id bigint NOT NULL,
+    staging_transaction_id bigint,
     txn_date date NOT NULL,
     debit numeric(18,2),
     credit numeric(18,2),
     balance numeric(18,2),
     details text,
-    created_at timestamp with time zone DEFAULT now()
+    created_at timestamp with time zone DEFAULT now(),
+    status text DEFAULT 'PENDING'::text NOT NULL,
+    CONSTRAINT uncategorized_transactions_status_check CHECK ((status = ANY (ARRAY['PENDING'::text, 'CATEGORISED'::text])))
 );
 
 
@@ -3525,6 +3909,18 @@ ALTER TABLE public.uncategorized_transactions ALTER COLUMN uncategorized_transac
 
 
 --
+-- Name: user_id_mapping; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_id_mapping (
+    mysql_user_id bigint NOT NULL,
+    supabase_user_id uuid NOT NULL,
+    email character varying(255),
+    mapped_at timestamp with time zone DEFAULT now()
+);
+
+
+--
 -- Name: user_modules; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3533,6 +3929,38 @@ CREATE TABLE public.user_modules (
     module_id bigint NOT NULL,
     created_at timestamp with time zone DEFAULT now()
 );
+
+
+--
+-- Name: user_sessions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_sessions (
+    session_id bigint NOT NULL,
+    user_id uuid NOT NULL,
+    token character varying(255) NOT NULL,
+    expires_at timestamp with time zone NOT NULL,
+    created_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: user_sessions_session_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_sessions_session_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_sessions_session_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_sessions_session_id_seq OWNED BY public.user_sessions.session_id;
 
 
 --
@@ -3742,6 +4170,69 @@ CREATE TABLE storage.vector_indexes (
 --
 
 ALTER TABLE ONLY auth.refresh_tokens ALTER COLUMN id SET DEFAULT nextval('auth.refresh_tokens_id_seq'::regclass);
+
+
+--
+-- Name: ai_chat_messages message_id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ai_chat_messages ALTER COLUMN message_id SET DEFAULT nextval('public.ai_chat_messages_message_id_seq'::regclass);
+
+
+--
+-- Name: ai_chat_sessions session_id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ai_chat_sessions ALTER COLUMN session_id SET DEFAULT nextval('public.ai_chat_sessions_session_id_seq'::regclass);
+
+
+--
+-- Name: ai_monthly_summaries summary_id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ai_monthly_summaries ALTER COLUMN summary_id SET DEFAULT nextval('public.ai_monthly_summaries_summary_id_seq'::regclass);
+
+
+--
+-- Name: document_account_match_log match_id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.document_account_match_log ALTER COLUMN match_id SET DEFAULT nextval('public.document_account_match_log_match_id_seq'::regclass);
+
+
+--
+-- Name: document_text_extractions text_extraction_id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.document_text_extractions ALTER COLUMN text_extraction_id SET DEFAULT nextval('public.document_text_extractions_text_extraction_id_seq'::regclass);
+
+
+--
+-- Name: document_upload_audit audit_id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.document_upload_audit ALTER COLUMN audit_id SET DEFAULT nextval('public.document_upload_audit_audit_id_seq'::regclass);
+
+
+--
+-- Name: random_qc_results qc_id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.random_qc_results ALTER COLUMN qc_id SET DEFAULT nextval('public.random_qc_results_qc_id_seq'::regclass);
+
+
+--
+-- Name: statement_categories statement_id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.statement_categories ALTER COLUMN statement_id SET DEFAULT nextval('public.statement_categories_statement_id_seq'::regclass);
+
+
+--
+-- Name: user_sessions session_id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_sessions ALTER COLUMN session_id SET DEFAULT nextval('public.user_sessions_session_id_seq'::regclass);
 
 
 --
@@ -3993,6 +4484,22 @@ ALTER TABLE ONLY auth.users
 
 
 --
+-- Name: webauthn_challenges webauthn_challenges_pkey; Type: CONSTRAINT; Schema: auth; Owner: -
+--
+
+ALTER TABLE ONLY auth.webauthn_challenges
+    ADD CONSTRAINT webauthn_challenges_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: webauthn_credentials webauthn_credentials_pkey; Type: CONSTRAINT; Schema: auth; Owner: -
+--
+
+ALTER TABLE ONLY auth.webauthn_credentials
+    ADD CONSTRAINT webauthn_credentials_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: account_identifiers account_identifiers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4006,6 +4513,30 @@ ALTER TABLE ONLY public.account_identifiers
 
 ALTER TABLE ONLY public.accounts
     ADD CONSTRAINT accounts_pkey PRIMARY KEY (account_id);
+
+
+--
+-- Name: ai_chat_messages ai_chat_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ai_chat_messages
+    ADD CONSTRAINT ai_chat_messages_pkey PRIMARY KEY (message_id);
+
+
+--
+-- Name: ai_chat_sessions ai_chat_sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ai_chat_sessions
+    ADD CONSTRAINT ai_chat_sessions_pkey PRIMARY KEY (session_id);
+
+
+--
+-- Name: ai_monthly_summaries ai_monthly_summaries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ai_monthly_summaries
+    ADD CONSTRAINT ai_monthly_summaries_pkey PRIMARY KEY (summary_id);
 
 
 --
@@ -4038,6 +4569,38 @@ ALTER TABLE ONLY public.coa_modules
 
 ALTER TABLE ONLY public.coa_templates
     ADD CONSTRAINT coa_templates_pkey PRIMARY KEY (template_id);
+
+
+--
+-- Name: document_account_match_log document_account_match_log_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.document_account_match_log
+    ADD CONSTRAINT document_account_match_log_pkey PRIMARY KEY (match_id);
+
+
+--
+-- Name: document_password document_password_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.document_password
+    ADD CONSTRAINT document_password_pkey PRIMARY KEY (document_id);
+
+
+--
+-- Name: document_text_extractions document_text_extractions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.document_text_extractions
+    ADD CONSTRAINT document_text_extractions_pkey PRIMARY KEY (text_extraction_id);
+
+
+--
+-- Name: document_upload_audit document_upload_audit_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.document_upload_audit
+    ADD CONSTRAINT document_upload_audit_pkey PRIMARY KEY (audit_id);
 
 
 --
@@ -4113,11 +4676,35 @@ ALTER TABLE ONLY public.profiles
 
 
 --
+-- Name: random_qc_results random_qc_results_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.random_qc_results
+    ADD CONSTRAINT random_qc_results_pkey PRIMARY KEY (qc_id);
+
+
+--
 -- Name: routing_rules routing_rules_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.routing_rules
     ADD CONSTRAINT routing_rules_pkey PRIMARY KEY (rule_id);
+
+
+--
+-- Name: statement_categories statement_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.statement_categories
+    ADD CONSTRAINT statement_categories_pkey PRIMARY KEY (statement_id);
+
+
+--
+-- Name: transaction_overrides transaction_overrides_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.transaction_overrides
+    ADD CONSTRAINT transaction_overrides_pkey PRIMARY KEY (override_id);
 
 
 --
@@ -4137,11 +4724,43 @@ ALTER TABLE ONLY public.uncategorized_transactions
 
 
 --
+-- Name: user_id_mapping user_id_mapping_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_id_mapping
+    ADD CONSTRAINT user_id_mapping_pkey PRIMARY KEY (mysql_user_id);
+
+
+--
+-- Name: user_id_mapping user_id_mapping_supabase_user_id_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_id_mapping
+    ADD CONSTRAINT user_id_mapping_supabase_user_id_key UNIQUE (supabase_user_id);
+
+
+--
 -- Name: user_modules user_modules_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_modules
     ADD CONSTRAINT user_modules_pkey PRIMARY KEY (user_id, module_id);
+
+
+--
+-- Name: user_sessions user_sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_sessions
+    ADD CONSTRAINT user_sessions_pkey PRIMARY KEY (session_id);
+
+
+--
+-- Name: user_sessions user_sessions_token_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_sessions
+    ADD CONSTRAINT user_sessions_token_key UNIQUE (token);
 
 
 --
@@ -4605,10 +5224,115 @@ CREATE INDEX users_is_anonymous_idx ON auth.users USING btree (is_anonymous);
 
 
 --
+-- Name: webauthn_challenges_expires_at_idx; Type: INDEX; Schema: auth; Owner: -
+--
+
+CREATE INDEX webauthn_challenges_expires_at_idx ON auth.webauthn_challenges USING btree (expires_at);
+
+
+--
+-- Name: webauthn_challenges_user_id_idx; Type: INDEX; Schema: auth; Owner: -
+--
+
+CREATE INDEX webauthn_challenges_user_id_idx ON auth.webauthn_challenges USING btree (user_id);
+
+
+--
+-- Name: webauthn_credentials_credential_id_key; Type: INDEX; Schema: auth; Owner: -
+--
+
+CREATE UNIQUE INDEX webauthn_credentials_credential_id_key ON auth.webauthn_credentials USING btree (credential_id);
+
+
+--
+-- Name: webauthn_credentials_user_id_idx; Type: INDEX; Schema: auth; Owner: -
+--
+
+CREATE INDEX webauthn_credentials_user_id_idx ON auth.webauthn_credentials USING btree (user_id);
+
+
+--
+-- Name: idx_ai_chat_messages_session_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_ai_chat_messages_session_id ON public.ai_chat_messages USING btree (session_id);
+
+
+--
+-- Name: idx_ai_chat_sessions_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_ai_chat_sessions_user_id ON public.ai_chat_sessions USING btree (user_id);
+
+
+--
+-- Name: idx_ai_monthly_summaries_month; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_ai_monthly_summaries_month ON public.ai_monthly_summaries USING btree (summary_month);
+
+
+--
+-- Name: idx_ai_monthly_summaries_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_ai_monthly_summaries_user_id ON public.ai_monthly_summaries USING btree (user_id);
+
+
+--
 -- Name: idx_contra_lookup; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_contra_lookup ON public.transactions USING btree (user_id, amount, transaction_type, transaction_date, is_contra);
+
+
+--
+-- Name: idx_document_account_match_log_document_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_document_account_match_log_document_id ON public.document_account_match_log USING btree (document_id);
+
+
+--
+-- Name: idx_document_account_match_log_matched_account; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_document_account_match_log_matched_account ON public.document_account_match_log USING btree (matched_account_id);
+
+
+--
+-- Name: idx_document_account_match_log_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_document_account_match_log_user_id ON public.document_account_match_log USING btree (user_id);
+
+
+--
+-- Name: idx_document_text_extractions_document_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_document_text_extractions_document_id ON public.document_text_extractions USING btree (document_id);
+
+
+--
+-- Name: idx_document_text_extractions_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_document_text_extractions_status ON public.document_text_extractions USING btree (extraction_status);
+
+
+--
+-- Name: idx_document_upload_audit_document_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_document_upload_audit_document_id ON public.document_upload_audit USING btree (document_id);
+
+
+--
+-- Name: idx_document_upload_audit_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_document_upload_audit_status ON public.document_upload_audit USING btree (status);
 
 
 --
@@ -4619,10 +5343,66 @@ CREATE INDEX idx_global_vector_hnsw ON public.global_vector_cache USING hnsw (em
 
 
 --
+-- Name: idx_ledger_entries_unique_txn_account; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_ledger_entries_unique_txn_account ON public.ledger_entries USING btree (transaction_id, account_id);
+
+
+--
+-- Name: idx_ledger_entries_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_ledger_entries_user_id ON public.ledger_entries USING btree (user_id);
+
+
+--
 -- Name: idx_personal_vector_hnsw; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_personal_vector_hnsw ON public.personal_vector_cache USING hnsw (embedding public.vector_cosine_ops);
+
+
+--
+-- Name: idx_random_qc_results_document_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_random_qc_results_document_id ON public.random_qc_results USING btree (document_id);
+
+
+--
+-- Name: idx_random_qc_results_statement_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_random_qc_results_statement_id ON public.random_qc_results USING btree (statement_id);
+
+
+--
+-- Name: idx_random_qc_results_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_random_qc_results_status ON public.random_qc_results USING btree (qc_status);
+
+
+--
+-- Name: idx_statement_categories_institution; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_statement_categories_institution ON public.statement_categories USING btree (institution_name);
+
+
+--
+-- Name: idx_statement_categories_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_statement_categories_status ON public.statement_categories USING btree (status);
+
+
+--
+-- Name: idx_transactions_unique_uncat_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_transactions_unique_uncat_id ON public.transactions USING btree (uncategorized_transaction_id) WHERE (uncategorized_transaction_id IS NOT NULL);
 
 
 --
@@ -4633,10 +5413,31 @@ CREATE INDEX idx_txn_date ON public.transactions USING btree (transaction_date);
 
 
 --
+-- Name: idx_user_id_mapping_supabase; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_user_id_mapping_supabase ON public.user_id_mapping USING btree (supabase_user_id);
+
+
+--
 -- Name: idx_user_merchant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_user_merchant ON public.transactions USING btree (user_id, clean_merchant_name);
+
+
+--
+-- Name: idx_user_sessions_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_user_sessions_token ON public.user_sessions USING btree (token);
+
+
+--
+-- Name: idx_user_sessions_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_user_sessions_user_id ON public.user_sessions USING btree (user_id);
 
 
 --
@@ -4929,6 +5730,22 @@ ALTER TABLE ONLY auth.sso_domains
 
 
 --
+-- Name: webauthn_challenges webauthn_challenges_user_id_fkey; Type: FK CONSTRAINT; Schema: auth; Owner: -
+--
+
+ALTER TABLE ONLY auth.webauthn_challenges
+    ADD CONSTRAINT webauthn_challenges_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: webauthn_credentials webauthn_credentials_user_id_fkey; Type: FK CONSTRAINT; Schema: auth; Owner: -
+--
+
+ALTER TABLE ONLY auth.webauthn_credentials
+    ADD CONSTRAINT webauthn_credentials_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE;
+
+
+--
 -- Name: account_identifiers account_identifiers_account_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4969,6 +5786,30 @@ ALTER TABLE ONLY public.accounts
 
 
 --
+-- Name: ai_chat_messages ai_chat_messages_session_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ai_chat_messages
+    ADD CONSTRAINT ai_chat_messages_session_id_fkey FOREIGN KEY (session_id) REFERENCES public.ai_chat_sessions(session_id) ON DELETE CASCADE;
+
+
+--
+-- Name: ai_chat_sessions ai_chat_sessions_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ai_chat_sessions
+    ADD CONSTRAINT ai_chat_sessions_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: ai_monthly_summaries ai_monthly_summaries_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ai_monthly_summaries
+    ADD CONSTRAINT ai_monthly_summaries_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE;
+
+
+--
 -- Name: ai_transactions_staging ai_transactions_staging_document_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -5001,6 +5842,62 @@ ALTER TABLE ONLY public.coa_templates
 
 
 --
+-- Name: document_account_match_log document_account_match_log_document_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.document_account_match_log
+    ADD CONSTRAINT document_account_match_log_document_id_fkey FOREIGN KEY (document_id) REFERENCES public.documents(document_id);
+
+
+--
+-- Name: document_account_match_log document_account_match_log_matched_account_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.document_account_match_log
+    ADD CONSTRAINT document_account_match_log_matched_account_id_fkey FOREIGN KEY (matched_account_id) REFERENCES public.accounts(account_id);
+
+
+--
+-- Name: document_account_match_log document_account_match_log_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.document_account_match_log
+    ADD CONSTRAINT document_account_match_log_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: document_password document_password_document_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.document_password
+    ADD CONSTRAINT document_password_document_id_fkey FOREIGN KEY (document_id) REFERENCES public.documents(document_id) ON DELETE CASCADE;
+
+
+--
+-- Name: document_text_extractions document_text_extractions_document_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.document_text_extractions
+    ADD CONSTRAINT document_text_extractions_document_id_fkey FOREIGN KEY (document_id) REFERENCES public.documents(document_id) ON DELETE CASCADE;
+
+
+--
+-- Name: document_upload_audit document_upload_audit_document_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.document_upload_audit
+    ADD CONSTRAINT document_upload_audit_document_id_fkey FOREIGN KEY (document_id) REFERENCES public.documents(document_id) ON DELETE CASCADE;
+
+
+--
+-- Name: documents documents_statement_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.documents
+    ADD CONSTRAINT documents_statement_id_fkey FOREIGN KEY (statement_id) REFERENCES public.statement_categories(statement_id) ON DELETE SET NULL;
+
+
+--
 -- Name: documents documents_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -5030,6 +5927,14 @@ ALTER TABLE ONLY public.ledger_entries
 
 ALTER TABLE ONLY public.ledger_entries
     ADD CONSTRAINT ledger_entries_transaction_id_fkey FOREIGN KEY (transaction_id) REFERENCES public.transactions(transaction_id) ON DELETE CASCADE;
+
+
+--
+-- Name: ledger_entries ledger_entries_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ledger_entries
+    ADD CONSTRAINT ledger_entries_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE;
 
 
 --
@@ -5073,11 +5978,35 @@ ALTER TABLE ONLY public.profiles
 
 
 --
+-- Name: random_qc_results random_qc_results_document_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.random_qc_results
+    ADD CONSTRAINT random_qc_results_document_id_fkey FOREIGN KEY (document_id) REFERENCES public.documents(document_id);
+
+
+--
+-- Name: random_qc_results random_qc_results_statement_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.random_qc_results
+    ADD CONSTRAINT random_qc_results_statement_id_fkey FOREIGN KEY (statement_id) REFERENCES public.statement_categories(statement_id);
+
+
+--
 -- Name: routing_rules routing_rules_target_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.routing_rules
     ADD CONSTRAINT routing_rules_target_template_id_fkey FOREIGN KEY (target_template_id) REFERENCES public.coa_templates(template_id) ON DELETE SET NULL;
+
+
+--
+-- Name: transaction_overrides transaction_overrides_staging_transaction_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.transaction_overrides
+    ADD CONSTRAINT transaction_overrides_staging_transaction_id_fkey FOREIGN KEY (staging_transaction_id) REFERENCES public.ai_transactions_staging(staging_transaction_id) ON DELETE CASCADE;
 
 
 --
@@ -5153,6 +6082,14 @@ ALTER TABLE ONLY public.uncategorized_transactions
 
 
 --
+-- Name: user_id_mapping user_id_mapping_supabase_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_id_mapping
+    ADD CONSTRAINT user_id_mapping_supabase_user_id_fkey FOREIGN KEY (supabase_user_id) REFERENCES auth.users(id) ON DELETE CASCADE;
+
+
+--
 -- Name: user_modules user_modules_module_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -5166,6 +6103,14 @@ ALTER TABLE ONLY public.user_modules
 
 ALTER TABLE ONLY public.user_modules
     ADD CONSTRAINT user_modules_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_sessions user_sessions_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_sessions
+    ADD CONSTRAINT user_sessions_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE;
 
 
 --
@@ -5389,6 +6334,13 @@ CREATE POLICY "Users can manage their own final txns" ON public.transactions USI
 
 
 --
+-- Name: ledger_entries Users can manage their own ledger entries; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "Users can manage their own ledger entries" ON public.ledger_entries TO authenticated USING ((auth.uid() = user_id));
+
+
+--
 -- Name: ai_transactions_staging Users can manage their own staging; Type: POLICY; Schema: public; Owner: -
 --
 
@@ -5407,15 +6359,6 @@ CREATE POLICY "Users can manage their own uncategorized" ON public.uncategorized
 --
 
 CREATE POLICY "Users can view all templates" ON public.coa_templates FOR SELECT TO authenticated USING (true);
-
-
---
--- Name: ledger_entries Users can view their own ledger entries; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "Users can view their own ledger entries" ON public.ledger_entries TO authenticated USING ((EXISTS ( SELECT 1
-   FROM public.transactions
-  WHERE ((transactions.transaction_id = ledger_entries.transaction_id) AND (transactions.user_id = auth.uid())))));
 
 
 --
@@ -5445,6 +6388,24 @@ ALTER TABLE public.account_identifiers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.accounts ENABLE ROW LEVEL SECURITY;
 
 --
+-- Name: ai_chat_messages; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.ai_chat_messages ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: ai_chat_sessions; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.ai_chat_sessions ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: ai_monthly_summaries; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.ai_monthly_summaries ENABLE ROW LEVEL SECURITY;
+
+--
 -- Name: ai_transactions_staging; Type: ROW SECURITY; Schema: public; Owner: -
 --
 
@@ -5461,6 +6422,30 @@ ALTER TABLE public.coa_modules ENABLE ROW LEVEL SECURITY;
 --
 
 ALTER TABLE public.coa_templates ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: document_account_match_log; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.document_account_match_log ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: document_password; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.document_password ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: document_text_extractions; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.document_text_extractions ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: document_upload_audit; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.document_upload_audit ENABLE ROW LEVEL SECURITY;
 
 --
 -- Name: documents; Type: ROW SECURITY; Schema: public; Owner: -
@@ -5499,10 +6484,28 @@ ALTER TABLE public.personal_vector_cache ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 
 --
+-- Name: random_qc_results; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.random_qc_results ENABLE ROW LEVEL SECURITY;
+
+--
 -- Name: routing_rules; Type: ROW SECURITY; Schema: public; Owner: -
 --
 
 ALTER TABLE public.routing_rules ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: statement_categories; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.statement_categories ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: transaction_overrides; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.transaction_overrides ENABLE ROW LEVEL SECURITY;
 
 --
 -- Name: transactions; Type: ROW SECURITY; Schema: public; Owner: -
@@ -5517,10 +6520,22 @@ ALTER TABLE public.transactions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.uncategorized_transactions ENABLE ROW LEVEL SECURITY;
 
 --
+-- Name: user_id_mapping; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.user_id_mapping ENABLE ROW LEVEL SECURITY;
+
+--
 -- Name: user_modules; Type: ROW SECURITY; Schema: public; Owner: -
 --
 
 ALTER TABLE public.user_modules ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: user_sessions; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.user_sessions ENABLE ROW LEVEL SECURITY;
 
 --
 -- Name: messages; Type: ROW SECURITY; Schema: realtime; Owner: -
@@ -7759,6 +8774,22 @@ GRANT SELECT ON TABLE auth.users TO postgres WITH GRANT OPTION;
 
 
 --
+-- Name: TABLE webauthn_challenges; Type: ACL; Schema: auth; Owner: -
+--
+
+GRANT ALL ON TABLE auth.webauthn_challenges TO postgres;
+GRANT ALL ON TABLE auth.webauthn_challenges TO dashboard_user;
+
+
+--
+-- Name: TABLE webauthn_credentials; Type: ACL; Schema: auth; Owner: -
+--
+
+GRANT ALL ON TABLE auth.webauthn_credentials TO postgres;
+GRANT ALL ON TABLE auth.webauthn_credentials TO dashboard_user;
+
+
+--
 -- Name: TABLE pg_stat_statements; Type: ACL; Schema: extensions; Owner: -
 --
 
@@ -7813,6 +8844,60 @@ GRANT ALL ON SEQUENCE public.accounts_account_id_seq TO service_role;
 
 
 --
+-- Name: TABLE ai_chat_messages; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON TABLE public.ai_chat_messages TO anon;
+GRANT ALL ON TABLE public.ai_chat_messages TO authenticated;
+GRANT ALL ON TABLE public.ai_chat_messages TO service_role;
+
+
+--
+-- Name: SEQUENCE ai_chat_messages_message_id_seq; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON SEQUENCE public.ai_chat_messages_message_id_seq TO anon;
+GRANT ALL ON SEQUENCE public.ai_chat_messages_message_id_seq TO authenticated;
+GRANT ALL ON SEQUENCE public.ai_chat_messages_message_id_seq TO service_role;
+
+
+--
+-- Name: TABLE ai_chat_sessions; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON TABLE public.ai_chat_sessions TO anon;
+GRANT ALL ON TABLE public.ai_chat_sessions TO authenticated;
+GRANT ALL ON TABLE public.ai_chat_sessions TO service_role;
+
+
+--
+-- Name: SEQUENCE ai_chat_sessions_session_id_seq; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON SEQUENCE public.ai_chat_sessions_session_id_seq TO anon;
+GRANT ALL ON SEQUENCE public.ai_chat_sessions_session_id_seq TO authenticated;
+GRANT ALL ON SEQUENCE public.ai_chat_sessions_session_id_seq TO service_role;
+
+
+--
+-- Name: TABLE ai_monthly_summaries; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON TABLE public.ai_monthly_summaries TO anon;
+GRANT ALL ON TABLE public.ai_monthly_summaries TO authenticated;
+GRANT ALL ON TABLE public.ai_monthly_summaries TO service_role;
+
+
+--
+-- Name: SEQUENCE ai_monthly_summaries_summary_id_seq; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON SEQUENCE public.ai_monthly_summaries_summary_id_seq TO anon;
+GRANT ALL ON SEQUENCE public.ai_monthly_summaries_summary_id_seq TO authenticated;
+GRANT ALL ON SEQUENCE public.ai_monthly_summaries_summary_id_seq TO service_role;
+
+
+--
 -- Name: TABLE ai_transactions_staging; Type: ACL; Schema: public; Owner: -
 --
 
@@ -7864,6 +8949,69 @@ GRANT ALL ON TABLE public.coa_templates TO service_role;
 GRANT ALL ON SEQUENCE public.coa_templates_template_id_seq TO anon;
 GRANT ALL ON SEQUENCE public.coa_templates_template_id_seq TO authenticated;
 GRANT ALL ON SEQUENCE public.coa_templates_template_id_seq TO service_role;
+
+
+--
+-- Name: TABLE document_account_match_log; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON TABLE public.document_account_match_log TO anon;
+GRANT ALL ON TABLE public.document_account_match_log TO authenticated;
+GRANT ALL ON TABLE public.document_account_match_log TO service_role;
+
+
+--
+-- Name: SEQUENCE document_account_match_log_match_id_seq; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON SEQUENCE public.document_account_match_log_match_id_seq TO anon;
+GRANT ALL ON SEQUENCE public.document_account_match_log_match_id_seq TO authenticated;
+GRANT ALL ON SEQUENCE public.document_account_match_log_match_id_seq TO service_role;
+
+
+--
+-- Name: TABLE document_password; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON TABLE public.document_password TO anon;
+GRANT ALL ON TABLE public.document_password TO authenticated;
+GRANT ALL ON TABLE public.document_password TO service_role;
+
+
+--
+-- Name: TABLE document_text_extractions; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON TABLE public.document_text_extractions TO anon;
+GRANT ALL ON TABLE public.document_text_extractions TO authenticated;
+GRANT ALL ON TABLE public.document_text_extractions TO service_role;
+
+
+--
+-- Name: SEQUENCE document_text_extractions_text_extraction_id_seq; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON SEQUENCE public.document_text_extractions_text_extraction_id_seq TO anon;
+GRANT ALL ON SEQUENCE public.document_text_extractions_text_extraction_id_seq TO authenticated;
+GRANT ALL ON SEQUENCE public.document_text_extractions_text_extraction_id_seq TO service_role;
+
+
+--
+-- Name: TABLE document_upload_audit; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON TABLE public.document_upload_audit TO anon;
+GRANT ALL ON TABLE public.document_upload_audit TO authenticated;
+GRANT ALL ON TABLE public.document_upload_audit TO service_role;
+
+
+--
+-- Name: SEQUENCE document_upload_audit_audit_id_seq; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON SEQUENCE public.document_upload_audit_audit_id_seq TO anon;
+GRANT ALL ON SEQUENCE public.document_upload_audit_audit_id_seq TO authenticated;
+GRANT ALL ON SEQUENCE public.document_upload_audit_audit_id_seq TO service_role;
 
 
 --
@@ -7957,6 +9105,24 @@ GRANT ALL ON TABLE public.profiles TO service_role;
 
 
 --
+-- Name: TABLE random_qc_results; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON TABLE public.random_qc_results TO anon;
+GRANT ALL ON TABLE public.random_qc_results TO authenticated;
+GRANT ALL ON TABLE public.random_qc_results TO service_role;
+
+
+--
+-- Name: SEQUENCE random_qc_results_qc_id_seq; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON SEQUENCE public.random_qc_results_qc_id_seq TO anon;
+GRANT ALL ON SEQUENCE public.random_qc_results_qc_id_seq TO authenticated;
+GRANT ALL ON SEQUENCE public.random_qc_results_qc_id_seq TO service_role;
+
+
+--
 -- Name: TABLE routing_rules; Type: ACL; Schema: public; Owner: -
 --
 
@@ -7972,6 +9138,42 @@ GRANT ALL ON TABLE public.routing_rules TO service_role;
 GRANT ALL ON SEQUENCE public.routing_rules_rule_id_seq TO anon;
 GRANT ALL ON SEQUENCE public.routing_rules_rule_id_seq TO authenticated;
 GRANT ALL ON SEQUENCE public.routing_rules_rule_id_seq TO service_role;
+
+
+--
+-- Name: TABLE statement_categories; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON TABLE public.statement_categories TO anon;
+GRANT ALL ON TABLE public.statement_categories TO authenticated;
+GRANT ALL ON TABLE public.statement_categories TO service_role;
+
+
+--
+-- Name: SEQUENCE statement_categories_statement_id_seq; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON SEQUENCE public.statement_categories_statement_id_seq TO anon;
+GRANT ALL ON SEQUENCE public.statement_categories_statement_id_seq TO authenticated;
+GRANT ALL ON SEQUENCE public.statement_categories_statement_id_seq TO service_role;
+
+
+--
+-- Name: TABLE transaction_overrides; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON TABLE public.transaction_overrides TO anon;
+GRANT ALL ON TABLE public.transaction_overrides TO authenticated;
+GRANT ALL ON TABLE public.transaction_overrides TO service_role;
+
+
+--
+-- Name: SEQUENCE transaction_overrides_override_id_seq; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON SEQUENCE public.transaction_overrides_override_id_seq TO anon;
+GRANT ALL ON SEQUENCE public.transaction_overrides_override_id_seq TO authenticated;
+GRANT ALL ON SEQUENCE public.transaction_overrides_override_id_seq TO service_role;
 
 
 --
@@ -8011,12 +9213,39 @@ GRANT ALL ON SEQUENCE public.uncategorized_transactions_uncategorized_transactio
 
 
 --
+-- Name: TABLE user_id_mapping; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON TABLE public.user_id_mapping TO anon;
+GRANT ALL ON TABLE public.user_id_mapping TO authenticated;
+GRANT ALL ON TABLE public.user_id_mapping TO service_role;
+
+
+--
 -- Name: TABLE user_modules; Type: ACL; Schema: public; Owner: -
 --
 
 GRANT ALL ON TABLE public.user_modules TO anon;
 GRANT ALL ON TABLE public.user_modules TO authenticated;
 GRANT ALL ON TABLE public.user_modules TO service_role;
+
+
+--
+-- Name: TABLE user_sessions; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON TABLE public.user_sessions TO anon;
+GRANT ALL ON TABLE public.user_sessions TO authenticated;
+GRANT ALL ON TABLE public.user_sessions TO service_role;
+
+
+--
+-- Name: SEQUENCE user_sessions_session_id_seq; Type: ACL; Schema: public; Owner: -
+--
+
+GRANT ALL ON SEQUENCE public.user_sessions_session_id_seq TO anon;
+GRANT ALL ON SEQUENCE public.user_sessions_session_id_seq TO authenticated;
+GRANT ALL ON SEQUENCE public.user_sessions_session_id_seq TO service_role;
 
 
 --
@@ -8435,5 +9664,5 @@ CREATE EVENT TRIGGER pgrst_drop_watch ON sql_drop
 -- PostgreSQL database dump complete
 --
 
-\unrestrict hgukVA1bhyyZkixhUd8n39vry3RG2sY8fU844BfcDsCLUHwlGDX4CPvvSDt4KSF
+\unrestrict SRlNcVYco1EbWHKzDl42OvWRXLU4FQt7o1Jaz4HfBhLvWe8DZIOKRXbeaiMk0qw
 

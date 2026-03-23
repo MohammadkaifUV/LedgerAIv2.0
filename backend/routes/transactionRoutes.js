@@ -14,7 +14,7 @@ router.post('/upload-bulk', authMiddleware, bulkUploadStatements);
 router.post('/categorize-bulk', authMiddleware, processUpload);
 
 // 🛡️ Route: PATCH /:id/recategorize
-// Updates a transaction with a new offset_account_id and marks as USER_OVERRIDE.
+// Updates a transaction with a new offset_account_id and marks as USER_MANUAL.
 // Body: { offset_account_id: number }
 router.patch('/:id/recategorize', authMiddleware, recategorizeTransaction);
 
