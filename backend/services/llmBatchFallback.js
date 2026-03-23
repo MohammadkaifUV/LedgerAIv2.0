@@ -51,6 +51,13 @@ ${JSON.stringify(uncategorizedArray.map(t => ({
 })), null, 2)}
 `;
 
+    // Debug logging
+    console.log('🤖 LLM BATCH FALLBACK DEBUG:');
+    console.log(`   Available categories count: ${availableCategories.length}`);
+    console.log(`   Categories: ${availableCategories.map(c => c.account_name).join(', ')}`);
+    console.log(`   Transactions to categorize: ${uncategorizedArray.length}`);
+    console.log(`   First transaction sample: ${uncategorizedArray[0]?.details || 'N/A'}`);
+
     // 2. Call LLM API (Via OpenRouter for standard model triggers)
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
