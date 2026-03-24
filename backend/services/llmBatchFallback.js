@@ -20,30 +20,49 @@ async function categorizeBatch(uncategorizedArray, availableCategories) {
     }
 
     if (!OPENROUTER_API_KEY) {
-      logger.warn('OPENROUTER_API_KEY missing, skipping LLM fallback');
+      logger.warn('⚠️ OPENROUTER_API_KEY missing, skipping LLM fallback');
       return [];
     }
 
     // Split into smaller batches to avoid context overflow
     const BATCH_SIZE = 20;
     const allResults = [];
+    let successfulBatches = 0;
+    let failedBatches = 0;
 
     for (let i = 0; i < uncategorizedArray.length; i += BATCH_SIZE) {
       const batch = uncategorizedArray.slice(i, i + BATCH_SIZE);
+      const batchNum = Math.floor(i / BATCH_SIZE) + 1;
+      const totalBatches = Math.ceil(uncategorizedArray.length / BATCH_SIZE);
+
       logger.info('Processing LLM batch', {
-        batchNum: Math.floor(i / BATCH_SIZE) + 1,
-        totalBatches: Math.ceil(uncategorizedArray.length / BATCH_SIZE),
+        batchNum,
+        totalBatches,
         batchSize: batch.length
       });
 
       const batchResults = await processBatch(batch, availableCategories);
-      allResults.push(...batchResults);
+
+      if (batchResults.length > 0) {
+        successfulBatches++;
+        allResults.push(...batchResults);
+      } else {
+        failedBatches++;
+        logger.warn('⚠️ LLM batch returned no results', { batchNum, totalBatches });
+      }
     }
+
+    logger.info('LLM batch processing complete', {
+      totalTransactions: uncategorizedArray.length,
+      successfulBatches,
+      failedBatches,
+      categorizedCount: allResults.length
+    });
 
     return allResults;
 
   } catch (err) {
-    console.error('❌ categorizeBatch encountered an error during processing:', err);
+    logger.error('❌ categorizeBatch encountered an error during processing', { error: err.message, stack: err.stack });
     return []; // Return empty on failure to proceed with other processes triggers safeguards
   }
 }
@@ -121,7 +140,42 @@ ${JSON.stringify(batch.map(t => ({
     });
 
     if (!response.ok) {
-      console.error(`❌ LLM API call failed with status: ${response.status}`);
+      const errorText = await response.text();
+      let errorDetails = '';
+
+      try {
+        const errorJson = JSON.parse(errorText);
+        errorDetails = errorJson.error?.message || errorJson.message || errorText;
+      } catch {
+        errorDetails = errorText;
+      }
+
+      // Specific error handling for common issues
+      if (response.status === 402) {
+        logger.error('💳 LLM API: INSUFFICIENT CREDITS', {
+          status: response.status,
+          error: errorDetails,
+          message: 'OpenRouter credits exhausted. Please top up at https://openrouter.ai/credits'
+        });
+      } else if (response.status === 401) {
+        logger.error('🔑 LLM API: AUTHENTICATION FAILED', {
+          status: response.status,
+          error: errorDetails,
+          message: 'Invalid or missing OPENROUTER_API_KEY'
+        });
+      } else if (response.status === 429) {
+        logger.error('⏱️ LLM API: RATE LIMIT EXCEEDED', {
+          status: response.status,
+          error: errorDetails,
+          message: 'Too many requests. Please wait and retry.'
+        });
+      } else {
+        logger.error('❌ LLM API call failed', {
+          status: response.status,
+          error: errorDetails
+        });
+      }
+
       return [];
     }
 
