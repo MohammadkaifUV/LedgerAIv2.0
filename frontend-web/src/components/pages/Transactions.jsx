@@ -617,13 +617,14 @@ const Transactions = () => {
       {recatTarget && (
         <AccountPickerModal
           currentAccountId={recatTarget.transactions?.[0]?.offset_account_id}
+          transactionDirection={recatTarget.debit > 0 ? 'DEBIT' : 'CREDIT'}
           onSelect={handleRecategorize}
           onClose={() => setRecatTarget(null)}
         />
       )}
       {manualTarget && (
         <AccountPickerModal
-          mode="income-expense"
+          transactionDirection={manualTarget.debit > 0 ? 'DEBIT' : 'CREDIT'}
           currentAccountId={null}
           onSelect={handleManualCategorize}
           onClose={() => setManualTarget(null)}

@@ -185,7 +185,8 @@ async function processUpload(req, res) {
       // ==========================================
       let vectorMatch = null;
       try {
-        vectorMatch = await vectorMatchService.findVectorMatch(cleanMerchantName, userId);
+        const transactionType = txn.debit ? 'DEBIT' : 'CREDIT';
+        vectorMatch = await vectorMatchService.findVectorMatch(cleanMerchantName, userId, transactionType);
       } catch (err) {
         logger.error('Vector match failed', { error: err.message });
         // vectorMatch remains null, proceed to fallback
@@ -222,37 +223,90 @@ async function processUpload(req, res) {
     logger.info('Stage 4: LLM Batch Fallback', { leftoverCount: leftovers.length });
 
     if (leftovers.length > 0) {
-      const { data: accounts } = await supabase
-        .from('accounts')
-        .select('account_id, account_name')
-        .eq('user_id', userId)
-        .eq('is_active', true)
-        .in('account_type', ['INCOME', 'EXPENSE'])
-        .not('account_name', 'in', '("Uncategorised Income","Uncategorised Expense")');
+      // Separate leftovers by transaction type
+      const debitLeftovers = leftovers.filter(t => t.debit);
+      const creditLeftovers = leftovers.filter(t => t.credit);
 
-      const availableCategories = accounts || [];
-      logger.info('Available categories for LLM', { count: availableCategories.length });
+      logger.info('LLM batch separation', {
+        debitCount: debitLeftovers.length,
+        creditCount: creditLeftovers.length
+      });
 
-      if (availableCategories.length > 0) {
-        const llmResults = await llmBatchFallback.categorizeBatch(leftovers, availableCategories);
-        logger.info('LLM categorization complete', { resultsCount: llmResults.length });
+      // Process DEBIT transactions (money out) - show only DEBIT nature accounts
+      if (debitLeftovers.length > 0) {
+        const { data: debitAccounts } = await supabase
+          .from('accounts')
+          .select('account_id, account_name, balance_nature')
+          .eq('user_id', userId)
+          .eq('is_active', true)
+          .eq('balance_nature', 'DEBIT')
+          .in('account_type', ['EXPENSE', 'ASSET'])
+          .not('account_name', 'in', '("Uncategorised Expense")');
 
-        for (const prediction of llmResults) {
-          const match = finalResults.find(t =>
-            (t.uncategorized_transaction_id || t.transaction_id) ==
-            (prediction.uncategorized_transaction_id || prediction.transaction_id)
-          );
-          if (match) {
-            match.offset_account_id = prediction.offset_account_id;
-            match.categorised_by = prediction.categorised_by || 'LLM_PREDICTION';
-            match.confidence_score = prediction.confidence_score;
-            // Set attention level based on confidence
-            if (prediction.confidence_score >= 0.8) {
-              match.attention_level = 'LOW';
-            } else if (prediction.confidence_score >= 0.5) {
-              match.attention_level = 'MEDIUM';
-            } else {
-              match.attention_level = 'HIGH';
+        const debitCategories = debitAccounts || [];
+        logger.info('DEBIT categories for LLM', { count: debitCategories.length });
+
+        if (debitCategories.length > 0) {
+          const debitLlmResults = await llmBatchFallback.categorizeBatch(debitLeftovers, debitCategories);
+          logger.info('DEBIT LLM categorization complete', { resultsCount: debitLlmResults.length });
+
+          for (const prediction of debitLlmResults) {
+            const match = finalResults.find(t =>
+              (t.uncategorized_transaction_id || t.transaction_id) ==
+              (prediction.uncategorized_transaction_id || prediction.transaction_id)
+            );
+            if (match) {
+              match.offset_account_id = prediction.offset_account_id;
+              match.categorised_by = prediction.categorised_by || 'LLM_PREDICTION';
+              match.confidence_score = prediction.confidence_score;
+              // Set attention level based on confidence
+              if (prediction.confidence_score >= 0.8) {
+                match.attention_level = 'LOW';
+              } else if (prediction.confidence_score >= 0.5) {
+                match.attention_level = 'MEDIUM';
+              } else {
+                match.attention_level = 'HIGH';
+              }
+            }
+          }
+        }
+      }
+
+      // Process CREDIT transactions (money in) - show only CREDIT nature accounts
+      if (creditLeftovers.length > 0) {
+        const { data: creditAccounts } = await supabase
+          .from('accounts')
+          .select('account_id, account_name, balance_nature')
+          .eq('user_id', userId)
+          .eq('is_active', true)
+          .eq('balance_nature', 'CREDIT')
+          .in('account_type', ['INCOME', 'LIABILITY', 'EQUITY'])
+          .not('account_name', 'in', '("Uncategorised Income")');
+
+        const creditCategories = creditAccounts || [];
+        logger.info('CREDIT categories for LLM', { count: creditCategories.length });
+
+        if (creditCategories.length > 0) {
+          const creditLlmResults = await llmBatchFallback.categorizeBatch(creditLeftovers, creditCategories);
+          logger.info('CREDIT LLM categorization complete', { resultsCount: creditLlmResults.length });
+
+          for (const prediction of creditLlmResults) {
+            const match = finalResults.find(t =>
+              (t.uncategorized_transaction_id || t.transaction_id) ==
+              (prediction.uncategorized_transaction_id || prediction.transaction_id)
+            );
+            if (match) {
+              match.offset_account_id = prediction.offset_account_id;
+              match.categorised_by = prediction.categorised_by || 'LLM_PREDICTION';
+              match.confidence_score = prediction.confidence_score;
+              // Set attention level based on confidence
+              if (prediction.confidence_score >= 0.8) {
+                match.attention_level = 'LOW';
+              } else if (prediction.confidence_score >= 0.5) {
+                match.attention_level = 'MEDIUM';
+              } else {
+                match.attention_level = 'HIGH';
+              }
             }
           }
         }

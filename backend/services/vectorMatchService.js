@@ -4,14 +4,15 @@ require('dotenv').config();
 const ML_SERVICE_URL = process.env.ML_SERVICE_URL || `http://127.0.0.1:${process.env.PYTHON_PORT || 5000}`;
 
 /**
- * Handles the AI similarity matching for cleaned merchant strings 
+ * Handles the AI similarity matching for cleaned merchant strings
  * checking against personal_vector_cache FIRST, then falling back to global_vector_cache.
- * 
+ *
  * @param {string} cleanString - The merchant name or VPA string.
  * @param {string} userId - The UUID of the authenticated user.
+ * @param {string} transactionType - 'DEBIT' or 'CREDIT' to filter by balance_nature.
  * @returns {object|null} Returns { account_id, categorised_by, confidence_score } if matched, else null.
  */
-async function findVectorMatch(cleanString, userId) {
+async function findVectorMatch(cleanString, userId, transactionType) {
   try {
     if (!cleanString || !userId) return null;
 
@@ -72,18 +73,22 @@ async function findVectorMatch(cleanString, userId) {
       const match = gData[0];
       const targetTemplateId = match.target_template_id;
 
+      // Determine required balance nature based on transaction type
+      const requiredBalanceNature = transactionType === 'DEBIT' ? 'DEBIT' : 'CREDIT';
+
       // Map Node Template to Account explicitly using local database relation speed buffers triggers
       const { data: accData, error: accError } = await supabase
         .from('accounts')
-        .select('account_id')
+        .select('account_id, balance_nature')
         .eq('user_id', userId)
         .eq('template_id', targetTemplateId)
         .eq('is_active', true)
+        .eq('balance_nature', requiredBalanceNature)
         .limit(1);
 
       if (accError) {
         console.error('❌ findVectorMatch template mapping error:', accError);
-        return null; 
+        return null;
       }
 
       if (accData && accData.length > 0) {
@@ -92,6 +97,8 @@ async function findVectorMatch(cleanString, userId) {
           confidence_score: 0.85,
           categorised_by: 'GLOBAL_VECTOR'
         };
+      } else {
+        console.warn(`⚠️ Vector match found but balance_nature mismatch. Template: ${targetTemplateId}, Required: ${requiredBalanceNature}`);
       }
     }
 

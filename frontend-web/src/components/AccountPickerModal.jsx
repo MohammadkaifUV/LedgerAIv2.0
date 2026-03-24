@@ -2,11 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../shared/supabase';
 import AddAccountModal from './AddAccountModal';
 import '../styles/AccountPickerModal.css';
-import '../styles/AddAccountModal.css';
 
 const ACCOUNT_TYPE_ORDER = ['INCOME', 'EXPENSE', 'ASSET', 'LIABILITY', 'EQUITY'];
 
-const AccountPickerModal = ({ onSelect, onClose, currentAccountId, transactionType = null }) => {
+const AccountPickerModal = ({ onSelect, onClose, currentAccountId, transactionDirection = null }) => {
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,8 +13,10 @@ const AccountPickerModal = ({ onSelect, onClose, currentAccountId, transactionTy
   const [showAll, setShowAll] = useState(false);
   const searchInputRef = useRef(null);
 
-  // Determine visible account types based on transactionType
-  const visibleTypes = transactionType === 'income-expense' ? ['INCOME', 'EXPENSE'] : ACCOUNT_TYPE_ORDER;
+  // Determine which balance nature to show based on transaction direction
+  // If transaction is DEBIT (money out), show DEBIT nature accounts (EXPENSE, ASSET)
+  // If transaction is CREDIT (money in), show CREDIT nature accounts (INCOME, LIABILITY, EQUITY)
+  const allowedBalanceNature = transactionDirection === 'DEBIT' ? 'DEBIT' : transactionDirection === 'CREDIT' ? 'CREDIT' : null;
 
   useEffect(() => {
     const fetchAccounts = async () => {
@@ -31,15 +32,20 @@ const AccountPickerModal = ({ onSelect, onClose, currentAccountId, transactionTy
 
         let query = supabase
           .from('accounts')
-          .select('account_id, account_name, account_type, parent_account_id, is_active')
+          .select('account_id, account_name, account_type, balance_nature, parent_account_id, is_active')
           .eq('user_id', user.id)
           .eq('is_active', true);
+
+        // Filter by balance nature if transaction direction is specified
+        if (allowedBalanceNature) {
+          query = query.eq('balance_nature', allowedBalanceNature);
+        }
 
         const { data, error } = await query
           .order('account_type', { ascending: true })
           .order('account_name', { ascending: true });
 
-        console.log('📦 Raw accounts data:', data, 'Error:', error);  // ADD THIS
+        console.log('📦 Raw accounts data:', data, 'Error:', error);
         console.log('🔢 Count:', data?.length, 'is_active values:', data?.map(a => a.is_active));
 
         if (error) throw error;
@@ -59,7 +65,7 @@ const AccountPickerModal = ({ onSelect, onClose, currentAccountId, transactionTy
         searchInputRef.current.focus();
       }
     }, 0);
-  }, [transactionType]);
+  }, [allowedBalanceNature]);
 
   // Handle escape key
   useEffect(() => {
@@ -85,7 +91,7 @@ const AccountPickerModal = ({ onSelect, onClose, currentAccountId, transactionTy
 
     // Filter by search term (case-insensitive)
     const filtered = {};
-    visibleTypes.forEach((type) => {
+    ACCOUNT_TYPE_ORDER.forEach((type) => {
       if (grouped[type]) {
         filtered[type] = grouped[type].filter((acc) =>
           acc.account_name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -93,7 +99,7 @@ const AccountPickerModal = ({ onSelect, onClose, currentAccountId, transactionTy
       }
     });
 
-    return visibleTypes.map((type) => ({
+    return ACCOUNT_TYPE_ORDER.map((type) => ({
       type,
       accounts: filtered[type] || []
     })).filter((group) => group.accounts.length > 0);
@@ -103,6 +109,7 @@ const AccountPickerModal = ({ onSelect, onClose, currentAccountId, transactionTy
 
   const handleAccountCreated = (newAccount) => {
     setAccounts((prev) => [...prev, newAccount]);
+    setShowAddAccount(false);
   };
 
   return (

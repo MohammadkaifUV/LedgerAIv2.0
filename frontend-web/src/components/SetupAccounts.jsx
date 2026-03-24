@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../shared/supabase';
 import '../styles/SetupAccounts.css';
 
-const PARENT_CODES = {
-  BANK: 'BANK_ACCOUNTS',      // code value in coa_templates
-  CREDIT_CARD: 'CREDIT_CARDS',
-  CASH_WALLET: 'CASH_WALLETS'
+const PARENT_NAMES = {
+  BANK: 'Bank Accounts',
+  CREDIT_CARD: 'Credit Cards',
+  CASH_WALLET: 'Digital Wallets'
 };
 
 const SetupAccounts = ({ onSetupAccountsComplete }) => {
@@ -82,24 +82,37 @@ const SetupAccounts = ({ onSetupAccountsComplete }) => {
         const fallbackName = isBank ? 'Bank Account' : isCredit ? 'Credit Card' : 'Cash/Wallet';
         const accName = account.account_name || account.institution_name || fallbackName;
 
-        // Fetch parent_account_id from existing COA mapping via code lookup
+        // Fetch parent_account_id from existing COA mapping via account_name lookup
         let parentAccountId = null;
-        const typeCode = PARENT_CODES[account.type];
-        if (typeCode) {
-          const { data: tmpl } = await supabase
+        const parentName = PARENT_NAMES[account.type];
+        if (parentName) {
+          const { data: tmpl, error: tmplError } = await supabase
             .from('coa_templates')
             .select('template_id')
-            .eq('code', typeCode)
-            .single();
-          
+            .eq('account_name', parentName)
+            .maybeSingle();
+
+          if (tmplError) {
+            console.error(`Error fetching template for ${parentName}:`, tmplError);
+          }
+
           if (tmpl?.template_id) {
-            const { data: parentAcc } = await supabase
+            const { data: parentAcc, error: parentError } = await supabase
               .from('accounts')
               .select('account_id')
               .eq('user_id', user.id)
               .eq('template_id', tmpl.template_id)
-              .single();
-            if (parentAcc) parentAccountId = parentAcc.account_id;
+              .maybeSingle();
+
+            if (parentError) {
+              console.error(`Error fetching parent account for ${parentName}:`, parentError);
+            }
+
+            if (parentAcc) {
+              parentAccountId = parentAcc.account_id;
+            } else {
+              console.warn(`Parent account not found for ${parentName}. Account will be created at root level.`);
+            }
           }
         }
 
@@ -179,10 +192,9 @@ const SetupAccounts = ({ onSetupAccountsComplete }) => {
                   <div className="type-icon">
                     {acc.type === 'BANK' && <span>🏦</span>}
                     {acc.type === 'CREDIT_CARD' && <span>💳</span>}
-                    {acc.type === 'CASH_WALLET' && <span>💰</span>}
                   </div>
                   <h3>
-                    {acc.type === 'BANK' ? 'Bank Account' : acc.type === 'CREDIT_CARD' ? 'Credit Card' : 'Cash / Wallet'}
+                    {acc.type === 'BANK' ? 'Bank Account' : 'Credit Card'}
                   </h3>
                 </div>
                 {!(acc.type === 'BANK' && accounts.filter(a => a.type === 'BANK').length <= 1) && (
@@ -233,20 +245,6 @@ const SetupAccounts = ({ onSetupAccountsComplete }) => {
                   </>
                 )}
 
-                {acc.type === 'CASH_WALLET' && (
-                  <>
-                    <div className="form-row">
-                      <div className="input-group">
-                        <label>Wallet / Account Name</label>
-                        <input type="text" placeholder="e.g. Petty Cash" value={acc.account_name} onChange={(e) => handleChange(acc.id, 'account_name', e.target.value)} />
-                      </div>
-                      <div className="input-group">
-                        <label>Initial Balance</label>
-                        <input type="number" placeholder="e.g. 500" value={acc.balance} onChange={(e) => handleChange(acc.id, 'balance', e.target.value)} />
-                      </div>
-                    </div>
-                  </>
-                )}
               </div>
             </div>
           ))}
@@ -259,9 +257,6 @@ const SetupAccounts = ({ onSetupAccountsComplete }) => {
           </button>
           <button className="add-action-btn" onClick={() => addAccountForm('CREDIT_CARD')}>
             <span>+ Add Credit Card</span>
-          </button>
-          <button className="add-action-btn" onClick={() => addAccountForm('CASH_WALLET')}>
-            <span>+ Add Cash/Wallet</span>
           </button>
         </div>
 
