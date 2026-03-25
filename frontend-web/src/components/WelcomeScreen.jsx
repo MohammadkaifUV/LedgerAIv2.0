@@ -92,55 +92,51 @@ const WelcomeScreen = ({ toggleTheme, isDarkMode, onSetupComplete }) => {
 
       if (fetchError) throw fetchError;
 
-      // 3. Separate Parents and Children
-      const parents = templates.filter(t => !t.parent_template_id);
-      const children = templates.filter(t => t.parent_template_id);
-
-      // 4. Insert Parents inside Accounts
-      const parentInserts = parents.map(p => ({
+      // 3. Insert all accounts first without parent relationships
+      const accountInserts = templates.map(t => ({
         user_id: user.id,
-        account_name: p.account_name,
-        account_type: p.account_type,
-        balance_nature: p.balance_nature,
-        is_system_generated: p.is_system_generated,
-        template_id: p.template_id
+        account_name: t.account_name,
+        account_type: t.account_type,
+        balance_nature: t.balance_nature,
+        is_system_generated: t.is_system_generated,
+        template_id: t.template_id,
+        parent_account_id: null // Will be set in next step
       }));
 
-      const { data: insertedParents, error: parentError } = await supabase
+      const { data: insertedAccounts, error: insertError } = await supabase
         .from('accounts')
-        .insert(parentInserts)
+        .insert(accountInserts)
         .select('account_id, template_id');
 
-      if (parentError) throw parentError;
+      if (insertError) throw insertError;
 
-      // 5. Map parent old template_id to new account_id
-      const parentMap = {};
-      insertedParents.forEach(p => {
-        if (p.template_id) {
-          parentMap[p.template_id] = p.account_id;
+      // 4. Build a map of template_id -> account_id
+      const templateMap = {};
+      insertedAccounts.forEach(acc => {
+        if (acc.template_id) {
+          templateMap[acc.template_id] = acc.account_id;
         }
       });
 
-      // 6. Insert Children mapping parent_account_id
-      const childInserts = children.map(c => ({
-        user_id: user.id,
-        account_name: c.account_name,
-        account_type: c.account_type,
-        balance_nature: c.balance_nature,
-        is_system_generated: c.is_system_generated,
-        template_id: c.template_id,
-        parent_account_id: parentMap[c.parent_template_id] || null
-      }));
+      // 5. Update parent_account_id for all accounts that have a parent
+      const updates = templates
+        .filter(t => t.parent_template_id && templateMap[t.parent_template_id])
+        .map(t => ({
+          account_id: templateMap[t.template_id],
+          parent_account_id: templateMap[t.parent_template_id]
+        }));
 
-      if (childInserts.length > 0) {
-        const { error: childError } = await supabase
+      // Update in batches to set parent relationships
+      for (const update of updates) {
+        const { error: updateError } = await supabase
           .from('accounts')
-          .insert(childInserts);
-          
-        if (childError) throw childError;
+          .update({ parent_account_id: update.parent_account_id })
+          .eq('account_id', update.account_id);
+
+        if (updateError) throw updateError;
       }
 
-      // 7. Insert into user_modules to mark setup completion
+      // 6. Insert into user_modules to mark setup completion
       const moduleInserts = idsToFetch.map(id => ({
         user_id: user.id,
         module_id: id

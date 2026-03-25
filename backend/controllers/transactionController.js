@@ -77,13 +77,24 @@ async function recategorizeTransaction(req, res) {
       return res.status(400).json({ error: 'Missing transactionId or offset_account_id.' });
     }
 
+    // Check if the new account is uncategorised
+    const { data: newAccount } = await supabase
+      .from('accounts')
+      .select('account_name')
+      .eq('account_id', offset_account_id)
+      .single();
+
+    const isUncategorised = newAccount?.account_name === 'Uncategorised Expense' ||
+                           newAccount?.account_name === 'Uncategorised Income';
+
     // Update with user_id constraint to ensure ownership
     const { error } = await supabase
       .from('transactions')
       .update({
         offset_account_id: offset_account_id,
         categorised_by: 'USER_MANUAL',
-        review_status: 'PENDING'
+        review_status: 'PENDING',
+        is_uncategorised: isUncategorised
       })
       .eq('transaction_id', transactionId)
       .eq('user_id', userId);
