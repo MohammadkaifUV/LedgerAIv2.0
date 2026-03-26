@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import UploadModal from '../UploadModal';
+import { useNavigate } from 'react-router-dom';
 import AccountPickerModal from '../AccountPickerModal';
 import { Toast, useToast } from '../Toast';
 import { supabase } from '../../shared/supabase';
@@ -10,8 +10,8 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000
 const ATTENTION_ORDER = ['HIGH', 'MEDIUM', 'LOW'];
 
 const Transactions = () => {
+  const navigate = useNavigate();
   const { toasts, showToast } = useToast();
-  const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [isCategorizing, setIsCategorizing] = useState(false);
   const [isApprovingBulk, setIsApprovingBulk] = useState(false);
   const [transactions, setTransactions] = useState([]);
@@ -337,7 +337,7 @@ const Transactions = () => {
         <div className="header-actions">
           <button
             className="action-btn upload"
-            onClick={() => setIsUploadOpen(true)}
+            onClick={() => navigate('/upload')}
             style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
           >
             <ICONS.Upload /> Upload
@@ -608,12 +608,6 @@ const Transactions = () => {
         </div>
       </div>
 
-      {isUploadOpen && (
-        <UploadModal
-          onClose={() => setIsUploadOpen(false)}
-          onUploadSuccess={() => fetchTransactions(activeFilter)}
-        />
-      )}
       {recatTarget && (
         <AccountPickerModal
           currentAccountId={recatTarget.transactions?.[0]?.offset_account_id}

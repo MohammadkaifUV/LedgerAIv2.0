@@ -1,12 +1,52 @@
 const logger = require('../utils/logger');
 const contraRadarService = require('../services/contraRadarService');
 const rulesEngineService = require('../services/rulesEngineService');
+const keywordMatchService = require('../services/keywordMatchService');
 const vectorMatchService = require('../services/vectorMatchService');
 const personalCacheService = require('../services/personalCacheService');
 const supabase = require('../config/supabaseClient');
 const llmBatchFallback = require('../services/llmBatchFallback');
 
 const ML_SERVICE_URL = process.env.ML_SERVICE_URL || `http://127.0.0.1:${process.env.PYTHON_PORT || 5000}`;
+
+/**
+ * Sanitizes raw transaction details by removing noise and keeping merchant-relevant tokens.
+ * Designed for regex-first approach with future QC panel governance in mind.
+ *
+ * @param {string} rawDetails - Raw transaction description
+ * @returns {string} Cleaned uppercase merchant name
+ */
+function sanitizeTransactionDetails(rawDetails) {
+  if (!rawDetails) return '';
+
+  let cleaned = rawDetails;
+
+  // 1. Remove payment method prefixes
+  cleaned = cleaned.replace(/^(UPI|IMPS|NEFT|RTGS|ACH|NACH)[\/\-]/gi, ' ');
+
+  // 2. Remove UPI handles
+  cleaned = cleaned.replace(/@(ybl|paytm|okaxis|oksbi|okicici|okhdfcbank|axisbank|hdfcbank|icici|sbi|upi)/gi, ' ');
+
+  // 3. Remove bank codes (4 letters + digit + alphanumeric)
+  cleaned = cleaned.replace(/\b[A-Z]{4}\d[A-Z0-9]{3,}\b/gi, ' ');
+
+  // 4. Remove long numeric sequences (10+ digits)
+  cleaned = cleaned.replace(/\b\d{10,}\b/g, ' ');
+
+  // 5. Remove dates (DD/MM/YY, DD-MM-YYYY, etc.)
+  cleaned = cleaned.replace(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/g, ' ');
+
+  // 6. Remove short alphanumeric codes starting with single letter + 6+ digits
+  cleaned = cleaned.replace(/\b[A-Z]\d{6,}\b/gi, ' ');
+
+  // 7. Replace all symbols with spaces (keep mixed codes like CF-, PI-)
+  cleaned = cleaned.replace(/[\/\.@_:;,\(\)\[\]]/g, ' ');
+
+  // 8. Collapse multiple spaces and trim
+  cleaned = cleaned.replace(/\s+/g, ' ').trim();
+
+  return cleaned.toUpperCase();
+}
 
 /**
  * ACCOUNT FIELD CONVENTION:
@@ -117,16 +157,35 @@ async function processUpload(req, res) {
           // If template lookup failed, fall through to next stages
         }
         else if (rulesResult.strategy === 'EXACT_THEN_DUMP') {
-          const categoryAccountId = await getAccountIdFromTemplate(rulesResult.targetTemplateId, userId, supabase);
+          // Check personal exact cache first - user may have categorized this garbage before
+          const personalMatch = await personalCacheService.checkExactMatch(userId, txn.details);
+          if (personalMatch) {
+            logger.info('Exact cache HIT for garbage transaction', { details: txn.details });
+            finalResults.push({
+              ...txn,
+              base_account_id: sourceAccountId,
+              offset_account_id: personalMatch.offset_account_id,
+              categorised_by: 'PERSONAL_EXACT',
+              confidence_score: 1.00,
+              attention_level: 'LOW'
+            });
+            continue;
+          }
 
-          // EXACT_THEN_DUMP allows null (for garbage transactions)
+          // No personal history - dump to uncategorised fallback
+          const transactionType = txn.debit ? 'DEBIT' : 'CREDIT';
+          const fallbackAccountId = transactionType === 'DEBIT'
+            ? uncategorisedExpenseId
+            : uncategorisedIncomeId;
+
           finalResults.push({
             ...txn,
             base_account_id: sourceAccountId,
-            offset_account_id: categoryAccountId || null,
+            offset_account_id: fallbackAccountId,
             categorised_by: 'TRAPDOOR_FILTER',
             confidence_score: 1.00,
-            attention_level: 'LOW'
+            attention_level: 'HIGH',
+            is_uncategorised: true
           });
           continue;
         }
@@ -136,56 +195,57 @@ async function processUpload(req, res) {
       }
 
       // ==========================================
-      // STAGE 1.5: PERSONAL EXACT CACHE
+      // STAGE 2: REGEX SANITIZATION
       // ==========================================
-      if (rulesResult.hasRuleMatch && rulesResult.strategy === 'VECTOR_SEARCH' && rulesResult.extractedId) {
-        logger.debug('Checking exact cache', { extractedId: rulesResult.extractedId });
-        const personalMatch = await personalCacheService.checkExactMatch(userId, rulesResult.extractedId);
-        if (personalMatch) {
-          logger.info('Exact cache HIT', { extractedId: rulesResult.extractedId });
-          finalResults.push({
-            ...txn,
-            base_account_id: sourceAccountId,
-            offset_account_id: personalMatch.offset_account_id,
-            clean_merchant_name: rulesResult.extractedId.toUpperCase(),
-            categorised_by: 'PERSONAL_EXACT',
-            confidence_score: 1.00,
-            extracted_id: rulesResult.extractedId || null,
-            attention_level: 'LOW'
-          });
-          continue;
-        } else {
-          logger.debug('Exact cache MISS', { extractedId: rulesResult.extractedId });
-        }
-      }
-
-      // ==========================================
-      // STAGE 2: PYTHON NER
-      // ==========================================
-      // Run NER if no rule match OR if VECTOR_SEARCH strategy (to get clean merchant name)
+      // Sanitize transaction details if no rule match OR if VECTOR_SEARCH strategy
       if (!rulesResult.hasRuleMatch || rulesResult.strategy === 'VECTOR_SEARCH') {
-        try {
-          const sanitizedString = txn.details.replace(/[^a-zA-Z0-9\s]/g, ' ');
-          const nerResponse = await fetch(`${ML_SERVICE_URL}/ner`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: sanitizedString })
-          });
-          if (nerResponse.ok) {
-            const nerData = await nerResponse.json();
-            cleanMerchantName = nerData.merchant_name || sanitizedString;
-          }
-        } catch (err) {
-          logger.error('NER failure', { details: txn.details, error: err.message });
-        }
+        cleanMerchantName = sanitizeTransactionDetails(cleanMerchantName);
+        logger.debug('Sanitized merchant name', { original: txn.details, cleaned: cleanMerchantName });
       }
 
       // ==========================================
       // STAGE 3: VECTOR SIMILARITY
       // ==========================================
+
+      // ==========================================
+      // STAGE 3.15: GLOBAL KEYWORD RULES
+      // ==========================================
+      const transactionType = txn.debit ? 'DEBIT' : 'CREDIT';
+      const keywordMatch = keywordMatchService.checkKeywordMatch(cleanMerchantName);
+
+      if (keywordMatch) {
+        logger.info('Keyword match found', {
+          keyword: keywordMatch.matchedKeyword,
+          merchantName: cleanMerchantName
+        });
+
+        const categoryAccountId = await keywordMatchService.getAccountIdFromTemplate(
+          keywordMatch.targetTemplateId,
+          userId,
+          transactionType
+        );
+
+        if (categoryAccountId) {
+          finalResults.push({
+            ...txn,
+            base_account_id: sourceAccountId,
+            offset_account_id: categoryAccountId,
+            clean_merchant_name: cleanMerchantName.toUpperCase(),
+            categorised_by: 'GLOBAL_KEYWORD',
+            confidence_score: 0.95,
+            extracted_id: rulesResult.extractedId || null,
+            attention_level: 'LOW'
+          });
+          continue;
+        }
+        // If template lookup failed, fall through to vector matching
+      }
+
+      // ==========================================
+      // STAGE 3.2: VECTOR SIMILARITY (Personal + Global)
+      // ==========================================
       let vectorMatch = null;
       try {
-        const transactionType = txn.debit ? 'DEBIT' : 'CREDIT';
         vectorMatch = await vectorMatchService.findVectorMatch(cleanMerchantName, userId, transactionType);
       } catch (err) {
         logger.error('Vector match failed', { error: err.message });

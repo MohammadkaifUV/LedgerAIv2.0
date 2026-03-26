@@ -7,6 +7,7 @@ const logger = require('./utils/logger');
 const transactionRoutes = require('./routes/transactionRoutes');
 const qcRoutes = require('./routes/qcRoutes');
 const rulesEngineService = require('./services/rulesEngineService');
+const keywordMatchService = require('./services/keywordMatchService');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -85,8 +86,11 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Load rules at startup
-rulesEngineService.loadRules().then(() => {
+// Load rules and keyword rules at startup
+Promise.all([
+  rulesEngineService.loadRules(),
+  keywordMatchService.loadKeywordRules()
+]).then(() => {
   app.listen(PORT, () => {
     logger.info(`LedgerAI Backend running on port ${PORT}`, { port: PORT, env: process.env.NODE_ENV || 'development' });
   });

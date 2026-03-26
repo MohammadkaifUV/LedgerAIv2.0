@@ -10,6 +10,8 @@ import Overview from './components/pages/Overview';
 import Transactions from './components/pages/Transactions';
 import Accounts from './components/pages/Accounts';
 import Analytics from './components/pages/Analytics';
+import Upload from './components/pages/Upload';
+import Review from './components/pages/Review';
 import WelcomeScreen from './components/WelcomeScreen';
 import SetupAccounts from './components/SetupAccounts';
 import QCPanel from './components/QCPanel';
@@ -172,6 +174,8 @@ function App() {
                <Route path="transactions" element={<Transactions />} />
                <Route path="accounts" element={<Accounts />} />
                <Route path="analytics" element={<Analytics />} />
+               <Route path="upload" element={<Upload />} />
+               <Route path="upload/review" element={<Review />} />
           </Route>
 
           {/* Catch-All / Redirect */}

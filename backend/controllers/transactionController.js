@@ -3,6 +3,45 @@ const { upsertExactCache, upsertVectorCache, isGarbage } = require('../services/
 const rulesEngineService = require('../services/rulesEngineService');
 
 /**
+ * Sanitizes raw transaction details by removing noise and keeping merchant-relevant tokens.
+ * Matches the sanitization logic in bulkController.js for consistency.
+ *
+ * @param {string} rawDetails - Raw transaction description
+ * @returns {string} Cleaned uppercase merchant name
+ */
+function sanitizeTransactionDetails(rawDetails) {
+  if (!rawDetails) return '';
+
+  let cleaned = rawDetails;
+
+  // 1. Remove payment method prefixes
+  cleaned = cleaned.replace(/^(UPI|IMPS|NEFT|RTGS|ACH|NACH)[\/\-]/gi, ' ');
+
+  // 2. Remove UPI handles
+  cleaned = cleaned.replace(/@(ybl|paytm|okaxis|oksbi|okicici|okhdfcbank|axisbank|hdfcbank|icici|sbi|upi)/gi, ' ');
+
+  // 3. Remove bank codes (4 letters + digit + alphanumeric)
+  cleaned = cleaned.replace(/\b[A-Z]{4}\d[A-Z0-9]{3,}\b/gi, ' ');
+
+  // 4. Remove long numeric sequences (10+ digits)
+  cleaned = cleaned.replace(/\b\d{10,}\b/g, ' ');
+
+  // 5. Remove dates (DD/MM/YY, DD-MM-YYYY, etc.)
+  cleaned = cleaned.replace(/\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/g, ' ');
+
+  // 6. Remove short alphanumeric codes starting with single letter + 6+ digits
+  cleaned = cleaned.replace(/\b[A-Z]\d{6,}\b/gi, ' ');
+
+  // 7. Replace all symbols with spaces (keep mixed codes like CF-, PI-)
+  cleaned = cleaned.replace(/[\/\.@_:;,\(\)\[\]]/g, ' ');
+
+  // 8. Collapse multiple spaces and trim
+  cleaned = cleaned.replace(/\s+/g, ' ').trim();
+
+  return cleaned.toUpperCase();
+}
+
+/**
  * Creates double-entry ledger entries for an approved transaction.
  * Every transaction produces exactly 2 ledger entries.
  * 
@@ -186,12 +225,12 @@ async function approveTransaction(req, res) {
       );
 
       if (txnData && !txnData.is_contra) {
-        if (txnData.extracted_id) {
-          // Rules engine already extracted a clean VPA/ID — goes to exact cache
+        if (txnData.extracted_id && isGarbage(txnData.extracted_id)) {
+          // Extracted ID is garbage (QR code, phone number, etc.) — goes to exact cache
           await upsertExactCache(userId, txnData.extracted_id, txnData.offset_account_id);
         } else {
-          // No extraction happened — raw details is a real merchant name, vector cache it
-          const nameToCache = txnData.clean_merchant_name || txnData.details;
+          // Either no extraction, or extracted ID is semantic (merchant name) — goes to vector cache
+          const nameToCache = txnData.extracted_id || txnData.clean_merchant_name || txnData.details;
           await upsertVectorCache(userId, nameToCache, txnData.offset_account_id);
         }
       }
@@ -290,12 +329,12 @@ async function bulkApproveTransactions(req, res) {
           );
 
           if (!txn.is_contra) {
-            if (txn.extracted_id) {
-              // Rules engine already extracted a clean VPA/ID — goes to exact cache
+            if (txn.extracted_id && isGarbage(txn.extracted_id)) {
+              // Extracted ID is garbage (QR code, phone number, etc.) — goes to exact cache
               await upsertExactCache(userId, txn.extracted_id, txn.offset_account_id);
             } else {
-              // No extraction happened — raw details is a real merchant name, vector cache it
-              const nameToCache = txn.clean_merchant_name || txn.details;
+              // Either no extraction, or extracted ID is semantic (merchant name) — goes to vector cache
+              const nameToCache = txn.extracted_id || txn.clean_merchant_name || txn.details;
               await upsertVectorCache(userId, nameToCache, txn.offset_account_id);
             }
           }
@@ -413,34 +452,23 @@ async function manualCategorizeTransaction(req, res) {
       const rulesResult = rulesEngineService.evaluateTransaction(rawDetails);
 
       if (rulesResult.hasRuleMatch && rulesResult.strategy === 'VECTOR_SEARCH' && rulesResult.extractedId) {
-        // Store the extracted ID in exact cache
-        console.log(`💾 Storing in exact cache: "${rulesResult.extractedId}" for transaction: "${rawDetails}"`);
-        await upsertExactCache(userId, rulesResult.extractedId, newTxn.offset_account_id);
+        // Check if extracted ID is garbage or semantic
+        if (isGarbage(rulesResult.extractedId)) {
+          // Extracted ID is garbage — store in exact cache
+          console.log(`💾 Storing garbage extracted ID in exact cache: "${rulesResult.extractedId}" for transaction: "${rawDetails}"`);
+          await upsertExactCache(userId, rulesResult.extractedId, newTxn.offset_account_id);
+        } else {
+          // Extracted ID is semantic (merchant name) — store in vector cache
+          console.log(`💾 Storing semantic extracted ID in vector cache: "${rulesResult.extractedId}" for transaction: "${rawDetails}"`);
+          await upsertVectorCache(userId, rulesResult.extractedId, newTxn.offset_account_id);
+        }
       } else if (isGarbage(rawDetails)) {
         // Store raw garbage string in exact cache
         console.log(`💾 Storing garbage in exact cache: "${rawDetails.trim()}"`);
         await upsertExactCache(userId, rawDetails.trim(), newTxn.offset_account_id);
       } else {
-        // For vector cache, try to get cleaned name from NER first
-        let cleanName = rawDetails;
-        if (!rulesResult.hasRuleMatch) {
-          try {
-            const ML_SERVICE_URL = process.env.ML_SERVICE_URL || `http://127.0.0.1:${process.env.PYTHON_PORT || 5000}`;
-            const sanitizedString = rawDetails.replace(/[^a-zA-Z0-9\s]/g, ' ');
-            const nerResponse = await fetch(`${ML_SERVICE_URL}/ner`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ text: sanitizedString })
-            });
-            if (nerResponse.ok) {
-              const nerData = await nerResponse.json();
-              cleanName = nerData.merchant_name || sanitizedString;
-            }
-          } catch (err) {
-            console.error(`NER failure for manual categorize [${rawDetails}]:`, err.message);
-          }
-        }
-        // Store cleaned name in vector cache for semantic matching
+        // Use regex sanitization instead of NER
+        const cleanName = sanitizeTransactionDetails(rawDetails);
         console.log(`💾 Storing in vector cache: "${cleanName}" for transaction: "${rawDetails}"`);
         await upsertVectorCache(userId, cleanName, newTxn.offset_account_id);
       }
