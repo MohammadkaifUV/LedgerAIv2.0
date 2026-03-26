@@ -1,9 +1,7 @@
 const logger = require('../utils/logger');
+const { callLLM, getProviderInfo } = require('./llmService');
 
 require('dotenv').config();
-
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
-const LLM_MODEL = process.env.LLM_MODEL || 'google/gemini-2.5-flash'; // OpenRouter default model layout trigger
 
 /**
  * Stage 4: LLM Batch Fallback
@@ -19,10 +17,13 @@ async function categorizeBatch(uncategorizedArray, availableCategories) {
       return [];
     }
 
-    if (!OPENROUTER_API_KEY) {
-      logger.warn('⚠️ OPENROUTER_API_KEY missing, skipping LLM fallback');
+    const providerInfo = getProviderInfo();
+    if (!providerInfo.configured) {
+      logger.warn(`⚠️ LLM provider (${providerInfo.provider}) not configured, skipping LLM fallback`);
       return [];
     }
+
+    logger.info('Using LLM provider', providerInfo);
 
     // Split into smaller batches to avoid context overflow
     const BATCH_SIZE = 20;
@@ -114,76 +115,21 @@ ${JSON.stringify(batch.map(t => ({
 `;
 
     // Debug logging
-    console.log('🤖 LLM BATCH FALLBACK DEBUG:');
-    console.log(`   Available categories count: ${availableCategories.length}`);
-    console.log(`   Categories: ${availableCategories.map(c => c.account_name).join(', ')}`);
-    console.log(`   Transactions to categorize: ${batch.length}`);
-    console.log(`   First transaction sample: ${batch[0]?.clean_merchant_name || batch[0]?.details || 'N/A'}`);
-
-    // 2. Call LLM API (Via OpenRouter for standard model triggers)
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-        'HTTP-Referer': 'http://localhost:3000', // Reference
-        'X-Title': 'LedgerAI v2.0'
-      },
-      body: JSON.stringify({
-        model: LLM_MODEL,
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
-        ],
-        temperature: 0.1 // Lower temperature for more deterministic outputs
-      })
+    logger.debug('LLM batch fallback', {
+      categoriesCount: availableCategories.length,
+      transactionsCount: batch.length,
+      firstTransaction: batch[0]?.clean_merchant_name || batch[0]?.details || 'N/A'
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      let errorDetails = '';
-
-      try {
-        const errorJson = JSON.parse(errorText);
-        errorDetails = errorJson.error?.message || errorJson.message || errorText;
-      } catch {
-        errorDetails = errorText;
-      }
-
-      // Specific error handling for common issues
-      if (response.status === 402) {
-        logger.error('💳 LLM API: INSUFFICIENT CREDITS', {
-          status: response.status,
-          error: errorDetails,
-          message: 'OpenRouter credits exhausted. Please top up at https://openrouter.ai/credits'
-        });
-      } else if (response.status === 401) {
-        logger.error('🔑 LLM API: AUTHENTICATION FAILED', {
-          status: response.status,
-          error: errorDetails,
-          message: 'Invalid or missing OPENROUTER_API_KEY'
-        });
-      } else if (response.status === 429) {
-        logger.error('⏱️ LLM API: RATE LIMIT EXCEEDED', {
-          status: response.status,
-          error: errorDetails,
-          message: 'Too many requests. Please wait and retry.'
-        });
-      } else {
-        logger.error('❌ LLM API call failed', {
-          status: response.status,
-          error: errorDetails
-        });
-      }
-
-      return [];
-    }
-
-    const data = await response.json();
-    const contentString = data.choices?.[0]?.message?.content?.trim();
-
-    if (!contentString) {
-      console.warn('⚠️ LLM response was empty or contained invalid nodes structure.');
+    // 2. Call LLM API (provider-agnostic)
+    let contentString;
+    try {
+      contentString = await callLLM([
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt }
+      ], 0.1);
+    } catch (err) {
+      logger.error('LLM API call failed', { error: err.message });
       return [];
     }
 
@@ -197,12 +143,15 @@ ${JSON.stringify(batch.map(t => ({
     try {
       parsedPredictions = JSON.parse(cleanContent);
     } catch (parseErr) {
-      console.error('❌ LLM response was not valid JSON:', cleanContent.slice(0, 200));
+      logger.error('LLM response was not valid JSON', {
+        error: parseErr.message,
+        preview: cleanContent.slice(0, 200)
+      });
       return [];
     }
 
     if (!Array.isArray(parsedPredictions)) {
-      console.error('❌ LLM returned non-array JSON:', typeof parsedPredictions);
+      logger.error('LLM returned non-array JSON', { type: typeof parsedPredictions });
       return [];
     }
 
@@ -230,15 +179,18 @@ ${JSON.stringify(batch.map(t => ({
           });
         }
       } else {
-        console.warn(`⚠️ Discarded hallucinated account_id [${suggested_account_id}] for transaction_id [${transaction_id}]`);
+        logger.warn('Discarded hallucinated account_id', {
+          accountId: suggested_account_id,
+          transactionId: transaction_id
+        });
       }
     }
 
     return safeResults;
 
   } catch (err) {
-    console.error('❌ processBatch encountered an error during processing:', err);
-    return []; // Return empty on failure to proceed with other processes triggers safeguards
+    logger.error('processBatch error', { error: err.message, stack: err.stack });
+    return [];
   }
 }
 

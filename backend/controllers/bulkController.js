@@ -334,8 +334,13 @@ async function processUpload(req, res) {
     // ==========================================
     // STAGE 5: APPLY FALLBACK & BATCH WRITE
     // ==========================================
+    logger.info('Preparing batch write', {
+      totalResults: finalResults.length,
+      withBaseAccount: finalResults.filter(item => item.base_account_id).length,
+      withoutBaseAccount: finalResults.filter(item => !item.base_account_id).length
+    });
+
     const transactionsBatch = finalResults
-      .filter(item => item.base_account_id)  // only require base_account_id
       .map(item => {
         const transactionType = item.debit ? 'DEBIT' : 'CREDIT';
 
@@ -356,7 +361,7 @@ async function processUpload(req, res) {
 
         return {
           user_id: userId,
-          base_account_id: item.base_account_id,
+          base_account_id: item.base_account_id || null,  // Allow NULL base_account_id
           offset_account_id: finalOffsetAccountId,
           document_id: item.document_id,
           transaction_date: item.txn_date,

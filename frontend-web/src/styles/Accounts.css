@@ -116,12 +116,14 @@
   gap: 8px;
   padding: 6px 8px;
   border-radius: 8px;
-  transition: background 0.15s;
+  border: 1px solid transparent;
+  transition: all 0.15s;
   min-height: 32px;
 }
 
 .node-header:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(127, 175, 138, 0.05);
+  border-color: var(--accent-color);
 }
 
 .account-node.has-kids > .node-header {
